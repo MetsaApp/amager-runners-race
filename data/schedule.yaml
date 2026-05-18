@@ -24,7 +24,7 @@ rows:
       da: "5K"
     hot: true
 
-  - time: "19:00"
+  - time: "19:15"
     kind:
       en: "Start"
       da: "Start"
