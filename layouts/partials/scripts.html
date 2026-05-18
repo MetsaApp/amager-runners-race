@@ -1,7 +1,7 @@
 {{- $routeData := .Site.Data.route -}}
 <script>
   window.__SITE = {
-    routePoints: {{ $routeData.points | jsonify }},
+    routePoints: JSON.parse({{ $routeData.points | jsonify }}),
     startLabel: {{ $routeData.startLabel | jsonify }},
     startVenue: {{ $routeData.startVenue | jsonify }}
   };
