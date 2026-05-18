@@ -1,0 +1,20 @@
+{{- $t := .t -}}
+{{- $lang := .lang -}}
+{{- $num := .section.num -}}
+{{- $rows := hugo.Data.schedule.rows -}}
+<section id="schedule">
+  <div class="section-head">
+    <span class="section-num">{{ $num }} / <span>{{ $t.schedule.sectionLabel }}</span></span>
+    <h2 class="section-title">{{ $t.schedule.sectionTitle }}</h2>
+  </div>
+  <div class="schedule">
+    {{ range $rows }}
+      <div class="sched-row">
+        <div class="sched-time">{{ .time }}</div>
+        <div class="sched-kind">{{ index .kind $lang }}</div>
+        <div class="sched-name">{{ index .name $lang }}</div>
+        <div class="sched-tag{{ if .hot }} hot{{ end }}">{{ index .tag $lang }}</div>
+      </div>
+    {{ end }}
+  </div>
+</section>

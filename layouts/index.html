@@ -1,0 +1,10 @@
+{{ define "main" }}
+  {{ $lang := .Site.Language.Lang }}
+  {{ $t := index hugo.Data.i18n $lang }}
+  {{ range hugo.Data.sections.order }}
+    {{ if .enabled }}
+      {{ $ctx := dict "section" . "t" $t "lang" $lang "page" $ }}
+      {{ partial (printf "sections/%s.html" .id) $ctx }}
+    {{ end }}
+  {{ end }}
+{{ end }}

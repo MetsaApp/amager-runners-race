@@ -1,0 +1,36 @@
+{{- $t := .t -}}
+{{- $p := .site.Params -}}
+<header class="hero" id="top">
+  <div class="hero-media" role="img" aria-label="Runners along the Amager coast"></div>
+  <div class="hero-inner">
+    <div class="hero-top">
+      <span class="pill"><span class="dot" aria-hidden="true"></span><span>{{ $t.hero.pill }}</span></span>
+      <span>{{ $t.hero.edition }}</span>
+    </div>
+
+    <div>
+      <div class="hero-kicker">{{ $t.hero.kicker }}</div>
+      <div class="hero-eyebrow">{{ $t.hero.eyebrow }}</div>
+      <h1 class="hero-title">5K<span class="slash">/</span>10K</h1>
+      <p class="hero-sub">{{ $t.hero.sub }}</p>
+    </div>
+
+    <div class="hero-bottom">
+      <dl class="hero-meta">
+        <div><dt>{{ $t.hero.metaDate }}</dt><dd>{{ $p.eventDateDisplay }}</dd></div>
+        <div><dt>{{ $t.hero.metaStart }}</dt><dd>{{ $p.startTimes }}</dd></div>
+        <div><dt>{{ $t.hero.metaWhere }}</dt><dd>{{ $p.location }}</dd></div>
+      </dl>
+      <div class="hero-cta">
+        <a href="#pricing" class="btn btn-primary">
+          <span>{{ $t.hero.ctaSignup }}</span>
+          <span class="arrow" aria-hidden="true">→</span>
+        </a>
+        <a href="#route" class="btn btn-ghost-light" id="viewRouteBtn">
+          <span>{{ $t.hero.ctaRoute }}</span>
+          <span class="arrow" id="routeArrow" aria-hidden="true">↓</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</header>

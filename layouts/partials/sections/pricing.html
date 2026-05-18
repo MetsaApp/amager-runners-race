@@ -1,0 +1,29 @@
+{{- $t := .t -}}
+{{- $lang := .lang -}}
+{{- $num := .section.num -}}
+{{- $data := hugo.Data.pricing -}}
+{{- $cols := $data.cols | default 3 -}}
+{{- $maxW := $data.maxWidth | default "640px" -}}
+<section id="pricing">
+  <div class="section-head">
+    <span class="section-num">{{ $num }} / <span>{{ $t.pricing.sectionLabel }}</span></span>
+    <h2 class="section-title">{{ $t.pricing.sectionTitle }}</h2>
+  </div>
+  <div class="pricing" style="--grid-cols: {{ $cols }};">
+    {{ range $data.tiers }}
+      <div class="price-card{{ if .feature }} feature{{ end }}"{{ if eq $cols 1 }} style="max-width: {{ $maxW }}; margin: 0 auto; width: 100%;"{{ end }}>
+        <div class="price-tier">{{ index .tier $lang }}</div>
+        <div class="price-amount">{{ .amount }}<small>{{ .currency }}</small></div>
+        <div class="price-window muted">{{ index .window $lang }}</div>
+        {{ if .perks }}
+          <ul class="price-list">
+            {{ range .perks }}
+              <li><span>{{ index . $lang }}</span><span>{{ if .included }}✓{{ else }}—{{ end }}</span></li>
+            {{ end }}
+          </ul>
+        {{ end }}
+        <a class="btn btn-primary" href="{{ $data.registerUrl }}">{{ $t.pricing.register }}</a>
+      </div>
+    {{ end }}
+  </div>
+</section>

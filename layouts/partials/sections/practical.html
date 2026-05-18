@@ -1,0 +1,23 @@
+{{- $t := .t -}}
+{{- $lang := .lang -}}
+{{- $num := .section.num -}}
+{{- $data := hugo.Data.practical -}}
+{{- $cols := $data.cols | default 4 -}}
+{{- $colsMobile := $data.colsMobile | default 2 -}}
+<section id="practical">
+  <div class="section-head">
+    <span class="section-num">{{ $num }} / <span>{{ $t.practical.sectionLabel }}</span></span>
+    <h2 class="section-title">{{ $t.practical.sectionTitle }}</h2>
+  </div>
+  <div class="practical" style="--grid-cols: {{ $cols }}; --grid-cols-mobile: {{ $colsMobile }};">
+    {{ range $data.cards }}
+      <div class="prac-card">
+        <div class="prac-icon" aria-hidden="true">{{ .icon }}</div>
+        <div>
+          <div class="prac-title">{{ index .title $lang }}</div>
+          <div class="prac-body">{{ index .body $lang }}</div>
+        </div>
+      </div>
+    {{ end }}
+  </div>
+</section>

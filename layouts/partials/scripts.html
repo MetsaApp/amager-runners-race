@@ -1,0 +1,12 @@
+{{- $routeData := hugo.Data.route -}}
+<script>
+  window.__SITE = JSON.parse({{ (dict "routePoints" $routeData.points "startLabel" $routeData.startLabel "startVenue" $routeData.startVenue) | jsonify }});
+</script>
+
+<script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js" defer></script>
+
+{{- $main := resources.Get "js/main.js" | resources.Minify | resources.Fingerprint -}}
+<script src="{{ $main.RelPermalink }}" integrity="{{ $main.Data.Integrity }}" defer></script>
+
+{{- $map := resources.Get "js/map.js" | resources.Minify | resources.Fingerprint -}}
+<script src="{{ $map.RelPermalink }}" integrity="{{ $map.Data.Integrity }}" defer></script>

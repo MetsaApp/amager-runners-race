@@ -1,0 +1,27 @@
+{{- $t := .t -}}
+{{- $lang := .lang -}}
+{{- $num := .section.num -}}
+{{- $data := hugo.Data.sponsors -}}
+{{- $cols := $data.cols | default 5 -}}
+{{- $colsMobile := $data.colsMobile | default 2 -}}
+<section id="sponsors">
+  <div class="section-head">
+    <span class="section-num">{{ $num }} / <span>{{ $t.sponsors.sectionLabel }}</span></span>
+    <h2 class="section-title">{{ $t.sponsors.sectionTitle }}</h2>
+  </div>
+  <div class="sponsors" style="--grid-cols: {{ $cols }}; --grid-cols-mobile: {{ $colsMobile }};">
+    {{ range $data.items }}
+      {{- $label := .name -}}
+      {{- if or .placeholder (not .name) }}{{ $label = $t.sponsors.yourLogo }}{{ end -}}
+      {{ if .url }}
+        <a class="sponsor{{ if or .placeholder (not .name) }} sponsor--placeholder{{ end }}" href="{{ .url }}" target="_blank" rel="noopener sponsored" aria-label="{{ $label }}">
+          {{ if .image }}<img src="{{ .image }}" alt="{{ $label }}" loading="lazy" />{{ else }}<span>{{ $label }}</span>{{ end }}
+        </a>
+      {{ else }}
+        <div class="sponsor{{ if or .placeholder (not .name) }} sponsor--placeholder{{ end }}">
+          {{ if .image }}<img src="{{ .image }}" alt="{{ $label }}" loading="lazy" />{{ else }}<span>{{ $label }}</span>{{ end }}
+        </div>
+      {{ end }}
+    {{ end }}
+  </div>
+</section>

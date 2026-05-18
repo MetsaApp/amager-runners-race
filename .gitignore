@@ -1,0 +1,24 @@
+# Hugo
+public/
+resources/_gen/
+.hugo_build.lock
+
+# OS / editor
+.DS_Store
+*.swp
+.idea/
+.vscode/
+
+# Node (if used for tooling)
+node_modules/
+
+# Playwright MCP visual test artifacts
+.playwright-mcp/
+/*.png
+
+# Claude Code local
+.claude/
+.mcp.json
+
+# Design inspiration / scratch
+design/

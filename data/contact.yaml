@@ -1,0 +1,25 @@
+# Contact column entries. Add new columns or new lines easily.
+
+columns:
+  - heading:
+      en: "Organiser"
+      da: "Arrangør"
+    lines:
+      - text: "Amager Runners"
+      - text: "Erantisvej 28, 2300 København S"
+      - text: "CVR 44864932"
+      - text: "info@amagerrunners.dk"
+        url: "mailto:info@amagerrunners.dk"
+        spacer: true
+      - text: "+45 51 90 41 82"
+
+  - heading:
+      en: "Follow"
+      da: "Følg"
+    lines:
+      - text: "@amagerrunners"
+        url: "https://instagram.com/amagerrunners"
+      - text: "strava.com/clubs/amagerrunners"
+        url: "https://strava.com/clubs/amagerrunners"
+      - text: "facebook.com/amagerrunners"
+        url: "https://facebook.com/amagerrunners"

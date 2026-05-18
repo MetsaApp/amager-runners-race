@@ -1,0 +1,19 @@
+{{- $t := .t -}}
+{{- $num := .section.num -}}
+<section id="info">
+  <div class="section-head">
+    <span class="section-num">{{ $num }} / <span>{{ $t.intro.sectionLabel }}</span></span>
+    <h2 class="section-title">{{ $t.intro.sectionTitle }}</h2>
+  </div>
+  <div class="intro-grid">
+    <div>
+      <div class="intro-label">{{ $t.intro.label }}</div>
+    </div>
+    <div>
+      <p class="intro-lead">{{ $t.intro.lead }}</p>
+      <div class="intro-body">
+        {{ $t.intro.body | safeHTML }}
+      </div>
+    </div>
+  </div>
+</section>
