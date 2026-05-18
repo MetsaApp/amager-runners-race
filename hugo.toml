@@ -6,7 +6,7 @@ defaultContentLanguageInSubdir = false
 enableRobotsTXT = true
 enableEmoji = false
 enableGitInfo = false
-canonifyURLs = true
+canonifyURLs = false
 summaryLength = 30
 timeout = "60s"
 
