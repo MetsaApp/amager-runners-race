@@ -1,0 +1,45 @@
+# Practical info cards. Grid columns adjustable via `cols`.
+# Add a new card by appending to `cards`.
+cols: 4          # desktop columns
+colsMobile: 2    # mobile columns
+
+cards:
+  - icon: "P"
+    title:
+      en: "Parking"
+      da: "Parkering"
+    body:
+      en: "Free parking at Amager Strandpark, north and south. Spaces are limited, so take the Metro to Øresund (4 min walk) if you can."
+      da: "Gratis parkering ved Amager Strandpark, nord og syd. Pladserne er begrænsede, så tag Metroen til Øresund (4 min. gang), hvis du kan."
+
+  - icon: "B"
+    title:
+      en: "Bag drop"
+      da: "Taskeaflevering"
+    body:
+      en: "Staffed bag drop at Helgoland Badeanstalt from 17:30 to 21:30. Show your bib to pick up."
+      da: "Bemandet taskeaflevering ved Helgoland Badeanstalt fra 17:30 til 21:30. Vis dit startnummer ved afhentning."
+
+  - icon: "H"
+    title:
+      en: "Water"
+      da: "Vand"
+    body:
+      en: "One water station at the start and finish. 10K runners pass it at halfway. Cups are compostable."
+      da: "Én drikkestation ved start og mål. 10K-løbere passerer den halvvejs. Kopperne er komposterbare."
+
+  - icon: "M"
+    title:
+      en: "First aid"
+      da: "Førstehjælp"
+    body:
+      en: "First aid at the start and finish, and at the 5K mark for 10K runners. Emergency number is printed on the back of your bib."
+      da: "Førstehjælp ved start og mål, og ved 5K-mærket for 10K-løbere. Nødnummer står bag på startnummeret."
+
+  - icon: "C"
+    title:
+      en: "Chip timing"
+      da: "Chiptidtagning"
+    body:
+      en: "Disposable chip on the back of your bib. Nothing to return. Live results at race.amagerrunners.dk from 18:40."
+      da: "Engangschip bag på startnummeret. Skal ikke afleveres. Live-resultater på race.amagerrunners.dk fra 18:40."

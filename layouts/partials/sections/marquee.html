@@ -1,0 +1,12 @@
+{{- $t := .t -}}
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track">
+    {{- range $i, $item := $t.marquee.items -}}
+      <span>{{ $item }}</span>
+    {{- end -}}
+    {{/* duplicate for seamless scroll */}}
+    {{- range $i, $item := $t.marquee.items -}}
+      <span>{{ $item }}</span>
+    {{- end -}}
+  </div>
+</div>

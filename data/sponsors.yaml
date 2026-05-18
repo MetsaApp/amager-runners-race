@@ -1,0 +1,38 @@
+# Sponsors / partners. Adjust grid via `cols` and `colsMobile`.
+# Add a sponsor by appending to `items`. Set `image` to /uploads/yourlogo.png
+# and `url` to their site; placeholder cards show `name`.
+cols: 5
+colsMobile: 2
+
+items:
+  - name: "Sponsor 01"
+    url: ""
+    image: ""
+  - name: "Sponsor 02"
+    url: ""
+    image: ""
+  - name: "Sponsor 03"
+    url: ""
+    image: ""
+  - name: "Sponsor 04"
+    url: ""
+    image: ""
+  - name: "Sponsor 05"
+    url: ""
+    image: ""
+  - name: "Sponsor 06"
+    url: ""
+    image: ""
+  - name: "Sponsor 07"
+    url: ""
+    image: ""
+  - name: "Sponsor 08"
+    url: ""
+    image: ""
+  - name: "Sponsor 09"
+    url: ""
+    image: ""
+  - name: ""        # blank name → renders "Your logo?" placeholder
+    url: ""
+    image: ""
+    placeholder: true

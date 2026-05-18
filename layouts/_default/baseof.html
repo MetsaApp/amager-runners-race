@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="{{ .Site.Language.Lang }}">
+<head>
+  {{ partial "head.html" . }}
+</head>
+<body data-hero="{{ .Site.Params.heroLayout | default "image" }}" data-accent="{{ .Site.Params.accent | default "blue" }}" data-fonts="{{ .Site.Params.fonts | default "athletic" }}">
+
+  {{ partial "topbar.html" . }}
+
+  {{ block "main" . }}{{ end }}
+
+  {{ partial "footer.html" . }}
+
+  {{ partial "scripts.html" . }}
+</body>
+</html>

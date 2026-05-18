@@ -1,0 +1,85 @@
+{{- $p := .Site.Params -}}
+{{- $startISO := printf "%sT18:30:00+02:00" $p.eventDate -}}
+{{- $endISO := printf "%sT21:30:00+02:00" $p.eventDate -}}
+{{- $url := .Site.BaseURL -}}
+{{- $img := absURL ($p.ogImage | default "/assets/hero.jpg") -}}
+{{- $logoImg := absURL "/assets/logo.png" -}}
+{{- $desc := $p.description | default .Site.Title -}}
+{{- $data := dict
+  "@context" "https://schema.org"
+  "@graph" (slice
+    (dict
+      "@type" "SportsEvent"
+      "@id" (printf "%s#event" $url)
+      "name" $p.eventName
+      "description" $desc
+      "startDate" $startISO
+      "endDate" $endISO
+      "eventStatus" "https://schema.org/EventScheduled"
+      "eventAttendanceMode" "https://schema.org/OfflineEventAttendanceMode"
+      "url" $url
+      "image" $img
+      "sport" "Road running"
+      "maximumAttendeeCapacity" $p.maxRunners
+      "location" (dict
+        "@type" "Place"
+        "name" $p.location
+        "address" (dict
+          "@type" "PostalAddress"
+          "streetAddress" "Amager Strandpark"
+          "addressLocality" "Copenhagen"
+          "postalCode" "2300"
+          "addressCountry" "DK"
+        )
+        "geo" (dict
+          "@type" "GeoCoordinates"
+          "latitude" 55.65155
+          "longitude" 12.64652
+        )
+      )
+      "organizer" (dict
+        "@type" "Organization"
+        "@id" (printf "%s#organisation" $url)
+        "name" $p.organiser
+        "url" "https://amagerrunners.dk"
+        "email" $p.organiserEmail
+        "telephone" $p.organiserPhone
+      )
+      "offers" (slice (dict
+        "@type" "Offer"
+        "name" "Entry · 5K or 10K"
+        "price" (printf "%d.00" (int $p.priceDKK))
+        "priceCurrency" "DKK"
+        "availability" "https://schema.org/InStock"
+        "url" (printf "%s#pricing" $url)
+        "validFrom" "2026-01-01T00:00:00+01:00"
+      ))
+    )
+    (dict
+      "@type" "Organization"
+      "@id" (printf "%s#organisation" $url)
+      "name" $p.organiser
+      "url" "https://amagerrunners.dk"
+      "logo" $logoImg
+      "email" $p.organiserEmail
+      "telephone" $p.organiserPhone
+      "address" (dict
+        "@type" "PostalAddress"
+        "streetAddress" "Erantisvej 28"
+        "addressLocality" "København S"
+        "postalCode" "2300"
+        "addressCountry" "DK"
+      )
+      "sameAs" (slice $p.social.instagram $p.social.strava $p.social.facebook)
+    )
+    (dict
+      "@type" "WebSite"
+      "@id" (printf "%s#website" $url)
+      "url" $url
+      "name" $p.eventName
+      "inLanguage" .Site.Language.Lang
+      "publisher" (dict "@id" (printf "%s#organisation" $url))
+    )
+  )
+-}}
+<script type="application/ld+json">{{ $data | jsonify | safeJS }}</script>

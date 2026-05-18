@@ -1,0 +1,30 @@
+# Section ordering and enable/disable flags.
+# Reorder, toggle, or add sections here. Each entry maps to a partial
+# in layouts/partials/sections/<id>.html
+
+order:
+  - id: hero
+    enabled: true
+  - id: marquee
+    enabled: true
+  - id: intro
+    enabled: true
+    num: "01"
+  - id: schedule
+    enabled: true
+    num: "02"
+  - id: practical
+    enabled: true
+    num: "03"
+  - id: pricing
+    enabled: true
+    num: "04"
+  - id: route
+    enabled: true
+    num: "05"
+  - id: sponsors
+    enabled: true
+    num: "06"
+  - id: contact
+    enabled: true
+    num: "07"

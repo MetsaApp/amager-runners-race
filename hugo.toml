@@ -1,0 +1,89 @@
+baseURL = "https://raceamagerrunners.dk/"
+title = "Amager Runners Race"
+languageCode = "en"
+defaultContentLanguage = "en"
+defaultContentLanguageInSubdir = false
+enableRobotsTXT = true
+enableEmoji = false
+enableGitInfo = false
+canonifyURLs = true
+summaryLength = 30
+timeout = "60s"
+
+# Single-page site — disable unused page kinds
+disableKinds = ["taxonomy", "term", "section"]
+
+# Sitemap defaults
+[sitemap]
+  changefreq = "weekly"
+  filename = "sitemap.xml"
+  priority = 0.5
+
+[minify]
+  minifyOutput = true
+  [minify.tdewolff.html]
+    keepWhitespace = false
+
+[markup]
+  [markup.goldmark.renderer]
+    unsafe = true
+
+[outputs]
+  home = ["HTML", "RSS"]
+
+# ----------------- LANGUAGES -----------------
+[languages]
+  [languages.en]
+    languageName = "English"
+    languageCode = "en"
+    weight = 1
+    title = "Amager Runners Race"
+    [languages.en.params]
+      description = "Amager Runners Race. A flat, fast 5K and 10K evening race in Amager Strandpark, Copenhagen. Thursday 3 September 2026."
+      ogLocale = "en_GB"
+
+  [languages.da]
+    languageName = "Dansk"
+    languageCode = "da"
+    weight = 2
+    title = "Amager Runners Race"
+    contentDir = "content/da"
+    [languages.da.params]
+      description = "Amager Runners Race. Et fladt, hurtigt 5K- og 10K-aftensløb i Amager Strandpark i København. Torsdag 3. september 2026."
+      ogLocale = "da_DK"
+
+# ----------------- SITE PARAMS -----------------
+[params]
+  # Core event details — change once, used everywhere
+  eventName = "Amager Runners Race"
+  eventDate = "2026-09-03"
+  eventDateDisplay = "03.09.2026"
+  eventDateLong = "Thursday 3 September 2026"
+  eventDateLongDa = "Torsdag 3. september 2026"
+  startTimes = "18:30 · 19:00"
+  location = "Amager Strandpark"
+  locationFull = "Amager Strandpark, Copenhagen, Denmark"
+  organiser = "Amager Runners"
+  organiserEmail = "info@amagerrunners.dk"
+  organiserPhone = "+45 51 90 41 82"
+  organiserAddress = "Erantisvej 28, 2300 København S"
+  organiserCVR = "44864932"
+  registrationStatus = "open"
+  maxRunners = 900
+  priceDKK = 200
+  domain = "raceamagerrunners.dk"
+
+  # SEO defaults
+  ogImage = "/assets/hero.jpg"
+  twitterHandle = "@amagerrunners"
+  themeColor = "#0B0D10"
+
+  # Design tweak defaults (editable per build)
+  accent = "blue"
+  fonts = "athletic"
+  heroLayout = "image"
+
+  [params.social]
+    instagram = "https://instagram.com/amagerrunners"
+    strava = "https://strava.com/clubs/amagerrunners"
+    facebook = "https://facebook.com/amagerrunners"

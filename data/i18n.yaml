@@ -1,0 +1,158 @@
+# Centralised translations for section labels.
+# Add a new language by adding a new top-level key.
+
+en:
+  nav:
+    info: "Info"
+    schedule: "Schedule"
+    pricing: "Pricing"
+    route: "Route"
+    contact: "Contact"
+
+  hero:
+    pill: "Registration open. 900 spots."
+    edition: "First edition · 2026"
+    kicker: "Amager Runners presents · Thursday 3 September 2026"
+    eyebrow: "Amager Runners Race"
+    sub: "An evening 5K and 10K on Amager Strandpark"
+    metaDate: "Date"
+    metaStart: "Start"
+    metaWhere: "Where"
+    ctaSignup: "Sign up"
+    ctaRoute: "View route"
+
+  marquee:
+    items:
+      - "03 · 09 · 2026"
+      - "Two distances"
+      - "Flat and fast"
+      - "One loop on the coast"
+      - "5K · 18:30"
+      - "10K · 19:00"
+
+  intro:
+    sectionLabel: "About the race"
+    sectionTitle: "Run the coast"
+    label: "A club race, open to everyone."
+    lead: "A flat, fast loop along Amager Strandpark. Run it once for the 5K, twice for the 10K."
+    body: |
+      <p>Amager Runners is hosting the first edition of our evening race. Same course, same start line, same finish on the sand. The 5K sets off at 18:30, the 10K at 19:00.</p>
+      <p>Chip timing is included. Any profit goes back to the club and to youth running on Amager.</p>
+
+  schedule:
+    sectionLabel: "Schedule"
+    sectionTitle: "The evening"
+
+  practical:
+    sectionLabel: "Practical"
+    sectionTitle: "Good to know"
+
+  pricing:
+    sectionLabel: "Registration"
+    sectionTitle: "Sign up"
+    register: "Register →"
+
+  route:
+    sectionLabel: "Route"
+    sectionTitle: "The loop"
+    intro: 'One course for both races. The 5K runs the loop below once. The 10K runs it <strong>twice</strong>, passing the start, finish line and water station at halfway.'
+    statDist: "Lap distance"
+    statElev: "Elevation gain"
+    statSurface: "Surface"
+    statStations: "Aid stations"
+    legendLoop: "The loop · 5 KM"
+    legendStart: "Start / Finish / Water"
+
+  sponsors:
+    sectionLabel: "Partners"
+    sectionTitle: "Made possible by"
+    yourLogo: "Your logo?"
+
+  contact:
+    sectionLabel: "Contact"
+    sectionTitle: "Get in touch"
+    big: 'Questions?<br>Write to <a href="mailto:info@amagerrunners.dk">info@<wbr>amagerrunners.dk</a>'
+    organiser: "Organiser"
+    follow: "Follow"
+
+  footer:
+    rights: "© 2026 Amager Runners"
+    tagline: "Made in Copenhagen"
+
+da:
+  nav:
+    info: "Info"
+    schedule: "Program"
+    pricing: "Pris"
+    route: "Rute"
+    contact: "Kontakt"
+
+  hero:
+    pill: "Tilmelding åben. 900 pladser."
+    edition: "Første udgave · 2026"
+    kicker: "Amager Runners præsenterer · Torsdag 3. september 2026"
+    eyebrow: "Amager Runners Race"
+    sub: "Et 5K- og 10K-aftensløb i Amager Strandpark"
+    metaDate: "Dato"
+    metaStart: "Start"
+    metaWhere: "Hvor"
+    ctaSignup: "Tilmeld"
+    ctaRoute: "Se ruten"
+
+  marquee:
+    items:
+      - "03 · 09 · 2026"
+      - "To distancer"
+      - "Fladt og hurtigt"
+      - "Én rute langs kysten"
+      - "5K · 18:30"
+      - "10K · 19:00"
+
+  intro:
+    sectionLabel: "Om løbet"
+    sectionTitle: "Løb langs kysten"
+    label: "Et klubløb. Åbent for alle."
+    lead: "En flad, hurtig rute gennem Amager Strandpark. Én omgang på 5K, to omgange på 10K."
+    body: |
+      <p>Amager Runners holder første udgave af vores aftensløb. Samme rute, samme startlinje, samme mål i sandet. 5K starter 18:30, 10K starter 19:00.</p>
+      <p>Chiptidtagning er inkluderet. Et eventuelt overskud går tilbage til klubben og til ungdomsløb på Amager.</p>
+
+  schedule:
+    sectionLabel: "Program"
+    sectionTitle: "Aftenen"
+
+  practical:
+    sectionLabel: "Praktisk"
+    sectionTitle: "Godt at vide"
+
+  pricing:
+    sectionLabel: "Tilmelding"
+    sectionTitle: "Tilmeld dig"
+    register: "Tilmeld →"
+
+  route:
+    sectionLabel: "Rute"
+    sectionTitle: "Ruten"
+    intro: 'Én rute til begge løb. 5K løber ruten herunder én gang. 10K løber den <strong>to gange</strong> og passerer start, mål og drikkestation halvvejs.'
+    statDist: "Omgangsdistance"
+    statElev: "Højdemeter"
+    statSurface: "Underlag"
+    statStations: "Depoter"
+    legendLoop: "Ruten · 5 KM"
+    legendStart: "Start / Mål / Vand"
+
+  sponsors:
+    sectionLabel: "Partnere"
+    sectionTitle: "Muliggjort af"
+    yourLogo: "Dit logo?"
+
+  contact:
+    sectionLabel: "Kontakt"
+    sectionTitle: "Kontakt os"
+    big: 'Spørgsmål?<br>Skriv til <a href="mailto:info@amagerrunners.dk">info@<wbr>amagerrunners.dk</a>'
+    organiser: "Arrangør"
+    follow: "Følg"
+
+  footer:
+    rights: "© 2026 Amager Runners"
+    tagline: "Lavet i København"

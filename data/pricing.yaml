@@ -1,0 +1,23 @@
+# Pricing tiers. Set `cols` to the desktop column count (1, 2, or 3).
+# Mark one tier with `feature: true` to highlight it (inverted card).
+cols: 1
+maxWidth: "640px"  # used when cols == 1
+registerUrl: "#"   # change when registration URL is live
+
+tiers:
+  - feature: true
+    tier:
+      en: "Entry · 5K or 10K"
+      da: "Tilmelding · 5K eller 10K"
+    amount: "200"
+    currency: "DKK"
+    window:
+      en: "One price. Both distances."
+      da: "Én pris. Begge distancer."
+    perks:
+      - en: "5K or 10K entry"
+        da: "5K eller 10K start"
+        included: true
+      - en: "Chip timing"
+        da: "Chiptidtagning"
+        included: true

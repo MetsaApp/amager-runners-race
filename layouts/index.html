@@ -1,0 +1,10 @@
+{{ define "main" }}
+  {{ $lang := .Site.Language.Lang }}
+  {{ $t := index .Site.Data.i18n $lang }}
+  {{ range .Site.Data.sections.order }}
+    {{ if .enabled }}
+      {{ $ctx := dict "section" . "t" $t "lang" $lang "site" $.Site "page" $ }}
+      {{ partial (printf "sections/%s.html" .id) $ctx }}
+    {{ end }}
+  {{ end }}
+{{ end }}

@@ -1,0 +1,23 @@
+{{- $t := .t -}}
+{{- $lang := .lang -}}
+{{- $num := .section.num -}}
+{{- $data := .site.Data.contact -}}
+<section id="contact">
+  <div class="section-head">
+    <span class="section-num">{{ $num }} / <span>{{ $t.contact.sectionLabel }}</span></span>
+    <h2 class="section-title">{{ $t.contact.sectionTitle }}</h2>
+  </div>
+  <div class="contact-grid">
+    <h3 class="contact-big">{{ $t.contact.big | safeHTML }}</h3>
+    {{ range $data.columns }}
+      <div class="contact-col">
+        <h4>{{ index .heading $lang }}</h4>
+        {{ range .lines }}
+          <p{{ if .spacer }} style="margin-top:10px"{{ end }}>
+            {{- if .url -}}<a href="{{ .url }}">{{ .text }}</a>{{- else -}}{{ .text }}{{- end -}}
+          </p>
+        {{ end }}
+      </div>
+    {{ end }}
+  </div>
+</section>

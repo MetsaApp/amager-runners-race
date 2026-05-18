@@ -1,0 +1,37 @@
+# Schedule rows. Add a row by appending to the `rows` list.
+rows:
+  - time: "17:30"
+    kind:
+      en: "Check-in"
+      da: "Check-in"
+    name:
+      en: "Bib pick-up and bag drop open"
+      da: "Bibafhentning og taskeaflevering åbner"
+    tag:
+      en: "All runners"
+      da: "Alle løbere"
+    hot: false
+
+  - time: "18:30"
+    kind:
+      en: "Start"
+      da: "Start"
+    name:
+      en: "5K · One loop"
+      da: "5K · Én runde"
+    tag:
+      en: "5K"
+      da: "5K"
+    hot: true
+
+  - time: "19:00"
+    kind:
+      en: "Start"
+      da: "Start"
+    name:
+      en: "10K · Two loops"
+      da: "10K · To runder"
+    tag:
+      en: "10K"
+      da: "10K"
+    hot: true
