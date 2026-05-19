@@ -1,7 +1,9 @@
 {{- $t := .t -}}
 {{- $p := .site.Params -}}
 {{- $lang := .lang -}}
-{{- $kicker := $t.hero.kicker | replace "{organiser}" $p.organiser | replace "{date}" (index $p.eventDateLong $lang) -}}
+{{- $kicker := $t.hero.kicker -}}
+{{- $kicker = replace $kicker "{organiser}" $p.organiser -}}
+{{- $kicker = replace $kicker "{date}" (index $p.eventDateLong $lang) -}}
 {{- $sub := replace $t.hero.sub "{location}" $p.location -}}
 {{- $pill := replace $t.hero.pill "{capacity}" (string $p.maxRunners) -}}
 <header class="hero" id="top">
