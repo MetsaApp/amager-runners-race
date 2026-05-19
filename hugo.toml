@@ -89,6 +89,6 @@ disableKinds = ["taxonomy", "term", "section"]
   heroLayout = "image"
 
   [params.social]
-    instagram = "https://instagram.com/amagerrunners"
+    website = "https://amagerrunners.dk/"
     strava = "https://strava.com/clubs/amagerrunners"
-    facebook = "https://facebook.com/amagerrunners"
+    facebook = "https://www.facebook.com/groups/992359708926135"
