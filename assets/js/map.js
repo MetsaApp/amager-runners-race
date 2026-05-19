@@ -176,6 +176,16 @@
     touchPitch: false,
   });
   map.addControl(new maplibregl.AttributionControl({ compact: true }));
+  // MapLibre's compact attribution mounts with `maplibregl-compact-show`
+  // (expanded) when the viewport is wide enough. Strip it once after the
+  // control is in the DOM so the credits start collapsed. We don't re-run
+  // this on every idle/render — if the user clicks the "i" we want it to
+  // stay open until they click again.
+  map.once("idle", () => {
+    document
+      .querySelectorAll(".maplibregl-ctrl-attrib.maplibregl-compact-show")
+      .forEach((el) => el.classList.remove("maplibregl-compact-show"));
+  });
   window.__mapInstance = map;
 
   // Runner — accent (blue) with ink + paper rings; pulses on lap 2.
