@@ -2,37 +2,48 @@
 {{- $lang := .lang -}}
 {{- $num := .section.num -}}
 {{- $data := hugo.Data.route -}}
-<section id="route">
+{{- $s5 := $data.stats.dist5k -}}
+<section id="route" data-active-tab="5k">
   <div class="section-head">
     <span class="section-num">{{ $num }} / <span>{{ $t.route.sectionLabel }}</span></span>
     <h2 class="section-title">{{ $t.route.sectionTitle }}</h2>
   </div>
 
-  <p class="route-lede">{{ $t.route.intro | safeHTML }}</p>
+  <div class="route-head">
+    <p class="route-lede">{{ $t.route.intro | safeHTML }}</p>
+    <div class="route-tabs" role="tablist" aria-label="Race distance">
+      <button class="route-tab is-active" data-tab="5k" role="tab" aria-selected="true" type="button">{{ $t.route.tab5k }}</button>
+      <button class="route-tab" data-tab="10k" role="tab" aria-selected="false" type="button">{{ $t.route.tab10k }}</button>
+    </div>
+  </div>
 
   <div id="map-wrap">
     <dl class="route-stats">
       <div>
         <dt>{{ $t.route.statDist }}</dt>
-        <dd>{{ index $data.stats.distance $lang }}</dd>
+        <dd data-stat="distance">
+          <span data-stat-base>{{ $s5.lapDistance }}</span>
+          <span class="route-stat-mul">×</span>
+          <span class="route-stat-laps" data-stat-laps>{{ $s5.laps }}</span>
+        </dd>
       </div>
       <div>
         <dt>{{ $t.route.statElev }}</dt>
-        <dd>{{ $data.stats.elevation }}</dd>
+        <dd data-stat="elev">{{ $s5.elevation }}</dd>
       </div>
       <div>
         <dt>{{ $t.route.statSurface }}</dt>
-        <dd>{{ index $data.stats.surface $lang }}</dd>
+        <dd data-stat="surface">{{ index $s5.surface $lang }}</dd>
       </div>
       <div>
         <dt>{{ $t.route.statStations }}</dt>
-        <dd>{{ $data.stats.aidStations }}</dd>
+        <dd data-stat="aid">{{ $s5.aidStations }}</dd>
       </div>
     </dl>
     <div id="map" role="img" aria-label="Race route map"></div>
     <div class="legend">
-      <span><span class="sw" style="background: var(--accent)"></span><span>{{ $t.route.legendLoop }}</span></span>
-      <span><span class="sw" style="background: #E0B341; height:10px; width:10px; border-radius:50%"></span><span>{{ $t.route.legendStart }}</span></span>
+      <span><span class="sw sw--line"></span><span>{{ $t.route.legendLoop }} · <span data-legend-distance>{{ $s5.legendDistance }}</span></span></span>
+      <span><span class="sw sw--dot"></span><span data-legend-start>{{ index $s5.legendStart $lang }}</span></span>
     </div>
   </div>
 </section>

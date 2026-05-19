@@ -54,13 +54,14 @@ en:
   route:
     sectionLabel: "Route"
     sectionTitle: "The loop"
-    intro: 'One course for both races. The 5K runs the loop below once. The 10K runs it <strong>twice</strong>, passing the start, finish line and water station at halfway.'
+    intro: 'One course for both races. The 5K runs the loop below once. The 10K runs it <strong>twice</strong>, with a single aid station at the start / finish line that you pass through at halfway.'
+    tab5k: "5 KM"
+    tab10k: "10 KM"
     statDist: "Lap distance"
     statElev: "Elevation gain"
     statSurface: "Surface"
     statStations: "Aid stations"
-    legendLoop: "The loop · 5 KM"
-    legendStart: "Start / Finish / Water"
+    legendLoop: "The loop"
 
   sponsors:
     sectionLabel: "Partners"
@@ -127,13 +128,14 @@ da:
   route:
     sectionLabel: "Rute"
     sectionTitle: "Ruten"
-    intro: 'Én rute til begge løb. 5K løber ruten herunder én gang. 10K løber den <strong>to gange</strong> og passerer start, mål og drikkestation halvvejs.'
+    intro: 'Én rute til begge løb. 5K løber ruten herunder én gang. 10K løber den <strong>to gange</strong>, med ét depot ved start/mål som du passerer halvvejs.'
+    tab5k: "5 KM"
+    tab10k: "10 KM"
     statDist: "Omgangsdistance"
     statElev: "Højdemeter"
     statSurface: "Underlag"
     statStations: "Depoter"
-    legendLoop: "Ruten · 5 KM"
-    legendStart: "Start / Mål / Vand"
+    legendLoop: "Ruten"
 
   sponsors:
     sectionLabel: "Partnere"
