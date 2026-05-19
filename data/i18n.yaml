@@ -33,8 +33,9 @@ en:
     sectionTitle: "Run the coast"
     label: "A club race, open to everyone."
     lead: "A flat, fast loop along Amager Strandpark. Run it once for the 5K, twice for the 10K."
+    startsSentence: "The {dist0} sets off at {time0}, the {dist1} at {time1}."
     body: |
-      <p>Amager Runners is hosting the first edition of our evening race. Same course, same start line, same finish on the sand. The 5K sets off at 18:30, the 10K at 19:00.</p>
+      <p>Amager Runners is hosting the first edition of our evening race. Same course, same start line, same finish on the sand. {starts}</p>
       <p>Chip timing is included. Any profit goes back to the club and to youth running on Amager.</p>
 
   schedule:
@@ -105,8 +106,9 @@ da:
     sectionTitle: "Løb langs kysten"
     label: "Et klubløb. Åbent for alle."
     lead: "En flad, hurtig rute gennem Amager Strandpark. Én omgang på 5K, to omgange på 10K."
+    startsSentence: "{dist0} starter {time0}, {dist1} starter {time1}."
     body: |
-      <p>Amager Runners holder første udgave af vores aftensløb. Samme rute, samme startlinje, samme mål i sandet. 5K starter 18:30, 10K starter 19:00.</p>
+      <p>Amager Runners holder første udgave af vores aftensløb. Samme rute, samme startlinje, samme mål i sandet. {starts}</p>
       <p>Chiptidtagning er inkluderet. Et eventuelt overskud går tilbage til klubben og til ungdomsløb på Amager.</p>
 
   schedule:

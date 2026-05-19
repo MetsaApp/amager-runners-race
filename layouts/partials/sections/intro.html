@@ -1,5 +1,15 @@
 {{- $t := .t -}}
+{{- $lang := .lang -}}
 {{- $num := .section.num -}}
+{{- $starts := where (index .site.Data.schedule "rows") "kind.en" "Start" -}}
+{{- $s0 := index $starts 0 -}}
+{{- $s1 := index $starts 1 -}}
+{{- $startsSentence := $t.intro.startsSentence -}}
+{{- $startsSentence = replace $startsSentence "{dist0}" (index $s0.tag $lang) -}}
+{{- $startsSentence = replace $startsSentence "{time0}" $s0.time -}}
+{{- $startsSentence = replace $startsSentence "{dist1}" (index $s1.tag $lang) -}}
+{{- $startsSentence = replace $startsSentence "{time1}" $s1.time -}}
+{{- $body := replace $t.intro.body "{starts}" $startsSentence -}}
 <section id="info">
   <div class="section-head">
     <span class="section-num">{{ $num }} / <span>{{ $t.intro.sectionLabel }}</span></span>
@@ -12,7 +22,7 @@
     <div>
       <p class="intro-lead">{{ $t.intro.lead }}</p>
       <div class="intro-body">
-        {{ $t.intro.body | safeHTML }}
+        {{ $body | safeHTML }}
       </div>
     </div>
   </div>
