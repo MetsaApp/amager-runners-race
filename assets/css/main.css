@@ -522,6 +522,19 @@ footer{
   color: var(--muted);
   border-top: 1px solid var(--line-soft);
 }
+footer span{ display: inline-flex; align-items: center; gap: 6px; }
+footer a{ display: inline-flex; align-items: center; gap: 6px; }
+.footer-heart{
+  display: inline-block;
+  color: var(--accent);
+  transition: transform .25s ease;
+}
+footer span:hover .footer-heart{ transform: scale(1.15); }
+.footer-metsa{
+  display: inline-block;
+  border-radius: 3px;
+  vertical-align: middle;
+}
 
 /* ---------------- HERO LAYOUT VARIANTS ---------------- */
 body[data-hero="split"] .hero-media{
