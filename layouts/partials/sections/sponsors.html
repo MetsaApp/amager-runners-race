@@ -2,26 +2,33 @@
 {{- $lang := .lang -}}
 {{- $num := .section.num -}}
 {{- $data := hugo.Data.sponsors -}}
+{{- $mainCols := $data.mainCols | default 3 -}}
+{{- $mainColsMobile := $data.mainColsMobile | default 1 -}}
 {{- $cols := $data.cols | default 5 -}}
 {{- $colsMobile := $data.colsMobile | default 2 -}}
+{{- $main := $data.main | default slice -}}
+{{- $regular := $data.regular | default ($data.items | default slice) -}}
 <section id="sponsors">
   <div class="section-head">
     <span class="section-num">{{ $num }} / <span>{{ $t.sponsors.sectionLabel }}</span></span>
     <h2 class="section-title">{{ $t.sponsors.sectionTitle }}</h2>
   </div>
-  <div class="sponsors" style="--grid-cols: {{ $cols }}; --grid-cols-mobile: {{ $colsMobile }};">
-    {{ range $data.items }}
-      {{- $label := .name -}}
-      {{- if or .placeholder (not .name) }}{{ $label = $t.sponsors.yourLogo }}{{ end -}}
-      {{ if .url }}
-        <a class="sponsor{{ if or .placeholder (not .name) }} sponsor--placeholder{{ end }}" href="{{ .url }}" target="_blank" rel="noopener sponsored" aria-label="{{ $label }}">
-          {{ if .image }}<img src="{{ .image }}" alt="{{ $label }}" loading="lazy" />{{ else }}<span>{{ $label }}</span>{{ end }}
-        </a>
-      {{ else }}
-        <div class="sponsor{{ if or .placeholder (not .name) }} sponsor--placeholder{{ end }}">
-          {{ if .image }}<img src="{{ .image }}" alt="{{ $label }}" loading="lazy" />{{ else }}<span>{{ $label }}</span>{{ end }}
-        </div>
+
+  {{ if $main }}
+    <h3 class="sponsors-tier">{{ $t.sponsors.tierMain }}</h3>
+    <div class="sponsors sponsors--main" style="--grid-cols: {{ $mainCols }}; --grid-cols-mobile: {{ $mainColsMobile }};">
+      {{ range $main }}
+        {{ partial "sections/_sponsor-cell.html" (dict "item" . "yourLogo" $t.sponsors.yourLogo) }}
       {{ end }}
-    {{ end }}
-  </div>
+    </div>
+  {{ end }}
+
+  {{ if $regular }}
+    <h3 class="sponsors-tier">{{ $t.sponsors.tierRegular }}</h3>
+    <div class="sponsors" style="--grid-cols: {{ $cols }}; --grid-cols-mobile: {{ $colsMobile }};">
+      {{ range $regular }}
+        {{ partial "sections/_sponsor-cell.html" (dict "item" . "yourLogo" $t.sponsors.yourLogo) }}
+      {{ end }}
+    </div>
+  {{ end }}
 </section>

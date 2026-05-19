@@ -66,6 +66,8 @@ en:
   sponsors:
     sectionLabel: "Partners"
     sectionTitle: "Made possible by"
+    tierMain: "Main sponsors"
+    tierRegular: "Sponsors"
     yourLogo: "Your logo?"
 
   contact:
@@ -139,6 +141,8 @@ da:
   sponsors:
     sectionLabel: "Partnere"
     sectionTitle: "Muliggjort af"
+    tierMain: "Hovedsponsorer"
+    tierRegular: "Sponsorer"
     yourLogo: "Dit logo?"
 
   contact:

@@ -1,13 +1,30 @@
-# Sponsors / partners. Adjust grid via `cols` and `colsMobile`.
-# Add a sponsor by appending to `items`. Set `image` to /img/yourlogo.png
-# and `url` to their site; placeholder cards show `name`.
+# Sponsors. Two tiers:
+#   - `main`    → "Hovedsponsorer" (large cells across the top)
+#   - `regular` → "Sponsorer" (smaller cells below)
+# Add an entry by appending to the relevant list. Set `image` to /img/yourlogo.png
+# and `url` to their site. Items with no `image` or `name` render as placeholders.
+
+mainCols: 3
+mainColsMobile: 1
 cols: 5
 colsMobile: 2
 
-items:
+main:
   - name: "Dansk Atletik"
     url: "https://dansk-atletik.dk"
     image: "/img/daf.jpg"
+  - name: "Sparekassen Danmark"
+    url: "https://sparekassendanmark.dk"
+    image: "/img/sparekassen-danmark.png"
+  - name: ""
+    url: ""
+    image: ""
+    placeholder: true
+
+regular:
+  - name: "MetaLine ApS"
+    url: ""
+    image: ""
   - name: "Sponsor 02"
     url: ""
     image: ""
@@ -32,7 +49,7 @@ items:
   - name: "Sponsor 09"
     url: ""
     image: ""
-  - name: ""        # blank name → renders "Your logo?" placeholder
+  - name: ""
     url: ""
     image: ""
     placeholder: true

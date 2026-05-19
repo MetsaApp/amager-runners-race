@@ -1,0 +1,14 @@
+{{- $it := .item -}}
+{{- $yourLogo := .yourLogo -}}
+{{- $isPlaceholder := or $it.placeholder (not $it.name) -}}
+{{- $label := $it.name -}}
+{{- if $isPlaceholder }}{{ $label = $yourLogo }}{{ end -}}
+{{ if $it.url }}
+  <a class="sponsor{{ if $isPlaceholder }} sponsor--placeholder{{ end }}" href="{{ $it.url }}" target="_blank" rel="noopener sponsored" aria-label="{{ $label }}">
+    {{ if $it.image }}<img src="{{ $it.image }}" alt="{{ $label }}" loading="lazy" />{{ else }}<span>{{ $label }}</span>{{ end }}
+  </a>
+{{ else }}
+  <div class="sponsor{{ if $isPlaceholder }} sponsor--placeholder{{ end }}">
+    {{ if $it.image }}<img src="{{ $it.image }}" alt="{{ $label }}" loading="lazy" />{{ else }}<span>{{ $label }}</span>{{ end }}
+  </div>
+{{ end }}
