@@ -1,5 +1,4 @@
-{{- $t := index hugo.Data.i18n .Site.Language.Lang -}}
 <footer>
-  <span>{{ $t.footer.rights }}</span>
-  <span>{{ $t.footer.tagline | safeHTML }}</span>
+  <span>&copy; {{ now.Format "2006" }} {{ .Site.Params.organiser }}</span>
+  <span>Made with &lt;3 by <a href="https://metsa.app" rel="noopener" target="_blank">metsa.app</a></span>
 </footer>

@@ -1,3 +1,0 @@
-# Cloudflare Pages redirects
-# www → apex
-https://www.raceamagerrunners.dk/* https://raceamagerrunners.dk/:splat 301!

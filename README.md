@@ -1,4 +1,4 @@
-# raceamagerrunners.dk
+# race.amagerrunners.dk
 
 Hugo source for the Amager Runners Race event site. Deployed to Cloudflare Pages.
 
@@ -30,7 +30,6 @@ translations in [`data/i18n.yaml`](./data/i18n.yaml). The most common edits:
 | Change practical grid columns | `data/practical.yaml` → `cols`, `colsMobile` |
 | Add / change pricing tier     | `data/pricing.yaml` (`tiers:`)         |
 | Update route polyline         | `data/route.yaml` (`points:`)          |
-| Add contact column or line    | `data/contact.yaml` (`columns:`)       |
 | Reorder / hide a section      | `data/sections.yaml` (`order:`)        |
 | English / Danish text         | `data/i18n.yaml`                       |
 | Event date, name, prices, …   | `hugo.toml` → `[params]`               |
@@ -47,12 +46,12 @@ The `practical`, `pricing`, and `sponsors` sections expose `cols` (desktop) and
 touching CSS.
 
 ### Sponsors with logo images
-Drop a PNG/SVG in `static/uploads/` and reference it in `data/sponsors.yaml`:
+Drop a PNG/SVG in `static/img/` and reference it in `data/sponsors.yaml`:
 
 ```yaml
 - name: "Acme Sports"
   url: "https://acme.example"
-  image: "/uploads/acme-sports.svg"
+  image: "/img/acme-sports.svg"
 ```
 
 ## Cloudflare Pages deployment
@@ -64,7 +63,7 @@ In the Pages dashboard:
 - **Environment variables:**
   - `HUGO_VERSION` = `0.144.0`
   - `HUGO_ENV` = `production`
-- **Custom domain:** `raceamagerrunners.dk` (and `www.raceamagerrunners.dk` redirects via `static/_redirects`)
+- **Custom domain:** `race.amagerrunners.dk`
 
 `static/_headers` adds security & cache headers. Hugo Pipes already
 fingerprints CSS/JS so they can be cached for a year.

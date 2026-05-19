@@ -1,5 +1,5 @@
 # Sponsors / partners. Adjust grid via `cols` and `colsMobile`.
-# Add a sponsor by appending to `items`. Set `image` to /uploads/yourlogo.png
+# Add a sponsor by appending to `items`. Set `image` to /img/yourlogo.png
 # and `url` to their site; placeholder cards show `name`.
 cols: 5
 colsMobile: 2
