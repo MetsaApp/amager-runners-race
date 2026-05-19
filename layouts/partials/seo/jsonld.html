@@ -2,8 +2,8 @@
 {{- $startISO := printf "%sT18:30:00+02:00" $p.eventDate -}}
 {{- $endISO := printf "%sT21:30:00+02:00" $p.eventDate -}}
 {{- $url := .Site.BaseURL -}}
-{{- $img := absURL ($p.ogImage | default "/assets/hero.jpg") -}}
-{{- $logoImg := absURL "/assets/logo.png" -}}
+{{- $img := absURL ($p.ogImage | default "/img/hero.jpg") -}}
+{{- $logoImg := absURL "/img/logo.png" -}}
 {{- $desc := $p.description | default .Site.Title -}}
 {{- $data := dict
   "@context" "https://schema.org"

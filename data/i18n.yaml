@@ -75,10 +75,6 @@ en:
     organiser: "Organiser"
     follow: "Follow"
 
-  footer:
-    rights: "© 2026 Amager Runners"
-    tagline: 'Made with <3 by <a href="https://metsa.app" rel="noopener" target="_blank">metsa.app</a>'
-
 da:
   nav:
     info: "Info"
@@ -152,7 +148,3 @@ da:
     big: 'Spørgsmål?<br>Skriv til <a href="mailto:info@amagerrunners.dk">info@<wbr>amagerrunners.dk</a>'
     organiser: "Arrangør"
     follow: "Følg"
-
-  footer:
-    rights: "© 2026 Amager Runners"
-    tagline: 'Made with <3 by <a href="https://metsa.app" rel="noopener" target="_blank">metsa.app</a>'

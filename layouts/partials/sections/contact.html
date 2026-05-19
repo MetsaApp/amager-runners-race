@@ -1,7 +1,6 @@
 {{- $t := .t -}}
-{{- $lang := .lang -}}
+{{- $p := .page.Site.Params -}}
 {{- $num := .section.num -}}
-{{- $data := hugo.Data.contact -}}
 <section id="contact">
   <div class="section-head">
     <span class="section-num">{{ $num }} / <span>{{ $t.contact.sectionLabel }}</span></span>
@@ -9,15 +8,19 @@
   </div>
   <div class="contact-grid">
     <h3 class="contact-big">{{ $t.contact.big | safeHTML }}</h3>
-    {{ range $data.columns }}
-      <div class="contact-col">
-        <h4>{{ index .heading $lang }}</h4>
-        {{ range .lines }}
-          <p{{ if .spacer }} style="margin-top:10px"{{ end }}>
-            {{- if .url -}}<a href="{{ .url }}">{{ .text }}</a>{{- else -}}{{ .text }}{{- end -}}
-          </p>
-        {{ end }}
-      </div>
-    {{ end }}
+    <div class="contact-col">
+      <h4>{{ $t.contact.organiser }}</h4>
+      <p>{{ $p.organiser }}</p>
+      <p>{{ $p.organiserAddress }}</p>
+      <p>CVR {{ $p.organiserCVR }}</p>
+      <p style="margin-top:10px"><a href="mailto:{{ $p.organiserEmail }}">{{ $p.organiserEmail }}</a></p>
+      <p>{{ $p.organiserPhone }}</p>
+    </div>
+    <div class="contact-col">
+      <h4>{{ $t.contact.follow }}</h4>
+      <p><a href="{{ $p.social.instagram }}">@amagerrunners</a></p>
+      <p><a href="{{ $p.social.strava }}">strava.com/clubs/amagerrunners</a></p>
+      <p><a href="{{ $p.social.facebook }}">facebook.com/amagerrunners</a></p>
+    </div>
   </div>
 </section>

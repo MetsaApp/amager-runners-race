@@ -1,6 +1,6 @@
 {{- $title := .Title -}}
 {{- $desc := .Params.description | default .Site.Params.description -}}
-{{- $img := .Site.Params.ogImage | default "/assets/hero.jpg" -}}
+{{- $img := .Site.Params.ogImage | default "/img/hero.jpg" -}}
 {{- $absImg := absURL $img -}}
 {{- $canonical := .Permalink -}}
 {{- $themeColor := .Site.Params.themeColor | default "#0B0D10" -}}
@@ -26,8 +26,8 @@
 <link rel="alternate" hreflang="x-default" href="{{ .Site.BaseURL }}" />
 
 {{/* Favicon / icons */}}
-<link rel="icon" type="image/png" href="{{ "/assets/logo.png" | relURL }}" />
-<link rel="apple-touch-icon" href="{{ "/assets/logo.png" | relURL }}" />
+<link rel="icon" type="image/png" href="{{ "/img/logo.png" | relURL }}" />
+<link rel="apple-touch-icon" href="{{ "/img/logo.png" | relURL }}" />
 
 {{/* Open Graph */}}
 <meta property="og:type" content="website" />

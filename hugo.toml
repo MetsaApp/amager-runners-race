@@ -1,4 +1,4 @@
-baseURL = "https://raceamagerrunners.dk/"
+baseURL = "https://race.amagerrunners.dk/"
 title = "Amager Runners Race"
 locale = "en"
 defaultContentLanguage = "en"
@@ -71,10 +71,10 @@ disableKinds = ["taxonomy", "term", "section"]
   registrationStatus = "open"
   maxRunners = 900
   priceDKK = 200
-  domain = "raceamagerrunners.dk"
+  domain = "race.amagerrunners.dk"
 
   # SEO defaults
-  ogImage = "/assets/hero.jpg"
+  ogImage = "/img/hero.jpg"
   twitterHandle = "@amagerrunners"
   themeColor = "#0B0D10"
 
