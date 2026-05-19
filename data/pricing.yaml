@@ -2,7 +2,7 @@
 # Mark one tier with `feature: true` to highlight it (inverted card).
 cols: 1
 maxWidth: "640px"  # used when cols == 1
-registerUrl: "#"   # change when registration URL is live
+registerUrl: "https://meets.rosterathletics.com/public/competitions/details/schedule?id=29108"
 
 tiers:
   - feature: true
