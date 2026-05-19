@@ -11,7 +11,7 @@
     <div class="contact-col">
       <h4>{{ $t.contact.organiser }}</h4>
       <p>{{ $p.organiser }}</p>
-      <p>{{ $p.organiserAddress }}</p>
+      <p>{{ $p.organiserStreet }}, {{ $p.organiserPostalCode }} {{ $p.organiserLocality }}</p>
       <p>CVR {{ $p.organiserCVR }}</p>
       <p style="margin-top:10px"><a href="mailto:{{ $p.organiserEmail }}">{{ $p.organiserEmail }}</a></p>
       <p>{{ $p.organiserPhone }}</p>

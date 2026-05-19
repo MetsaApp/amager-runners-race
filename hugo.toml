@@ -69,7 +69,6 @@ disableKinds = ["taxonomy", "term", "section"]
   organiser = "Amager Runners"
   organiserEmail = "info@amagerrunners.dk"
   organiserPhone = "+45 51 90 41 82"
-  organiserAddress = "Erantisvej 28, 2300 København S"
   organiserStreet = "Erantisvej 28"
   organiserPostalCode = "2300"
   organiserLocality = "København S"
