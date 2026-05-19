@@ -204,16 +204,19 @@
   }
   function addKmMarker(key, label, lngLat) {
     if (kmMarkers[key]) return;
+    // Wrapper sits at the lngLat (anchor: center). Both children are
+    // absolutely positioned so the dot's center lands exactly on the
+    // anchor point and the badge floats up + to the right of it.
     const el = document.createElement("div");
-    el.style.cssText = "display:flex;align-items:center;gap:4px;pointer-events:none;";
+    el.style.cssText = "position:relative;width:0;height:0;pointer-events:none;";
     const dot = document.createElement("span");
-    dot.style.cssText = `width:9px;height:9px;border-radius:50%;background:${INK};box-shadow:0 0 0 2.5px ${PAPER};flex-shrink:0;`;
+    dot.style.cssText = `position:absolute;left:-4.5px;top:-4.5px;width:9px;height:9px;border-radius:50%;background:${INK};box-shadow:0 0 0 2.5px ${PAPER};`;
     const tag = document.createElement("span");
     tag.textContent = label;
-    tag.style.cssText = `font:600 10px/1 "JetBrains Mono", ui-monospace, monospace;color:${PAPER};background:${INK};padding:2px 5px;border-radius:3px;box-shadow:0 1px 4px rgba(0,0,0,.15);letter-spacing:.04em;white-space:nowrap;`;
+    tag.style.cssText = `position:absolute;left:8px;top:-14px;font:600 10px/1 "JetBrains Mono", ui-monospace, monospace;color:${PAPER};background:${INK};padding:2px 5px;border-radius:3px;box-shadow:0 1px 4px rgba(0,0,0,.15);letter-spacing:.04em;white-space:nowrap;`;
     el.appendChild(dot);
     el.appendChild(tag);
-    const mk = new maplibregl.Marker({ element: el, anchor: "left", offset: [0, -10] }).setLngLat(lngLat).addTo(map);
+    const mk = new maplibregl.Marker({ element: el, anchor: "center" }).setLngLat(lngLat).addTo(map);
     el.style.opacity = "0";
     if (el.animate) {
       el.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 280, easing: "cubic-bezier(.2,.7,.3,1)", fill: "forwards" });
