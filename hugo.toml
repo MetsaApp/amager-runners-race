@@ -60,18 +60,28 @@ disableKinds = ["taxonomy", "term", "section"]
   eventDateDisplay = "03.09.2026"
   eventDateLong = "Thursday 3 September 2026"
   eventDateLongDa = "Torsdag 3. september 2026"
-  startTimes = "18:30 · 19:00"
+  # Start times come from data/schedule.yaml (rows with kind.en = "Start").
+  eventEndTime = "21:30"
+  eventLat = 55.65155
+  eventLng = 12.64652
   location = "Amager Strandpark"
   locationFull = "Amager Strandpark, Copenhagen, Denmark"
   organiser = "Amager Runners"
   organiserEmail = "info@amagerrunners.dk"
   organiserPhone = "+45 51 90 41 82"
   organiserAddress = "Erantisvej 28, 2300 København S"
+  organiserStreet = "Erantisvej 28"
+  organiserPostalCode = "2300"
+  organiserLocality = "København S"
   organiserCVR = "44864932"
   registrationStatus = "open"
+  # NOTE: maxRunners is also referenced in content/_index.md and content/da/_index.md
+  # front-matter descriptions, which can't read params. Update those by hand.
   maxRunners = 900
   priceDKK = 200
   domain = "race.amagerrunners.dk"
+  bagDropEnd = "21:30"
+  resultsLiveTime = "18:40"
 
   # SEO defaults
   ogImage = "/img/hero.jpg"
