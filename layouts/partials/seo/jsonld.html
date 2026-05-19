@@ -1,6 +1,8 @@
 {{- $p := .Site.Params -}}
-{{- $startISO := printf "%sT18:30:00+02:00" $p.eventDate -}}
-{{- $endISO := printf "%sT21:30:00+02:00" $p.eventDate -}}
+{{- $starts := where (index .Site.Data.schedule "rows") "kind.en" "Start" -}}
+{{- $firstStart := (index $starts 0).time -}}
+{{- $startISO := printf "%sT%s:00+02:00" $p.eventDate $firstStart -}}
+{{- $endISO := printf "%sT%s:00+02:00" $p.eventDate $p.eventEndTime -}}
 {{- $url := .Site.BaseURL -}}
 {{- $img := absURL ($p.ogImage | default "/img/hero.jpg") -}}
 {{- $logoImg := absURL "/img/logo.png" -}}
@@ -26,15 +28,15 @@
         "name" $p.location
         "address" (dict
           "@type" "PostalAddress"
-          "streetAddress" "Amager Strandpark"
+          "streetAddress" $p.location
           "addressLocality" "Copenhagen"
-          "postalCode" "2300"
+          "postalCode" $p.organiserPostalCode
           "addressCountry" "DK"
         )
         "geo" (dict
           "@type" "GeoCoordinates"
-          "latitude" 55.65155
-          "longitude" 12.64652
+          "latitude" $p.eventLat
+          "longitude" $p.eventLng
         )
       )
       "organizer" (dict
@@ -65,9 +67,9 @@
       "telephone" $p.organiserPhone
       "address" (dict
         "@type" "PostalAddress"
-        "streetAddress" "Erantisvej 28"
-        "addressLocality" "København S"
-        "postalCode" "2300"
+        "streetAddress" $p.organiserStreet
+        "addressLocality" $p.organiserLocality
+        "postalCode" $p.organiserPostalCode
         "addressCountry" "DK"
       )
       "sameAs" (slice $p.social.instagram $p.social.strava $p.social.facebook)
