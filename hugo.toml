@@ -74,10 +74,6 @@ disableKinds = ["taxonomy", "term", "section"]
   maxRunners = 900
   priceDKK = 200
   currency = "DKK"
-  # domain (race.amagerrunners.dk) is derived from baseURL in templates.
-  bagDropEnd = "21:30"
-  resultsLiveTime = "18:40"
-
   # SEO defaults
   ogImage = "/img/hero.jpg"
   twitterHandle = "@amagerrunners"

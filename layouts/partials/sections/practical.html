@@ -5,8 +5,6 @@
 {{- $data := hugo.Data.practical -}}
 {{- $cols := $data.cols | default 4 -}}
 {{- $colsMobile := $data.colsMobile | default 2 -}}
-{{- $checkin := (index (index .site.Data.schedule "rows") 0).time -}}
-{{- $domain := .site.BaseURL | strings.TrimPrefix "https://" | strings.TrimPrefix "http://" | strings.TrimSuffix "/" -}}
 <section id="practical">
   <div class="section-head">
     <span class="section-num">{{ $num }} / <span>{{ $t.practical.sectionLabel }}</span></span>
@@ -15,10 +13,6 @@
   <div class="practical" style="--grid-cols: {{ $cols }}; --grid-cols-mobile: {{ $colsMobile }};">
     {{ range $data.cards }}
       {{- $body := index .body $lang -}}
-      {{- $body = replace $body "{checkin}" $checkin -}}
-      {{- $body = replace $body "{bagDropEnd}" $p.bagDropEnd -}}
-      {{- $body = replace $body "{domain}" $domain -}}
-      {{- $body = replace $body "{resultsLive}" $p.resultsLiveTime -}}
       {{- $body = replace $body "{location}" $p.location -}}
       <div class="prac-card">
         <div class="prac-icon" aria-hidden="true">{{ .icon }}</div>

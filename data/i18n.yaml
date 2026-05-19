@@ -36,7 +36,7 @@ en:
     startsSentence: "The {dist0} sets off at {time0}, the {dist1} at {time1}."
     body: |
       <p>{organiser} is hosting the first edition of our evening race. Same course, same start line, same finish on the sand. {starts}</p>
-      <p>Chip timing is included. Any profit goes back to the club and to youth running on Amager.</p>
+      <p>Chip timing is included. Any profit goes back to the club, Amager Runners.</p>
 
   schedule:
     sectionLabel: "Schedule"
@@ -109,7 +109,7 @@ da:
     startsSentence: "{dist0} starter {time0}, {dist1} starter {time1}."
     body: |
       <p>{organiser} holder første udgave af vores aftensløb. Samme rute, samme startlinje, samme mål i sandet. {starts}</p>
-      <p>Chiptidtagning er inkluderet. Et eventuelt overskud går tilbage til klubben og til ungdomsløb på Amager.</p>
+      <p>Chiptidtagning er inkluderet. Et eventuelt overskud går tilbage til klubben, Amager Runners.</p>
 
   schedule:
     sectionLabel: "Program"
