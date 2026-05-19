@@ -5,7 +5,7 @@ stats:
   dist5k:
     lapDistance: "5 KM"
     laps: 1
-    elevation: "~12 M"
+    elevation: "~6 M"
     surface:
       en: "Paved path"
       da: "Asfalteret sti"
@@ -17,7 +17,7 @@ stats:
   dist10k:
     lapDistance: "10 KM"
     laps: 2
-    elevation: "~24 M"
+    elevation: "~12 M"
     surface:
       en: "Paved path"
       da: "Asfalteret sti"
