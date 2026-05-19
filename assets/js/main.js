@@ -12,3 +12,17 @@
     });
   }
 })();
+
+// Toggle body.is-scrolled when the hero leaves the top — drives the
+// topbar's overlay → solid swap.
+(function () {
+  const hero = document.querySelector(".hero");
+  if (!hero || !("IntersectionObserver" in window)) return;
+  const io = new IntersectionObserver(
+    ([entry]) => {
+      document.body.classList.toggle("is-scrolled", !entry.isIntersecting);
+    },
+    { rootMargin: "-60px 0px 0px 0px" }
+  );
+  io.observe(hero);
+})();
