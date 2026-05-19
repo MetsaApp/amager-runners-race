@@ -475,24 +475,8 @@ a.sponsor:hover{ background: var(--bg); }
 
 /* ---------------- CONTACT / FOOTER ---------------- */
 .contact-grid{
-  display: grid; grid-template-columns: 1.2fr 1fr 1fr;
+  display: grid; grid-template-columns: 1fr 1fr;
   gap: 48px;
-}
-.contact-big{
-  font-family: var(--f-display);
-  font-size: clamp(32px, 5.5vw, 80px);
-  line-height: .95; text-transform: uppercase;
-  letter-spacing: -.01em;
-  margin: 0;
-  overflow-wrap: anywhere;
-  word-break: break-word;
-  hyphens: auto;
-}
-.contact-big a{
-  text-decoration: none; color: var(--accent);
-  border-bottom: 4px solid var(--accent);
-  overflow-wrap: anywhere;
-  word-break: break-word;
 }
 .contact-col h4{
   font-family: var(--f-mono); font-size: 11px;
@@ -621,9 +605,6 @@ body[data-fonts="modern"]{
   .prac-card{ min-height: 0; padding: 28px 22px; }
 
   .price-amount{ font-size: 56px; }
-
-  .contact-big{ font-size: clamp(32px, 9vw, 56px); }
-  .contact-big a{ border-bottom-width: 3px; }
 
   .marquee{ font-size: 22px; padding: 12px 0; }
   .marquee-track{ gap: 36px; padding-right: 36px; }

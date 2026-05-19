@@ -71,7 +71,6 @@ en:
   contact:
     sectionLabel: "Contact"
     sectionTitle: "Get in touch"
-    big: 'Questions?<br>Write to <a href="mailto:{email}">{emailDisplay}</a>'
     organiser: "Organiser"
     follow: "Follow"
 
@@ -145,6 +144,5 @@ da:
   contact:
     sectionLabel: "Kontakt"
     sectionTitle: "Kontakt os"
-    big: 'Spørgsmål?<br>Skriv til <a href="mailto:{email}">{emailDisplay}</a>'
     organiser: "Arrangør"
     follow: "Følg"

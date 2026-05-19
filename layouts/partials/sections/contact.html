@@ -1,25 +1,18 @@
 {{- $t := .t -}}
 {{- $p := .page.Site.Params -}}
 {{- $num := .section.num -}}
-{{- $emailParts := split $p.organiserEmail "@" -}}
-{{- $emailDisplay := printf "%s@<wbr>%s" (index $emailParts 0) (index $emailParts 1) -}}
-{{- $big := $t.contact.big -}}
-{{- $big = replace $big "{email}" $p.organiserEmail -}}
-{{- $big = replace $big "{emailDisplay}" $emailDisplay -}}
 <section id="contact">
   <div class="section-head">
     <span class="section-num">{{ $num }} / <span>{{ $t.contact.sectionLabel }}</span></span>
     <h2 class="section-title">{{ $t.contact.sectionTitle }}</h2>
   </div>
   <div class="contact-grid">
-    <h3 class="contact-big">{{ $big | safeHTML }}</h3>
     <div class="contact-col">
       <h4>{{ $t.contact.organiser }}</h4>
       <p>{{ $p.organiser }}</p>
       <p>{{ $p.organiserStreet }}, {{ $p.organiserPostalCode }} {{ $p.organiserLocality }}</p>
       <p>CVR {{ $p.organiserCVR }}</p>
       <p style="margin-top:10px"><a href="mailto:{{ $p.organiserEmail }}">{{ $p.organiserEmail }}</a></p>
-      <p>{{ $p.organiserPhone }}</p>
     </div>
     <div class="contact-col">
       <h4>{{ $t.contact.follow }}</h4>
