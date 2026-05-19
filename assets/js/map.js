@@ -4,9 +4,8 @@
   if (!mapEl) return;
 
   const SITE = window.__SITE || {};
-  const COORDS = SITE.routePoints || [];
-  if (!COORDS.length) return;
-  const START = COORDS[0];
+  const ROUTES_RAW = SITE.routePoints || {};
+  if (!ROUTES_RAW["5k"] || !ROUTES_RAW["5k"].length) return;
   const STATS = SITE.routeStats || {};
   const SECTION = document.getElementById("route");
   const REDUCED_MOTION = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -22,56 +21,68 @@
     const h = Math.sin(dLat / 2) ** 2 + Math.cos(lat1) * Math.cos(lat2) * Math.sin(dLng / 2) ** 2;
     return 2 * R * Math.asin(Math.sqrt(h));
   }
-  const segLens = [];
-  let totalKm = 0;
-  for (let i = 1; i < COORDS.length; i++) {
-    const d = haversine(COORDS[i - 1], COORDS[i]);
-    segLens.push(d);
-    totalKm += d;
-  }
   function lerp(a, b, t) { return a + (b - a) * t; }
   function easeInOut(t) { return t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2; }
-  function pointAtT(t) {
-    if (t <= 0) return COORDS[0];
-    if (t >= 1) return COORDS[COORDS.length - 1];
-    const target = t * totalKm;
-    let acc = 0;
-    for (let i = 0; i < segLens.length; i++) {
-      if (acc + segLens[i] >= target) {
-        const f = (target - acc) / segLens[i];
-        return [
-          lerp(COORDS[i][0], COORDS[i + 1][0], f),
-          lerp(COORDS[i][1], COORDS[i + 1][1], f),
-        ];
-      }
-      acc += segLens[i];
+
+  function buildRoute(coords) {
+    const segLens = [];
+    let totalKm = 0;
+    for (let i = 1; i < coords.length; i++) {
+      const d = haversine(coords[i - 1], coords[i]);
+      segLens.push(d);
+      totalKm += d;
     }
-    return COORDS[COORDS.length - 1];
-  }
-  function pointAtDistance(km) {
-    let acc = 0;
-    for (let i = 1; i < COORDS.length; i++) {
-      const seg = haversine(COORDS[i - 1], COORDS[i]);
-      if (acc + seg >= km) {
-        const f = (km - acc) / seg;
-        return [
-          COORDS[i - 1][0] + (COORDS[i][0] - COORDS[i - 1][0]) * f,
-          COORDS[i - 1][1] + (COORDS[i][1] - COORDS[i - 1][1]) * f,
-        ];
+    function pointAtT(t) {
+      if (t <= 0) return coords[0];
+      if (t >= 1) return coords[coords.length - 1];
+      const target = t * totalKm;
+      let acc = 0;
+      for (let i = 0; i < segLens.length; i++) {
+        if (acc + segLens[i] >= target) {
+          const f = (target - acc) / segLens[i];
+          return [
+            lerp(coords[i][0], coords[i + 1][0], f),
+            lerp(coords[i][1], coords[i + 1][1], f),
+          ];
+        }
+        acc += segLens[i];
       }
-      acc += seg;
+      return coords[coords.length - 1];
     }
-    return COORDS[COORDS.length - 1];
-  }
-  const KM_POINTS = [];
-  {
+    function pointAtDistance(km) {
+      let acc = 0;
+      for (let i = 0; i < segLens.length; i++) {
+        if (acc + segLens[i] >= km) {
+          const f = (km - acc) / segLens[i];
+          return [
+            lerp(coords[i][0], coords[i + 1][0], f),
+            lerp(coords[i][1], coords[i + 1][1], f),
+          ];
+        }
+        acc += segLens[i];
+      }
+      return coords[coords.length - 1];
+    }
+    const kmPoints = [];
     const whole = Math.floor(totalKm);
-    for (let k = 1; k <= whole; k++) KM_POINTS.push({ km: k, lngLat: pointAtDistance(k) });
+    for (let k = 1; k <= whole; k++) kmPoints.push({ km: k, lngLat: pointAtDistance(k) });
+    const bounds = coords.reduce(
+      (b, c) => b.extend(c),
+      new maplibregl.LngLatBounds(coords[0], coords[0])
+    );
+    return { coords, totalKm, pointAtT, kmPoints, bounds };
   }
-  const BOUNDS = COORDS.reduce(
-    (b, c) => b.extend(c),
-    new maplibregl.LngLatBounds(COORDS[0], COORDS[0])
-  );
+
+  const ROUTES = {
+    "5k": buildRoute(ROUTES_RAW["5k"]),
+    "10k": ROUTES_RAW["10k"] && ROUTES_RAW["10k"].length ? buildRoute(ROUTES_RAW["10k"]) : buildRoute(ROUTES_RAW["5k"]),
+  };
+
+  // Start/finish marker is pinned to the venue, not the first GPX point
+  // (Strava traces often start a few meters off the actual start line).
+  const START_COORD = (Array.isArray(SITE.startCoord) && SITE.startCoord.length === 2)
+    ? SITE.startCoord
+    : ROUTES["5k"].coords[0];
 
   // ----- Color helpers -------------------------------------------------------
   function resolveColorToHex(cssColor, fallback) {
@@ -113,10 +124,13 @@
   const GOLD = "#E0B341";
 
   // ----- Map init -----------------------------------------------------------
+  const initialTab = (SECTION && SECTION.dataset.activeTab) || "5k";
+  const initialRoute = ROUTES[initialTab];
+
   const map = new maplibregl.Map({
     container: "map",
     style: "https://basemaps.cartocdn.com/gl/positron-gl-style/style.json",
-    center: START,
+    center: initialRoute.coords[0],
     zoom: 13,
     attributionControl: { compact: true },
     dragRotate: false,
@@ -125,9 +139,29 @@
   });
   window.__mapInstance = map;
 
+  // Runner uses the accent (blue) with an ink ring + paper outer ring so it
+  // reads clearly against the gold start/finish/aid marker.
   const runnerEl = document.createElement("div");
-  runnerEl.style.cssText = `width:18px;height:18px;border-radius:50%;background:${GOLD};box-shadow:0 0 0 3px ${INK}, 0 0 14px ${ACCENT_GLOW};transition:opacity .25s;opacity:0;`;
-  const runnerMarker = new maplibregl.Marker({ element: runnerEl }).setLngLat(START);
+  runnerEl.style.cssText = `width:18px;height:18px;border-radius:50%;background:${ACCENT};box-shadow:0 0 0 2.5px ${PAPER}, 0 0 0 4.5px ${INK}, 0 0 14px ${hexToRgba(ACCENT, 0.55)};transition:opacity .25s;opacity:0;`;
+  const runnerMarker = new maplibregl.Marker({ element: runnerEl }).setLngLat(initialRoute.coords[0]);
+
+  let startMarker = null;
+  function placeStartMarker(lngLat) {
+    if (!startMarker) {
+      const startEl = document.createElement("div");
+      startEl.style.cssText = `width:16px;height:16px;border-radius:50%;background:${GOLD};box-shadow:0 0 0 2.5px ${PAPER}, 0 0 0 4.5px ${INK};`;
+      startMarker = new maplibregl.Marker({ element: startEl })
+        .setLngLat(lngLat)
+        .setPopup(
+          new maplibregl.Popup({ offset: 16 }).setHTML(
+            "<strong>" + (SITE.startLabel || "Start / Finish") + "</strong><br/>" + (SITE.startVenue || "")
+          )
+        )
+        .addTo(map);
+    } else {
+      startMarker.setLngLat(lngLat);
+    }
+  }
 
   let kmMarkers = {};
   function clearKmMarkers() {
@@ -137,30 +171,28 @@
   function addKmMarker(key, label, lngLat) {
     if (kmMarkers[key]) return;
     const el = document.createElement("div");
-    el.style.cssText = "display:flex;align-items:center;gap:4px;transform:translateY(-2px);pointer-events:none;";
+    el.style.cssText = "display:flex;align-items:center;gap:4px;pointer-events:none;";
     const dot = document.createElement("span");
-    dot.style.cssText = `width:9px;height:9px;border-radius:50%;background:${INK};box-shadow:0 0 0 2.5px ${PAPER};`;
+    dot.style.cssText = `width:9px;height:9px;border-radius:50%;background:${INK};box-shadow:0 0 0 2.5px ${PAPER};flex-shrink:0;`;
     const tag = document.createElement("span");
     tag.textContent = label;
-    tag.style.cssText = `font:600 10px/1 "JetBrains Mono", ui-monospace, monospace;color:${PAPER};background:${INK};padding:2px 5px;border-radius:3px;box-shadow:0 1px 4px rgba(0,0,0,.15);letter-spacing:.04em;`;
+    tag.style.cssText = `font:600 10px/1 "JetBrains Mono", ui-monospace, monospace;color:${PAPER};background:${INK};padding:2px 5px;border-radius:3px;box-shadow:0 1px 4px rgba(0,0,0,.15);letter-spacing:.04em;white-space:nowrap;`;
     el.appendChild(dot);
     el.appendChild(tag);
-    const mk = new maplibregl.Marker({ element: el, anchor: "left" }).setLngLat(lngLat).addTo(map);
-    if (mk.getElement().animate) {
-      mk.getElement().animate(
-        [
-          { opacity: 0, transform: "translate(-4px, -2px) scale(.7)" },
-          { opacity: 1, transform: "translate(0,-2px) scale(1)" },
-        ],
-        { duration: 280, easing: "cubic-bezier(.2,.7,.3,1)", fill: "forwards" }
-      );
+    const mk = new maplibregl.Marker({ element: el, anchor: "left", offset: [0, -10] }).setLngLat(lngLat).addTo(map);
+    el.style.opacity = "0";
+    if (el.animate) {
+      el.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 280, easing: "cubic-bezier(.2,.7,.3,1)", fill: "forwards" });
+    } else {
+      el.style.opacity = "1";
     }
     kmMarkers[key] = mk;
   }
 
-  // Tab state
-  let currentTab = (SECTION && SECTION.dataset.activeTab) || "5k";
+  // ----- Tab / animation state ---------------------------------------------
+  let currentTab = initialTab;
   let animToken = 0;
+  let pendingTimer = null;
 
   function laneStop(stop, color) {
     return ["step", ["line-progress"], color, Math.max(0.0001, stop), "rgba(0,0,0,0)"];
@@ -171,7 +203,7 @@
       map.addSource("route", {
         type: "geojson",
         lineMetrics: true,
-        data: { type: "Feature", geometry: { type: "LineString", coordinates: COORDS } },
+        data: { type: "Feature", geometry: { type: "LineString", coordinates: ROUTES[currentTab].coords } },
       });
     }
     if (!map.getLayer("route-glow")) {
@@ -202,6 +234,9 @@
       });
     }
     if (!map.getLayer("route-dash")) {
+      // line-dasharray is silently ignored when line-gradient is set on the
+      // same layer, so the dash layer cannot also do the reveal. Hide it via
+      // line-opacity during the draw phase and fade in after.
       map.addLayer({
         id: "route-dash",
         type: "line",
@@ -211,7 +246,7 @@
           "line-color": INK,
           "line-width": 2,
           "line-dasharray": [2, 3],
-          "line-gradient": laneStop(0, INK),
+          "line-opacity": 0,
         },
       });
     }
@@ -220,40 +255,45 @@
   function setLineProgress(stop) {
     if (map.getLayer("route-main")) map.setPaintProperty("route-main", "line-gradient", laneStop(stop, ACCENT));
     if (map.getLayer("route-glow")) map.setPaintProperty("route-glow", "line-gradient", laneStop(stop, ACCENT_GLOW));
-    if (map.getLayer("route-dash")) map.setPaintProperty("route-dash", "line-gradient", laneStop(stop, INK));
   }
 
   function setLineComplete() {
     const fill = (color) => ["step", ["line-progress"], color, 1, color];
     if (map.getLayer("route-main")) map.setPaintProperty("route-main", "line-gradient", fill(ACCENT));
     if (map.getLayer("route-glow")) map.setPaintProperty("route-glow", "line-gradient", fill(ACCENT_GLOW));
-    if (map.getLayer("route-dash")) map.setPaintProperty("route-dash", "line-gradient", fill(INK));
+  }
+
+  function setDashOpacity(o) {
+    if (map.getLayer("route-dash")) map.setPaintProperty("route-dash", "line-opacity", o);
   }
 
   // ----- Animation ----------------------------------------------------------
-  function runAnimation(laps) {
+  function runAnimation(route, laps) {
     const myToken = ++animToken;
     clearKmMarkers();
 
     if (REDUCED_MOTION) {
       setLineComplete();
+      setDashOpacity(0.85);
       runnerEl.style.opacity = "0";
-      KM_POINTS.forEach((m, idx) => {
+      route.kmPoints.forEach((m, idx) => {
         addKmMarker(`r-${idx}`, `${m.km}K`, m.lngLat);
       });
       return;
     }
 
-    runnerMarker.setLngLat(COORDS[0]);
+    runnerMarker.setLngLat(route.coords[0]);
     runnerEl.style.opacity = "0";
     setLineProgress(0);
+    setDashOpacity(0);
 
     const drawMs = 4000;
+    const dashFadeMs = 600;
     const traceTotalMs = 21000;
     const traceMs = traceTotalMs / laps;
     const pauseMs = 2200;
     const start = performance.now();
-    const wholeLap = Math.floor(totalKm);
+    const wholeLap = Math.floor(route.totalKm);
 
     function frame(now) {
       if (animToken !== myToken) return;
@@ -264,14 +304,16 @@
         requestAnimationFrame(frame);
       } else if (elapsed < drawMs + traceMs * laps) {
         setLineComplete();
+        const dashT = Math.min(1, (elapsed - drawMs) / dashFadeMs);
+        setDashOpacity(dashT * 0.85);
         const traceElapsed = elapsed - drawMs;
         const lapIdx = Math.min(laps - 1, Math.floor(traceElapsed / traceMs));
         const lapT = easeInOut((traceElapsed - lapIdx * traceMs) / traceMs);
         runnerEl.style.opacity = "1";
-        runnerMarker.setLngLat(pointAtT(lapT));
+        runnerMarker.setLngLat(route.pointAtT(lapT));
 
-        const runnerKm = lapT * totalKm;
-        KM_POINTS.forEach((m, idx) => {
+        const runnerKm = lapT * route.totalKm;
+        route.kmPoints.forEach((m, idx) => {
           const key = `${lapIdx}-${idx}`;
           if (kmMarkers[key]) return;
           if (runnerKm >= m.km - 0.05) {
@@ -291,28 +333,44 @@
 
         requestAnimationFrame(frame);
       } else if (elapsed < drawMs + traceMs * laps + pauseMs) {
-        runnerMarker.setLngLat(COORDS[COORDS.length - 1]);
+        runnerMarker.setLngLat(route.coords[route.coords.length - 1]);
         requestAnimationFrame(frame);
       } else {
-        if (animToken === myToken) runAnimation(laps);
+        if (animToken === myToken) runAnimation(route, laps);
       }
     }
     requestAnimationFrame(frame);
   }
 
-  function fitAndAnimate(laps) {
-    if (!map.loaded()) {
-      map.once("load", () => fitAndAnimate(laps));
-      return;
-    }
-    ensureLayers();
-    map.fitBounds(BOUNDS, {
+  function swapRoute(tab) {
+    const route = ROUTES[tab];
+    if (!route) return;
+    // Cancel any in-flight animation and pending start.
+    animToken++;
+    if (pendingTimer) { clearTimeout(pendingTimer); pendingTimer = null; }
+    clearKmMarkers();
+    runnerEl.style.opacity = "0";
+
+    // Swap source geometry & start marker, then refit.
+    const src = map.getSource("route");
+    if (src) src.setData({ type: "Feature", geometry: { type: "LineString", coordinates: route.coords } });
+    placeStartMarker(START_COORD);
+    runnerMarker.setLngLat(route.coords[0]);
+    setLineProgress(0);
+    setDashOpacity(0);
+
+    map.fitBounds(route.bounds, {
       padding: { top: 60, bottom: 60, left: 60, right: 60 },
       duration: REDUCED_MOTION ? 0 : 700,
       essential: true,
     });
+
+    const laps = Number((STATS[tab] && STATS[tab].laps) || 1);
     const delay = REDUCED_MOTION ? 0 : 750;
-    setTimeout(() => runAnimation(laps), delay);
+    pendingTimer = setTimeout(() => {
+      pendingTimer = null;
+      runAnimation(route, laps);
+    }, delay);
   }
 
   // ----- Stat panel sync ----------------------------------------------------
@@ -346,35 +404,25 @@
       const tab = btn.dataset.tab;
       if (!tab || tab === currentTab) return;
       applyTab(tab);
-      const laps = (STATS[tab] && STATS[tab].laps) || 1;
-      fitAndAnimate(laps);
+      swapRoute(tab);
     });
   });
 
   // ----- Map load -----------------------------------------------------------
   map.on("load", () => {
     ensureLayers();
-
-    // Start / finish marker — gold core, paper + ink rings.
-    const startEl = document.createElement("div");
-    startEl.style.cssText = `width:16px;height:16px;border-radius:50%;background:${GOLD};box-shadow:0 0 0 2.5px ${PAPER}, 0 0 0 4.5px ${INK};`;
-    new maplibregl.Marker({ element: startEl })
-      .setLngLat(START)
-      .setPopup(
-        new maplibregl.Popup({ offset: 16 }).setHTML(
-          "<strong>" + (SITE.startLabel || "Start / Finish") + "</strong><br/>" + (SITE.startVenue || "")
-        )
-      )
-      .addTo(map);
-
+    placeStartMarker(START_COORD);
     runnerMarker.addTo(map);
 
-    map.fitBounds(BOUNDS, {
+    map.fitBounds(initialRoute.bounds, {
       padding: { top: 60, bottom: 60, left: 60, right: 60 },
       duration: 0,
     });
 
-    const initialLaps = (STATS[currentTab] && STATS[currentTab].laps) || 1;
-    setTimeout(() => runAnimation(initialLaps), REDUCED_MOTION ? 0 : 600);
+    const initialLaps = Number((STATS[currentTab] && STATS[currentTab].laps) || 1);
+    pendingTimer = setTimeout(() => {
+      pendingTimer = null;
+      runAnimation(initialRoute, initialLaps);
+    }, REDUCED_MOTION ? 0 : 600);
   });
 })();
