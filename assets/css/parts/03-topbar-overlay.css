@@ -1,0 +1,41 @@
+/* ---------------- TOPBAR OVERLAY VARIANT ---------------- */
+/* Topbar stays position:sticky in both states. Only background / colors
+   change when body.is-scrolled is toggled — never the position scheme.
+   This avoids the reflow jitter you'd get from swapping absolute ↔ sticky.
+
+   The hero pulls itself up under the topbar with margin-top: -<headerH>
+   so #top still resolves to scrollY: 0 (no header-shaped gap above the
+   image) and the topbar overlays the image visually without leaving a
+   cream stripe at the top of the page. */
+body[data-topbar="overlay"] .topbar{
+  background: transparent;
+  border-bottom: 0;
+  transition: background .2s ease, border-color .2s ease;
+}
+body[data-topbar="overlay"] .hero{
+  margin-top: calc(-1 * var(--topbar-h, 74px));
+}
+body[data-topbar="overlay"] .nav a{ color: #fff; opacity: .9; }
+body[data-topbar="overlay"] .nav a:hover{ opacity: 1; }
+body[data-topbar="overlay"] .brand{ color: #fff; }
+body[data-topbar="overlay"] .brand img{ content: url('/img/logo-white.png'); }
+body[data-topbar="overlay"] .lang-toggle{ border-color: rgba(255,255,255,.6); }
+body[data-topbar="overlay"] .lang-toggle a{ color: #fff; }
+body[data-topbar="overlay"] .lang-toggle a.on{ background: #fff; color: var(--ink); }
+
+/* Hero needs extra top padding so the eyebrow/title clear the overlay bar
+   (since the hero now sits under it). */
+body[data-topbar="overlay"] .hero-inner{ padding-top: 88px; }
+
+/* After scrolling past the hero: same sticky position; just swap colors. */
+body[data-topbar="overlay"].is-scrolled .topbar{
+  background: var(--bg);
+  border-bottom: 1px solid var(--line-soft);
+}
+body[data-topbar="overlay"].is-scrolled .nav a,
+body[data-topbar="overlay"].is-scrolled .brand{ color: var(--ink); }
+body[data-topbar="overlay"].is-scrolled .brand img{ content: normal; }
+body[data-topbar="overlay"].is-scrolled .lang-toggle{ border-color: var(--ink); }
+body[data-topbar="overlay"].is-scrolled .lang-toggle a{ color: var(--ink); }
+body[data-topbar="overlay"].is-scrolled .lang-toggle a.on{ background: var(--ink); color: var(--bg); }
+

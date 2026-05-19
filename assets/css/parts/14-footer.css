@@ -1,0 +1,40 @@
+/* ---------------- CONTACT / FOOTER ---------------- */
+.contact-grid{
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 48px;
+}
+.contact-col h4{
+  font-family: var(--f-mono); font-size: 11px;
+  letter-spacing: .14em; text-transform: uppercase;
+  color: var(--muted); margin: 0 0 14px;
+}
+.contact-col p{ margin: 0 0 6px; font-size: 15px; line-height: 1.55; }
+
+footer{
+  padding: 28px;
+  display: flex; justify-content: space-between;
+  font-family: var(--f-mono); font-size: 11px;
+  letter-spacing: .1em; text-transform: uppercase;
+  color: var(--muted);
+  border-top: 1px solid var(--line-soft);
+}
+footer span{ display: inline-flex; align-items: center; gap: 6px; }
+.footer-credit{
+  display: inline-flex; align-items: center; gap: 6px;
+  color: var(--muted);
+  text-decoration: none;
+  transition: color .15s ease;
+}
+.footer-credit:hover{ color: var(--ink); }
+.footer-heart{
+  display: inline-block;
+  color: var(--accent);
+  transition: transform .25s ease;
+}
+.footer-credit:hover .footer-heart{ transform: scale(1.15); }
+.footer-metsa{
+  display: inline-block;
+  border-radius: 3px;
+  vertical-align: middle;
+}
+

@@ -61,8 +61,29 @@
 {{/* MapLibre */}}
 <link href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css" rel="stylesheet" />
 
-{{/* Site CSS via Hugo Pipes */}}
-{{- $css := resources.Get "css/main.css" | resources.Minify | resources.Fingerprint -}}
+{{/* Site CSS — partials in assets/css/parts/ are concatenated in numeric
+     order, then minified and fingerprinted. The numeric prefix encodes
+     cascade order: tokens → base components → variants → responsive. */}}
+{{- $parts := slice
+    (resources.Get "css/parts/01-tokens.css")
+    (resources.Get "css/parts/02-topbar.css")
+    (resources.Get "css/parts/03-topbar-overlay.css")
+    (resources.Get "css/parts/04-hero.css")
+    (resources.Get "css/parts/05-buttons.css")
+    (resources.Get "css/parts/06-marquee.css")
+    (resources.Get "css/parts/07-sections.css")
+    (resources.Get "css/parts/08-intro.css")
+    (resources.Get "css/parts/09-schedule.css")
+    (resources.Get "css/parts/10-practical.css")
+    (resources.Get "css/parts/11-pricing.css")
+    (resources.Get "css/parts/12-route.css")
+    (resources.Get "css/parts/13-sponsors.css")
+    (resources.Get "css/parts/14-footer.css")
+    (resources.Get "css/parts/15-hero-variants.css")
+    (resources.Get "css/parts/16-theme-variants.css")
+    (resources.Get "css/parts/17-responsive.css")
+-}}
+{{- $css := $parts | resources.Concat "css/main.css" | resources.Minify | resources.Fingerprint -}}
 <link rel="stylesheet" href="{{ $css.RelPermalink }}" integrity="{{ $css.Data.Integrity }}" />
 
 {{/* JSON-LD: SportsEvent */}}

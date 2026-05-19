@@ -1,0 +1,36 @@
+/* ---------------- TOP BAR ---------------- */
+.topbar{
+  position: sticky; top: 0; z-index: 40;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 28px;
+  background: var(--bg);
+  border-bottom: 1px solid var(--line-soft);
+}
+.brand{
+  display: flex; align-items: center; gap: 12px;
+  font-family: var(--f-mono);
+  font-size: 12px; letter-spacing: .08em; text-transform: uppercase;
+  text-decoration: none;
+}
+.brand img{ height: 40px; width: auto; display: block; }
+.nav{
+  display: flex; gap: 28px; align-items: center;
+  font-family: var(--f-mono); font-size: 12px;
+  letter-spacing: .08em; text-transform: uppercase;
+}
+.nav a{ text-decoration: none; opacity: .7; transition: opacity .15s; }
+.nav a:hover{ opacity: 1; }
+.lang-toggle{
+  display: inline-flex; border: 1px solid var(--ink);
+  border-radius: 999px; overflow: hidden; font-family: var(--f-mono);
+  font-size: 11px; letter-spacing: .08em;
+}
+.lang-toggle a{
+  background: transparent;
+  padding: 8px 14px;
+  color: var(--ink); cursor: pointer;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+.lang-toggle a.on{ background: var(--ink); color: var(--bg); }
+

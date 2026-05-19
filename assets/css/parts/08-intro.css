@@ -1,0 +1,26 @@
+/* ---------------- INTRO ---------------- */
+.intro-grid{
+  display: grid;
+  grid-template-columns: 1fr 1.6fr;
+  gap: 80px;
+  max-width: 1320px;
+}
+.intro-label{
+  font-family: var(--f-mono); font-size: 12px;
+  letter-spacing: .14em; text-transform: uppercase;
+  color: var(--muted);
+}
+.intro-lead{
+  font-family: var(--f-display);
+  font-size: clamp(28px, 3.2vw, 44px);
+  line-height: 1.05;
+  text-transform: uppercase;
+  letter-spacing: -.01em;
+  margin: 0 0 24px;
+}
+.intro-body{
+  font-size: 17px; line-height: 1.55; color: var(--ink-2);
+  max-width: 62ch;
+}
+.intro-body p + p{ margin-top: 14px; }
+

@@ -1,0 +1,38 @@
+/* ---------------- SCHEDULE ---------------- */
+.schedule{
+  display: grid; grid-template-columns: 1fr;
+  border-top: 1px solid var(--ink);
+}
+.sched-row{
+  display: grid;
+  grid-template-columns: 160px 220px 1fr auto;
+  gap: 24px;
+  align-items: center;
+  padding: 26px 4px;
+  border-bottom: 1px solid var(--line-soft);
+  transition: background .2s;
+}
+.sched-row:hover{ background: oklch(from var(--accent) l c h / .06); }
+.sched-time{
+  font-family: var(--f-display);
+  font-size: 34px; letter-spacing: -.01em;
+}
+.sched-kind{
+  font-family: var(--f-mono); font-size: 11px;
+  letter-spacing: .14em; text-transform: uppercase;
+  color: var(--muted);
+}
+.sched-name{
+  font-family: var(--f-display);
+  font-size: 22px; text-transform: uppercase;
+}
+.sched-tag{
+  font-family: var(--f-mono); font-size: 11px;
+  letter-spacing: .12em; text-transform: uppercase;
+  padding: 4px 10px; border: 1px solid var(--line-soft);
+  border-radius: 999px;
+}
+.sched-tag.hot{
+  background: var(--accent); color: var(--accent-ink); border-color: var(--accent);
+}
+

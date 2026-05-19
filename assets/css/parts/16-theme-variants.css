@@ -1,0 +1,15 @@
+/* ---------------- ACCENT PRESETS ---------------- */
+body[data-accent="orange"]{ --accent: oklch(0.7 0.17 45);   --accent-ink: #0B0D10; }
+body[data-accent="lime"]  { --accent: oklch(0.82 0.17 130); --accent-ink: #0B0D10; }
+body[data-accent="red"]   { --accent: oklch(0.58 0.2 25);   --accent-ink: #ffffff; }
+body[data-accent="violet"]{ --accent: oklch(0.58 0.2 300);  --accent-ink: #ffffff; }
+
+/* ---------------- FONT PAIRINGS ---------------- */
+body[data-fonts="editorial"]{
+  --f-display: "Syne", sans-serif;
+}
+body[data-fonts="modern"]{
+  --f-display: "Bebas Neue", sans-serif;
+  --f-body: "Space Grotesk", sans-serif;
+}
+

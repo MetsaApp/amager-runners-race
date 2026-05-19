@@ -1,0 +1,22 @@
+/* ---------------- MARQUEE ---------------- */
+.marquee{
+  border-top: 1px solid var(--ink);
+  border-bottom: 1px solid var(--ink);
+  background: var(--ink);
+  color: var(--bg);
+  overflow: hidden;
+  padding: 14px 0;
+  font-family: var(--f-display);
+  font-size: 28px;
+  text-transform: uppercase;
+  letter-spacing: .02em;
+}
+.marquee-track{
+  display: inline-flex; gap: 48px;
+  white-space: nowrap;
+  animation: scroll 40s linear infinite;
+  padding-right: 48px;
+}
+.marquee-track span:nth-child(even){ color: var(--accent); }
+@keyframes scroll { to { transform: translateX(-50%); } }
+

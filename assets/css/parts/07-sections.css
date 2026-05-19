@@ -1,0 +1,22 @@
+/* ---------------- SECTIONS ---------------- */
+section{ padding: 110px 28px; border-bottom: 1px solid var(--line-soft); }
+.section-head{
+  display: flex; align-items: baseline; justify-content: space-between;
+  gap: 24px; margin-bottom: 60px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--ink);
+}
+.section-num{
+  font-family: var(--f-mono); font-size: 12px;
+  letter-spacing: .14em; text-transform: uppercase;
+  color: var(--muted);
+}
+.section-title{
+  font-family: var(--f-display);
+  font-size: clamp(44px, 7vw, 96px);
+  text-transform: uppercase;
+  letter-spacing: -.01em;
+  line-height: .9;
+  margin: 0;
+}
+
