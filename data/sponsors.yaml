@@ -1,7 +1,7 @@
 # Sponsors / partners. Adjust grid via `cols` and `colsMobile`.
 # Add a sponsor by appending to `items`. Set `image` to /img/yourlogo.png
 # and `url` to their site; placeholder cards show `name`.
-cols: 5
+cols: 4
 colsMobile: 2
 
 items:
@@ -11,25 +11,7 @@ items:
   - name: "Sparekassen Danmark"
     url: "https://sparekassendanmark.dk"
     image: "/img/sparekassen-danmark.png"
-  - name: "Sponsor 03"
-    url: ""
-    image: ""
-  - name: "Sponsor 04"
-    url: ""
-    image: ""
-  - name: "Sponsor 05"
-    url: ""
-    image: ""
-  - name: "Sponsor 06"
-    url: ""
-    image: ""
-  - name: "Sponsor 07"
-    url: ""
-    image: ""
-  - name: "Sponsor 08"
-    url: ""
-    image: ""
-  - name: "Sponsor 09"
+  - name: "MetaLine ApS"
     url: ""
     image: ""
   - name: ""        # blank name → renders "Your logo?" placeholder
