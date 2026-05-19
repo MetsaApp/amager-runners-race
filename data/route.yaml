@@ -2,14 +2,30 @@
 # To replace, paste a new ROUTE_5K list. The 10K is the 5K run twice.
 
 stats:
-  distance:
-    en: "5 KM × 1 or 2"
-    da: "5 KM × 1 eller 2"
-  elevation: "~12 M"
-  surface:
-    en: "Paved path"
-    da: "Asfalteret sti"
-  aidStations: "1 / 1"
+  dist5k:
+    lapDistance: "5 KM"
+    laps: 1
+    elevation: "~12 M"
+    surface:
+      en: "Paved path"
+      da: "Asfalteret sti"
+    aidStations: "—"
+    legendStart:
+      en: "Start / Finish"
+      da: "Start / Mål"
+    legendDistance: "5 KM"
+  dist10k:
+    lapDistance: "5 KM"
+    laps: 2
+    elevation: "~24 M"
+    surface:
+      en: "Paved path"
+      da: "Asfalteret sti"
+    aidStations: "1"
+    legendStart:
+      en: "Start / Finish / Aid"
+      da: "Start / Mål / Depot"
+    legendDistance: "10 KM"
 
 # Start/finish marker label
 startLabel: "Start / Finish"

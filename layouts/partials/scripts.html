@@ -1,6 +1,32 @@
 {{- $routeData := hugo.Data.route -}}
+{{- $lang := site.Language.Lang -}}
+{{- $s5 := $routeData.stats.dist5k -}}
+{{- $s10 := $routeData.stats.dist10k -}}
+{{- $stats5 := dict
+    "lapDistance" $s5.lapDistance
+    "laps" $s5.laps
+    "elevation" $s5.elevation
+    "surface" (index $s5.surface $lang)
+    "aidStations" $s5.aidStations
+    "legendStart" (index $s5.legendStart $lang)
+    "legendDistance" $s5.legendDistance
+-}}
+{{- $stats10 := dict
+    "lapDistance" $s10.lapDistance
+    "laps" $s10.laps
+    "elevation" $s10.elevation
+    "surface" (index $s10.surface $lang)
+    "aidStations" $s10.aidStations
+    "legendStart" (index $s10.legendStart $lang)
+    "legendDistance" $s10.legendDistance
+-}}
 <script>
-  window.__SITE = JSON.parse({{ (dict "routePoints" $routeData.points "startLabel" $routeData.startLabel "startVenue" $routeData.startVenue) | jsonify }});
+  window.__SITE = JSON.parse({{ (dict
+    "routePoints" $routeData.points
+    "startLabel" $routeData.startLabel
+    "startVenue" $routeData.startVenue
+    "routeStats" (dict "5k" $stats5 "10k" $stats10)
+  ) | jsonify }});
 </script>
 
 <script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js" defer></script>
