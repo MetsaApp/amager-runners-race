@@ -165,6 +165,10 @@
     center: initialRoute.coords[0],
     zoom: 13,
     attributionControl: { compact: true },
+    // The map is presentational — no panning, zooming, rotating, or
+    // keyboard navigation. `interactive: false` disables all user
+    // gestures and handlers in one shot.
+    interactive: false,
     dragRotate: false,
     pitchWithRotate: false,
     touchPitch: false,
