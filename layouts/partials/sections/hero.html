@@ -21,7 +21,7 @@
 
     <div class="hero-bottom">
       <dl class="hero-meta">
-        <div><dt>{{ $t.hero.metaDate }}</dt><dd>{{ $p.eventDateDisplay }}</dd></div>
+        <div><dt>{{ $t.hero.metaDate }}</dt><dd>{{ dateFormat "02.01.2006" $p.eventDate }}</dd></div>
         {{- $starts := where (index .site.Data.schedule "rows") "kind.en" "Start" -}}
         {{- $times := slice -}}
         {{- range $starts }}{{ $times = $times | append .time }}{{ end -}}

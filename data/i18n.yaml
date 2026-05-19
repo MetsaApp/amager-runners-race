@@ -23,7 +23,7 @@ en:
 
   marquee:
     items:
-      - "03 · 09 · 2026"
+      - "{date}"
       - "Two distances"
       - "Flat and fast"
       - "One loop on the coast"
@@ -96,7 +96,7 @@ da:
 
   marquee:
     items:
-      - "03 · 09 · 2026"
+      - "{date}"
       - "To distancer"
       - "Fladt og hurtigt"
       - "Én rute langs kysten"

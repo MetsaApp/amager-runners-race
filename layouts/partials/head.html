@@ -7,7 +7,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="theme-color" content="{{ $themeColor }}" />
-<title>{{ if .IsHome }}{{ .Site.Title }} — 5K / 10K · {{ .Site.Params.eventDateDisplay }}{{ else }}{{ .Title }} · {{ .Site.Title }}{{ end }}</title>
+<title>{{ if .IsHome }}{{ .Site.Title }} — 5K / 10K · {{ dateFormat "02.01.2006" .Site.Params.eventDate }}{{ else }}{{ .Title }} · {{ .Site.Title }}{{ end }}</title>
 <meta name="description" content="{{ $desc }}" />
 {{- with .Params.keywords }}<meta name="keywords" content="{{ delimit . ", " }}" />{{ end }}
 <meta name="author" content="{{ .Site.Params.organiser }}" />
@@ -32,7 +32,7 @@
 {{/* Open Graph */}}
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="{{ .Site.Title }}" />
-<meta property="og:title" content="{{ if .IsHome }}{{ .Site.Title }} — 5K / 10K · {{ .Site.Params.eventDateDisplay }}{{ else }}{{ .Title }}{{ end }}" />
+<meta property="og:title" content="{{ if .IsHome }}{{ .Site.Title }} — 5K / 10K · {{ dateFormat "02.01.2006" .Site.Params.eventDate }}{{ else }}{{ .Title }}{{ end }}" />
 <meta property="og:description" content="{{ $desc }}" />
 <meta property="og:url" content="{{ $canonical }}" />
 <meta property="og:locale" content="{{ .Site.Params.ogLocale | default "en_GB" }}" />

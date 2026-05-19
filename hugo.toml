@@ -54,7 +54,8 @@ disableKinds = ["taxonomy", "term", "section"]
 [params]
   # Core event details — change once, used everywhere. Event name uses top-level title.
   eventDate = "2026-09-03"
-  eventDateDisplay = "03.09.2026"
+  # eventDateDisplay (DD.MM.YYYY) is derived from eventDate via time.Format in templates.
+  # eventDateLong stays explicit because Hugo's time.Format doesn't localize month/weekday names.
   eventDateLong = { en = "Thursday 3 September 2026", da = "Torsdag 3. september 2026" }
   # Start times come from data/schedule.yaml (rows with kind.en = "Start").
   # Event geo coords come from the first point in data/route.yaml.

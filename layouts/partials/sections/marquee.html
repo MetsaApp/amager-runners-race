@@ -1,17 +1,19 @@
 {{- $t := .t -}}
 {{- $lang := .lang -}}
+{{- $p := .site.Params -}}
 {{- $starts := where (index .site.Data.schedule "rows") "kind.en" "Start" -}}
+{{- $marqueeDate := dateFormat "02 · 01 · 2006" $p.eventDate -}}
 <div class="marquee" aria-hidden="true">
   <div class="marquee-track">
     {{- range $i, $item := $t.marquee.items -}}
-      <span>{{ $item }}</span>
+      <span>{{ replace $item "{date}" $marqueeDate }}</span>
     {{- end -}}
     {{- range $row := $starts -}}
       <span>{{ index $row.tag $lang }} · {{ $row.time }}</span>
     {{- end -}}
     {{/* duplicate for seamless scroll */}}
     {{- range $i, $item := $t.marquee.items -}}
-      <span>{{ $item }}</span>
+      <span>{{ replace $item "{date}" $marqueeDate }}</span>
     {{- end -}}
     {{- range $row := $starts -}}
       <span>{{ index $row.tag $lang }} · {{ $row.time }}</span>
