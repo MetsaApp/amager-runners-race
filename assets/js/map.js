@@ -183,19 +183,17 @@
   paintRunner(ACCENT, hexToRgba(ACCENT, 0.55));
   const runnerMarker = new maplibregl.Marker({ element: runnerEl }).setLngLat(initialRoute.coords[0]);
 
-  // Meeting point — sits off the route, on the grass.
+  // Meeting point — sits off the route, on the grass. Decorative only
+  // (no popup, no link) so the map stays presentational.
   let meetingMarker = null;
   function placeMeetingMarker() {
     const mp = SITE.meetingPoint;
     if (!mp || !mp.coord) return;
     if (!meetingMarker) {
       const el = document.createElement("div");
-      el.style.cssText = `width:16px;height:16px;border-radius:50%;background:${GOLD};box-shadow:0 0 0 2.5px ${PAPER}, 0 0 0 4.5px ${INK};`;
-      const popupHtml = "<strong>" + (mp.label || "Meeting Point") + "</strong>" +
-        (mp.venue ? "<br/>" + mp.venue : "");
+      el.style.cssText = `width:16px;height:16px;border-radius:50%;background:${GOLD};box-shadow:0 0 0 2.5px ${PAPER}, 0 0 0 4.5px ${INK};pointer-events:none;`;
       meetingMarker = new maplibregl.Marker({ element: el })
         .setLngLat(mp.coord)
-        .setPopup(new maplibregl.Popup({ offset: 16 }).setHTML(popupHtml))
         .addTo(map);
     }
   }
