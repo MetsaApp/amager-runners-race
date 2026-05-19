@@ -9,8 +9,6 @@ tiers:
     tier:
       en: "Entry · 5K or 10K"
       da: "Tilmelding · 5K eller 10K"
-    amount: "200"
-    currency: "DKK"
     window:
       en: "One price. Both distances."
       da: "Én pris. Begge distancer."

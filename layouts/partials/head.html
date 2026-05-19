@@ -7,7 +7,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="theme-color" content="{{ $themeColor }}" />
-<title>{{ if .IsHome }}{{ .Site.Params.eventName }} — 5K / 10K · {{ .Site.Params.eventDateDisplay }}{{ else }}{{ .Title }} · {{ .Site.Title }}{{ end }}</title>
+<title>{{ if .IsHome }}{{ .Site.Title }} — 5K / 10K · {{ .Site.Params.eventDateDisplay }}{{ else }}{{ .Title }} · {{ .Site.Title }}{{ end }}</title>
 <meta name="description" content="{{ $desc }}" />
 {{- with .Params.keywords }}<meta name="keywords" content="{{ delimit . ", " }}" />{{ end }}
 <meta name="author" content="{{ .Site.Params.organiser }}" />
@@ -31,20 +31,20 @@
 
 {{/* Open Graph */}}
 <meta property="og:type" content="website" />
-<meta property="og:site_name" content="{{ .Site.Params.eventName }}" />
-<meta property="og:title" content="{{ if .IsHome }}{{ .Site.Params.eventName }} — 5K / 10K · {{ .Site.Params.eventDateDisplay }}{{ else }}{{ .Title }}{{ end }}" />
+<meta property="og:site_name" content="{{ .Site.Title }}" />
+<meta property="og:title" content="{{ if .IsHome }}{{ .Site.Title }} — 5K / 10K · {{ .Site.Params.eventDateDisplay }}{{ else }}{{ .Title }}{{ end }}" />
 <meta property="og:description" content="{{ $desc }}" />
 <meta property="og:url" content="{{ $canonical }}" />
 <meta property="og:locale" content="{{ .Site.Params.ogLocale | default "en_GB" }}" />
 {{- range .Translations }}<meta property="og:locale:alternate" content="{{ .Site.Params.ogLocale | default "en_GB" }}" />{{ end }}
 <meta property="og:image" content="{{ $absImg }}" />
-<meta property="og:image:alt" content="Runners along the Amager Strandpark coast" />
+<meta property="og:image:alt" content="Runners along the {{ .Site.Params.location }} coast" />
 <meta property="og:image:width" content="1600" />
 <meta property="og:image:height" content="1067" />
 
 {{/* Twitter */}}
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="{{ if .IsHome }}{{ .Site.Params.eventName }} — 5K / 10K{{ else }}{{ .Title }}{{ end }}" />
+<meta name="twitter:title" content="{{ if .IsHome }}{{ .Site.Title }} — 5K / 10K{{ else }}{{ .Title }}{{ end }}" />
 <meta name="twitter:description" content="{{ $desc }}" />
 <meta name="twitter:image" content="{{ $absImg }}" />
 {{- with .Site.Params.twitterHandle }}<meta name="twitter:site" content="{{ . }}" />{{ end }}

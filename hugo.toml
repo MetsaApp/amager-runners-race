@@ -37,36 +37,31 @@ disableKinds = ["taxonomy", "term", "section"]
     label = "English"
     locale = "en"
     weight = 1
-    title = "Amager Runners Race"
     [languages.en.params]
-      description = "Amager Runners Race. A flat, fast 5K and 10K evening race in Amager Strandpark, Copenhagen. Thursday 3 September 2026."
+      # description comes from content/_index.md front matter; title from top-level.
       ogLocale = "en_GB"
 
   [languages.da]
     label = "Dansk"
     locale = "da"
     weight = 2
-    title = "Amager Runners Race"
     contentDir = "content/da"
     [languages.da.params]
-      description = "Amager Runners Race. Et fladt, hurtigt 5K- og 10K-aftensløb i Amager Strandpark i København. Torsdag 3. september 2026."
+      # description comes from content/da/_index.md front matter; title from top-level.
       ogLocale = "da_DK"
 
 # ----------------- SITE PARAMS -----------------
 [params]
-  # Core event details — change once, used everywhere
-  eventName = "Amager Runners Race"
+  # Core event details — change once, used everywhere. Event name uses top-level title.
   eventDate = "2026-09-03"
   eventDateDisplay = "03.09.2026"
-  eventDateLong = "Thursday 3 September 2026"
-  eventDateLongDa = "Torsdag 3. september 2026"
+  eventDateLong = { en = "Thursday 3 September 2026", da = "Torsdag 3. september 2026" }
   # Start times come from data/schedule.yaml (rows with kind.en = "Start").
+  # Event geo coords come from the first point in data/route.yaml.
   eventEndTime = "21:30"
-  eventLat = 55.65155
-  eventLng = 12.64652
   location = "Amager Strandpark"
-  locationFull = "Amager Strandpark, Copenhagen, Denmark"
   organiser = "Amager Runners"
+  organiserUrl = "https://amagerrunners.dk"
   organiserEmail = "info@amagerrunners.dk"
   organiserPhone = "+45 51 90 41 82"
   organiserStreet = "Erantisvej 28"
@@ -78,7 +73,8 @@ disableKinds = ["taxonomy", "term", "section"]
   # front-matter descriptions, which can't read params. Update those by hand.
   maxRunners = 900
   priceDKK = 200
-  domain = "race.amagerrunners.dk"
+  currency = "DKK"
+  # domain (race.amagerrunners.dk) is derived from baseURL in templates.
   bagDropEnd = "21:30"
   resultsLiveTime = "18:40"
 

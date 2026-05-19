@@ -1,18 +1,22 @@
 {{- $t := .t -}}
 {{- $p := .site.Params -}}
+{{- $lang := .lang -}}
+{{- $kicker := $t.hero.kicker | replace "{organiser}" $p.organiser | replace "{date}" (index $p.eventDateLong $lang) -}}
+{{- $sub := replace $t.hero.sub "{location}" $p.location -}}
+{{- $pill := replace $t.hero.pill "{capacity}" (string $p.maxRunners) -}}
 <header class="hero" id="top">
   <div class="hero-media" role="img" aria-label="Runners along the Amager coast"></div>
   <div class="hero-inner">
     <div class="hero-top">
-      <span class="pill"><span class="dot" aria-hidden="true"></span><span>{{ replace $t.hero.pill "{capacity}" (string $p.maxRunners) }}</span></span>
+      <span class="pill"><span class="dot" aria-hidden="true"></span><span>{{ $pill }}</span></span>
       <span>{{ $t.hero.edition }}</span>
     </div>
 
     <div>
-      <div class="hero-kicker">{{ $t.hero.kicker }}</div>
+      <div class="hero-kicker">{{ $kicker }}</div>
       <div class="hero-eyebrow">{{ $t.hero.eyebrow }}</div>
       <h1 class="hero-title">5K<span class="slash">/</span>10K</h1>
-      <p class="hero-sub">{{ $t.hero.sub }}</p>
+      <p class="hero-sub">{{ $sub }}</p>
     </div>
 
     <div class="hero-bottom">

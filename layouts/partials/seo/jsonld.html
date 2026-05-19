@@ -13,7 +13,7 @@
     (dict
       "@type" "SportsEvent"
       "@id" (printf "%s#event" $url)
-      "name" $p.eventName
+      "name" .Site.Title
       "description" $desc
       "startDate" $startISO
       "endDate" $endISO
@@ -35,15 +35,15 @@
         )
         "geo" (dict
           "@type" "GeoCoordinates"
-          "latitude" $p.eventLat
-          "longitude" $p.eventLng
+          "latitude" (index (index .Site.Data.route.points 0) 1)
+          "longitude" (index (index .Site.Data.route.points 0) 0)
         )
       )
       "organizer" (dict
         "@type" "Organization"
         "@id" (printf "%s#organisation" $url)
         "name" $p.organiser
-        "url" "https://amagerrunners.dk"
+        "url" $p.organiserUrl
         "email" $p.organiserEmail
         "telephone" $p.organiserPhone
       )
@@ -51,7 +51,7 @@
         "@type" "Offer"
         "name" "Entry · 5K or 10K"
         "price" (printf "%d.00" (int $p.priceDKK))
-        "priceCurrency" "DKK"
+        "priceCurrency" $p.currency
         "availability" "https://schema.org/InStock"
         "url" (printf "%s#pricing" $url)
         "validFrom" "2026-01-01T00:00:00+01:00"
@@ -61,7 +61,7 @@
       "@type" "Organization"
       "@id" (printf "%s#organisation" $url)
       "name" $p.organiser
-      "url" "https://amagerrunners.dk"
+      "url" $p.organiserUrl
       "logo" $logoImg
       "email" $p.organiserEmail
       "telephone" $p.organiserPhone
@@ -78,7 +78,7 @@
       "@type" "WebSite"
       "@id" (printf "%s#website" $url)
       "url" $url
-      "name" $p.eventName
+      "name" .Site.Title
       "inLanguage" .Site.Language.Lang
       "publisher" (dict "@id" (printf "%s#organisation" $url))
     )
