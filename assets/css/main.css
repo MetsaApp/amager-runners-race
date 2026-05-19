@@ -442,6 +442,10 @@ section{ padding: 110px 28px; border-bottom: 1px solid var(--line-soft); }
 }
 .legend .sw--dot{
   width: 11px; height: 11px; border-radius: 50%;
+  background: var(--accent); box-shadow: 0 0 0 2px var(--ink);
+}
+.legend .sw--meeting{
+  width: 11px; height: 11px; border-radius: 50%;
   background: #E0B341; box-shadow: 0 0 0 2px var(--ink);
 }
 

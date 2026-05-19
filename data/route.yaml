@@ -15,7 +15,7 @@ stats:
       da: "Start / Mål"
     legendDistance: "5 KM"
   dist10k:
-    lapDistance: "10 KM"
+    lapDistance: "5 KM"
     laps: 2
     elevation: "~12 M"
     surface:
@@ -27,10 +27,19 @@ stats:
       da: "Start / Mål / Depot"
     legendDistance: "10 KM"
 
-# Start/finish marker
-startLabel: "Start / Finish"
-startVenue: "Tiøren"
+# Start/finish line — sits on the route itself
+startLabel:
+  en: "Start / Finish"
+  da: "Start / Mål"
 startCoord: [12.64234, 55.64816]
+
+# Meeting point / race arena — the grass field next to the start line
+meetingPoint:
+  coord: [12.64333, 55.64846]
+  label:
+    en: "Meeting Point"
+    da: "Mødested"
+  venue: "Tiøren"
 
 
 points5k:
