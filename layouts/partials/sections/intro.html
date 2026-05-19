@@ -11,7 +11,10 @@
 {{- $startsSentence = replace $startsSentence "{dist1}" (index $s1.tag $lang) -}}
 {{- $startsSentence = replace $startsSentence "{time1}" $s1.time -}}
 {{- $lead := replace $t.intro.lead "{location}" $p.location -}}
-{{- $body := $t.intro.body | replace "{starts}" $startsSentence | replace "{organiser}" $p.organiser | replace "{location}" $p.location -}}
+{{- $body := $t.intro.body -}}
+{{- $body = replace $body "{starts}" $startsSentence -}}
+{{- $body = replace $body "{organiser}" $p.organiser -}}
+{{- $body = replace $body "{location}" $p.location -}}
 <section id="info">
   <div class="section-head">
     <span class="section-num">{{ $num }} / <span>{{ $t.intro.sectionLabel }}</span></span>

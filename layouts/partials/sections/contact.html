@@ -3,7 +3,9 @@
 {{- $num := .section.num -}}
 {{- $emailParts := split $p.organiserEmail "@" -}}
 {{- $emailDisplay := printf "%s@<wbr>%s" (index $emailParts 0) (index $emailParts 1) -}}
-{{- $big := $t.contact.big | replace "{email}" $p.organiserEmail | replace "{emailDisplay}" $emailDisplay -}}
+{{- $big := $t.contact.big -}}
+{{- $big = replace $big "{email}" $p.organiserEmail -}}
+{{- $big = replace $big "{emailDisplay}" $emailDisplay -}}
 <section id="contact">
   <div class="section-head">
     <span class="section-num">{{ $num }} / <span>{{ $t.contact.sectionLabel }}</span></span>
