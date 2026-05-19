@@ -164,7 +164,9 @@
     style: "https://basemaps.cartocdn.com/gl/positron-gl-style/style.json",
     center: initialRoute.coords[0],
     zoom: 13,
-    attributionControl: { compact: true },
+    // Skip the default attribution control — we add a compact one below
+    // that stays collapsed regardless of viewport width.
+    attributionControl: false,
     // The map is presentational — no panning, zooming, rotating, or
     // keyboard navigation. `interactive: false` disables all user
     // gestures and handlers in one shot.
@@ -173,6 +175,7 @@
     pitchWithRotate: false,
     touchPitch: false,
   });
+  map.addControl(new maplibregl.AttributionControl({ compact: true }));
   window.__mapInstance = map;
 
   // Runner — accent (blue) with ink + paper rings; pulses on lap 2.
