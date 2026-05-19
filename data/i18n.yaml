@@ -10,7 +10,7 @@ en:
     contact: "Contact"
 
   hero:
-    pill: "Registration open. 900 spots."
+    pill: "Registration open. {capacity} spots."
     edition: "First edition · 2026"
     kicker: "Amager Runners presents · Thursday 3 September 2026"
     eyebrow: "Strandparkløbet Amager"
@@ -84,7 +84,7 @@ da:
     contact: "Kontakt"
 
   hero:
-    pill: "Tilmelding åben. 900 pladser."
+    pill: "Tilmelding åben. {capacity} pladser."
     edition: "Første udgave · 2026"
     kicker: "Amager Runners præsenterer · Torsdag 3. september 2026"
     eyebrow: "Amager Runners Race"

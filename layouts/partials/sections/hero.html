@@ -4,7 +4,7 @@
   <div class="hero-media" role="img" aria-label="Runners along the Amager coast"></div>
   <div class="hero-inner">
     <div class="hero-top">
-      <span class="pill"><span class="dot" aria-hidden="true"></span><span>{{ $t.hero.pill }}</span></span>
+      <span class="pill"><span class="dot" aria-hidden="true"></span><span>{{ replace $t.hero.pill "{capacity}" (string $p.maxRunners) }}</span></span>
       <span>{{ $t.hero.edition }}</span>
     </div>
 
@@ -18,7 +18,10 @@
     <div class="hero-bottom">
       <dl class="hero-meta">
         <div><dt>{{ $t.hero.metaDate }}</dt><dd>{{ $p.eventDateDisplay }}</dd></div>
-        <div><dt>{{ $t.hero.metaStart }}</dt><dd>{{ $p.startTimes }}</dd></div>
+        {{- $starts := where (index .site.Data.schedule "rows") "kind.en" "Start" -}}
+        {{- $times := slice -}}
+        {{- range $starts }}{{ $times = $times | append .time }}{{ end -}}
+        <div><dt>{{ $t.hero.metaStart }}</dt><dd>{{ delimit $times " · " }}</dd></div>
         <div><dt>{{ $t.hero.metaWhere }}</dt><dd>{{ $p.location }}</dd></div>
       </dl>
       <div class="hero-cta">
