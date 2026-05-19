@@ -10,6 +10,11 @@
   const SECTION = document.getElementById("route");
   const REDUCED_MOTION = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+  // Tracks whether the map is currently in the viewport. Set by an
+  // IntersectionObserver wired up after init below. The animation's frame()
+  // loop checks this and pauses (stashing its elapsed time) when false.
+  let mapVisible = true;
+
   // ----- Geometry helpers ----------------------------------------------------
   function haversine(a, b) {
     const R = 6371;
@@ -176,7 +181,34 @@
     touchPitch: false,
   });
   map.addControl(new maplibregl.AttributionControl({ compact: true }));
+  // MapLibre's compact attribution mounts with `maplibregl-compact-show`
+  // (expanded) when the viewport is wide enough. Strip it once after the
+  // control is in the DOM so the credits start collapsed. We don't re-run
+  // this on every idle/render — if the user clicks the "i" we want it to
+  // stay open until they click again.
+  map.once("idle", () => {
+    document
+      .querySelectorAll(".maplibregl-ctrl-attrib.maplibregl-compact-show")
+      .forEach((el) => el.classList.remove("maplibregl-compact-show"));
+  });
   window.__mapInstance = map;
+
+  // Pause the route animation when the map scrolls out of view. The frame
+  // loop stashes a resume callback when it pauses; we fire it when the
+  // map comes back so the trace picks up exactly where it left off rather
+  // than restarting.
+  if ("IntersectionObserver" in window) {
+    const visibilityObserver = new IntersectionObserver(
+      ([entry]) => {
+        mapVisible = entry.isIntersecting;
+        if (mapVisible && typeof resumeAnimation === "function") {
+          resumeAnimation();
+        }
+      },
+      { threshold: 0 }
+    );
+    visibilityObserver.observe(mapEl);
+  }
 
   // Runner — accent (blue) with ink + paper rings; pulses on lap 2.
   const runnerEl = document.createElement("div");
@@ -323,6 +355,11 @@
   // The polyline already contains every kilometer of the actual race
   // (the 10K array is the 5K loop laid out end-to-end). So we just trace
   // it once from start to finish — no looping, no lap-2 overlay.
+  // Resume hook set by the current frame() closure when it pauses because
+  // the map is offscreen. Called by the IntersectionObserver below when
+  // the map re-enters the viewport.
+  let resumeAnimation = null;
+
   function runAnimation(route) {
     const myToken = ++animToken;
     clearKmMarkers();
@@ -350,10 +387,25 @@
     // stays consistent across 5K and 10K.
     const traceMs = Math.round(4200 * route.totalKm);
     const pauseMs = 2200;
-    const start = performance.now();
+    let start = performance.now();
 
     function frame(now) {
       if (animToken !== myToken) return;
+      // Pause if the map has scrolled out of view. Don't schedule the next
+      // rAF; instead expose a resume callback that the observer will fire
+      // when the map comes back, adjusting `start` so elapsed picks up
+      // exactly where it left off.
+      if (!mapVisible) {
+        const pausedElapsed = now - start;
+        resumeAnimation = () => {
+          if (animToken !== myToken) return;
+          start = performance.now() - pausedElapsed;
+          resumeAnimation = null;
+          requestAnimationFrame(frame);
+        };
+        return;
+      }
+
       const elapsed = now - start;
       if (elapsed < drawMs) {
         const t = easeInOut(elapsed / drawMs);
