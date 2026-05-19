@@ -1,6 +1,8 @@
 {{- $p := .Site.Params -}}
-{{- $startISO := printf "%sT18:30:00+02:00" $p.eventDate -}}
-{{- $endISO := printf "%sT21:30:00+02:00" $p.eventDate -}}
+{{- $starts := where (index .Site.Data.schedule "rows") "kind.en" "Start" -}}
+{{- $firstStart := (index $starts 0).time -}}
+{{- $startISO := printf "%sT%s:00+02:00" $p.eventDate $firstStart -}}
+{{- $endISO := printf "%sT%s:00+02:00" $p.eventDate $p.eventEndTime -}}
 {{- $url := .Site.BaseURL -}}
 {{- $img := absURL ($p.ogImage | default "/img/hero.jpg") -}}
 {{- $logoImg := absURL "/img/logo.png" -}}
@@ -11,7 +13,7 @@
     (dict
       "@type" "SportsEvent"
       "@id" (printf "%s#event" $url)
-      "name" $p.eventName
+      "name" .Site.Title
       "description" $desc
       "startDate" $startISO
       "endDate" $endISO
@@ -26,22 +28,22 @@
         "name" $p.location
         "address" (dict
           "@type" "PostalAddress"
-          "streetAddress" "Amager Strandpark"
+          "streetAddress" $p.location
           "addressLocality" "Copenhagen"
-          "postalCode" "2300"
+          "postalCode" $p.organiserPostalCode
           "addressCountry" "DK"
         )
         "geo" (dict
           "@type" "GeoCoordinates"
-          "latitude" 55.65155
-          "longitude" 12.64652
+          "latitude" (index (index .Site.Data.route.points 0) 1)
+          "longitude" (index (index .Site.Data.route.points 0) 0)
         )
       )
       "organizer" (dict
         "@type" "Organization"
         "@id" (printf "%s#organisation" $url)
         "name" $p.organiser
-        "url" "https://amagerrunners.dk"
+        "url" $p.organiserUrl
         "email" $p.organiserEmail
         "telephone" $p.organiserPhone
       )
@@ -49,7 +51,7 @@
         "@type" "Offer"
         "name" "Entry · 5K or 10K"
         "price" (printf "%d.00" (int $p.priceDKK))
-        "priceCurrency" "DKK"
+        "priceCurrency" $p.currency
         "availability" "https://schema.org/InStock"
         "url" (printf "%s#pricing" $url)
         "validFrom" "2026-01-01T00:00:00+01:00"
@@ -59,15 +61,15 @@
       "@type" "Organization"
       "@id" (printf "%s#organisation" $url)
       "name" $p.organiser
-      "url" "https://amagerrunners.dk"
+      "url" $p.organiserUrl
       "logo" $logoImg
       "email" $p.organiserEmail
       "telephone" $p.organiserPhone
       "address" (dict
         "@type" "PostalAddress"
-        "streetAddress" "Erantisvej 28"
-        "addressLocality" "København S"
-        "postalCode" "2300"
+        "streetAddress" $p.organiserStreet
+        "addressLocality" $p.organiserLocality
+        "postalCode" $p.organiserPostalCode
         "addressCountry" "DK"
       )
       "sameAs" (slice $p.social.instagram $p.social.strava $p.social.facebook)
@@ -76,7 +78,7 @@
       "@type" "WebSite"
       "@id" (printf "%s#website" $url)
       "url" $url
-      "name" $p.eventName
+      "name" .Site.Title
       "inLanguage" .Site.Language.Lang
       "publisher" (dict "@id" (printf "%s#organisation" $url))
     )

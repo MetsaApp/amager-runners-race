@@ -1,6 +1,7 @@
 {{- $t := .t -}}
 {{- $lang := .lang -}}
 {{- $num := .section.num -}}
+{{- $p := .site.Params -}}
 {{- $data := hugo.Data.pricing -}}
 {{- $cols := $data.cols | default 3 -}}
 {{- $maxW := $data.maxWidth | default "640px" -}}
@@ -13,7 +14,7 @@
     {{ range $data.tiers }}
       <div class="price-card{{ if .feature }} feature{{ end }}"{{ if eq $cols 1 }} style="max-width: {{ $maxW }}; margin: 0 auto; width: 100%;"{{ end }}>
         <div class="price-tier">{{ index .tier $lang }}</div>
-        <div class="price-amount">{{ .amount }}<small>{{ .currency }}</small></div>
+        <div class="price-amount">{{ $p.priceDKK }}<small>{{ $p.currency }}</small></div>
         <div class="price-window muted">{{ index .window $lang }}</div>
         {{ if .perks }}
           <ul class="price-list">

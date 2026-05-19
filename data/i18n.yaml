@@ -10,11 +10,11 @@ en:
     contact: "Contact"
 
   hero:
-    pill: "Registration open. 900 spots."
+    pill: "Registration open. {capacity} spots."
     edition: "First edition · 2026"
-    kicker: "Amager Runners presents · Thursday 3 September 2026"
+    kicker: "{organiser} presents · {date}"
     eyebrow: "Strandparkløbet Amager"
-    sub: "An evening 5K and 10K on Amager Strandpark"
+    sub: "An evening 5K and 10K on {location}"
     metaDate: "Date"
     metaStart: "Start"
     metaWhere: "Where"
@@ -23,20 +23,19 @@ en:
 
   marquee:
     items:
-      - "03 · 09 · 2026"
+      - "{date}"
       - "Two distances"
       - "Flat and fast"
       - "One loop on the coast"
-      - "5K · 18:30"
-      - "10K · 19:15"
 
   intro:
     sectionLabel: "About the race"
     sectionTitle: "Run the coast"
     label: "A club race, open to everyone."
-    lead: "A flat, fast loop along Amager Strandpark. Run it once for the 5K, twice for the 10K."
+    lead: "A flat, fast loop along {location}. Run it once for the 5K, twice for the 10K."
+    startsSentence: "The {dist0} sets off at {time0}, the {dist1} at {time1}."
     body: |
-      <p>Amager Runners is hosting the first edition of our evening race. Same course, same start line, same finish on the sand. The 5K sets off at 18:30, the 10K at 19:00.</p>
+      <p>{organiser} is hosting the first edition of our evening race. Same course, same start line, same finish on the sand. {starts}</p>
       <p>Chip timing is included. Any profit goes back to the club and to youth running on Amager.</p>
 
   schedule:
@@ -71,7 +70,7 @@ en:
   contact:
     sectionLabel: "Contact"
     sectionTitle: "Get in touch"
-    big: 'Questions?<br>Write to <a href="mailto:info@amagerrunners.dk">info@<wbr>amagerrunners.dk</a>'
+    big: 'Questions?<br>Write to <a href="mailto:{email}">{emailDisplay}</a>'
     organiser: "Organiser"
     follow: "Follow"
 
@@ -84,11 +83,11 @@ da:
     contact: "Kontakt"
 
   hero:
-    pill: "Tilmelding åben. 900 pladser."
+    pill: "Tilmelding åben. {capacity} pladser."
     edition: "Første udgave · 2026"
-    kicker: "Amager Runners præsenterer · Torsdag 3. september 2026"
+    kicker: "{organiser} præsenterer · {date}"
     eyebrow: "Amager Runners Race"
-    sub: "Et 5K- og 10K-aftensløb i Amager Strandpark"
+    sub: "Et 5K- og 10K-aftensløb i {location}"
     metaDate: "Dato"
     metaStart: "Start"
     metaWhere: "Hvor"
@@ -97,20 +96,19 @@ da:
 
   marquee:
     items:
-      - "03 · 09 · 2026"
+      - "{date}"
       - "To distancer"
       - "Fladt og hurtigt"
       - "Én rute langs kysten"
-      - "5K · 18:30"
-      - "10K · 19:00"
 
   intro:
     sectionLabel: "Om løbet"
     sectionTitle: "Løb langs kysten"
     label: "Et klubløb. Åbent for alle."
-    lead: "En flad, hurtig rute gennem Amager Strandpark. Én omgang på 5K, to omgange på 10K."
+    lead: "En flad, hurtig rute gennem {location}. Én omgang på 5K, to omgange på 10K."
+    startsSentence: "{dist0} starter {time0}, {dist1} starter {time1}."
     body: |
-      <p>Amager Runners holder første udgave af vores aftensløb. Samme rute, samme startlinje, samme mål i sandet. 5K starter 18:30, 10K starter 19:00.</p>
+      <p>{organiser} holder første udgave af vores aftensløb. Samme rute, samme startlinje, samme mål i sandet. {starts}</p>
       <p>Chiptidtagning er inkluderet. Et eventuelt overskud går tilbage til klubben og til ungdomsløb på Amager.</p>
 
   schedule:
@@ -145,6 +143,6 @@ da:
   contact:
     sectionLabel: "Kontakt"
     sectionTitle: "Kontakt os"
-    big: 'Spørgsmål?<br>Skriv til <a href="mailto:info@amagerrunners.dk">info@<wbr>amagerrunners.dk</a>'
+    big: 'Spørgsmål?<br>Skriv til <a href="mailto:{email}">{emailDisplay}</a>'
     organiser: "Arrangør"
     follow: "Følg"
