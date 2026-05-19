@@ -17,8 +17,8 @@ cards:
       en: "Bag drop"
       da: "Taskeaflevering"
     body:
-      en: "Staffed bag drop at Helgoland Badeanstalt from 17:30 to 21:30. Show your bib to pick up."
-      da: "Bemandet taskeaflevering ved Helgoland Badeanstalt fra 17:30 til 21:30. Vis dit startnummer ved afhentning."
+      en: "Staffed bag drop at Helgoland Badeanstalt from {checkin} to {bagDropEnd}. Show your bib to pick up."
+      da: "Bemandet taskeaflevering ved Helgoland Badeanstalt fra {checkin} til {bagDropEnd}. Vis dit startnummer ved afhentning."
 
   - icon: "H"
     title:
@@ -41,5 +41,5 @@ cards:
       en: "Chip timing"
       da: "Chiptidtagning"
     body:
-      en: "Disposable chip on the back of your bib. Nothing to return. Live results at race.amagerrunners.dk from 18:40."
-      da: "Engangschip bag på startnummeret. Skal ikke afleveres. Live-resultater på race.amagerrunners.dk fra 18:40."
+      en: "Disposable chip on the back of your bib. Nothing to return. Live results at {domain} from {resultsLive}."
+      da: "Engangschip bag på startnummeret. Skal ikke afleveres. Live-resultater på {domain} fra {resultsLive}."
