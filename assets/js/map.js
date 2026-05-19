@@ -137,23 +137,27 @@
   function addKmMarker(key, label, lngLat) {
     if (kmMarkers[key]) return;
     const el = document.createElement("div");
-    el.style.cssText = "display:flex;align-items:center;gap:4px;transform:translateY(-2px);pointer-events:none;";
+    el.style.cssText = "display:flex;align-items:center;gap:4px;pointer-events:none;";
     const dot = document.createElement("span");
-    dot.style.cssText = `width:9px;height:9px;border-radius:50%;background:${INK};box-shadow:0 0 0 2.5px ${PAPER};`;
+    dot.style.cssText = `width:9px;height:9px;border-radius:50%;background:${INK};box-shadow:0 0 0 2.5px ${PAPER};flex-shrink:0;`;
     const tag = document.createElement("span");
     tag.textContent = label;
-    tag.style.cssText = `font:600 10px/1 "JetBrains Mono", ui-monospace, monospace;color:${PAPER};background:${INK};padding:2px 5px;border-radius:3px;box-shadow:0 1px 4px rgba(0,0,0,.15);letter-spacing:.04em;`;
+    tag.style.cssText = `font:600 10px/1 "JetBrains Mono", ui-monospace, monospace;color:${PAPER};background:${INK};padding:2px 5px;border-radius:3px;box-shadow:0 1px 4px rgba(0,0,0,.15);letter-spacing:.04em;white-space:nowrap;`;
     el.appendChild(dot);
     el.appendChild(tag);
-    const mk = new maplibregl.Marker({ element: el, anchor: "left" }).setLngLat(lngLat).addTo(map);
-    if (mk.getElement().animate) {
-      mk.getElement().animate(
+    const mk = new maplibregl.Marker({ element: el, anchor: "left", offset: [0, -10] }).setLngLat(lngLat).addTo(map);
+    const inner = el;
+    inner.style.opacity = "0";
+    if (inner.animate) {
+      inner.animate(
         [
-          { opacity: 0, transform: "translate(-4px, -2px) scale(.7)" },
-          { opacity: 1, transform: "translate(0,-2px) scale(1)" },
+          { opacity: 0 },
+          { opacity: 1 },
         ],
         { duration: 280, easing: "cubic-bezier(.2,.7,.3,1)", fill: "forwards" }
       );
+    } else {
+      inner.style.opacity = "1";
     }
     kmMarkers[key] = mk;
   }
@@ -202,6 +206,9 @@
       });
     }
     if (!map.getLayer("route-dash")) {
+      // line-dasharray is silently ignored when line-gradient is set, so the
+      // dash layer cannot also do the reveal. Instead, we hide it during the
+      // draw phase via line-opacity, then fade it in once the main line is done.
       map.addLayer({
         id: "route-dash",
         type: "line",
@@ -211,7 +218,7 @@
           "line-color": INK,
           "line-width": 2,
           "line-dasharray": [2, 3],
-          "line-gradient": laneStop(0, INK),
+          "line-opacity": 0,
         },
       });
     }
@@ -220,14 +227,16 @@
   function setLineProgress(stop) {
     if (map.getLayer("route-main")) map.setPaintProperty("route-main", "line-gradient", laneStop(stop, ACCENT));
     if (map.getLayer("route-glow")) map.setPaintProperty("route-glow", "line-gradient", laneStop(stop, ACCENT_GLOW));
-    if (map.getLayer("route-dash")) map.setPaintProperty("route-dash", "line-gradient", laneStop(stop, INK));
   }
 
   function setLineComplete() {
     const fill = (color) => ["step", ["line-progress"], color, 1, color];
     if (map.getLayer("route-main")) map.setPaintProperty("route-main", "line-gradient", fill(ACCENT));
     if (map.getLayer("route-glow")) map.setPaintProperty("route-glow", "line-gradient", fill(ACCENT_GLOW));
-    if (map.getLayer("route-dash")) map.setPaintProperty("route-dash", "line-gradient", fill(INK));
+  }
+
+  function setDashOpacity(o) {
+    if (map.getLayer("route-dash")) map.setPaintProperty("route-dash", "line-opacity", o);
   }
 
   // ----- Animation ----------------------------------------------------------
@@ -237,6 +246,7 @@
 
     if (REDUCED_MOTION) {
       setLineComplete();
+      setDashOpacity(0.85);
       runnerEl.style.opacity = "0";
       KM_POINTS.forEach((m, idx) => {
         addKmMarker(`r-${idx}`, `${m.km}K`, m.lngLat);
@@ -247,8 +257,10 @@
     runnerMarker.setLngLat(COORDS[0]);
     runnerEl.style.opacity = "0";
     setLineProgress(0);
+    setDashOpacity(0);
 
     const drawMs = 4000;
+    const dashFadeMs = 600;
     const traceTotalMs = 21000;
     const traceMs = traceTotalMs / laps;
     const pauseMs = 2200;
@@ -264,6 +276,8 @@
         requestAnimationFrame(frame);
       } else if (elapsed < drawMs + traceMs * laps) {
         setLineComplete();
+        const dashT = Math.min(1, (elapsed - drawMs) / dashFadeMs);
+        setDashOpacity(dashT * 0.85);
         const traceElapsed = elapsed - drawMs;
         const lapIdx = Math.min(laps - 1, Math.floor(traceElapsed / traceMs));
         const lapT = easeInOut((traceElapsed - lapIdx * traceMs) / traceMs);
