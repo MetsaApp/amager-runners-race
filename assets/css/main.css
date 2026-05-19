@@ -523,13 +523,19 @@ footer{
   border-top: 1px solid var(--line-soft);
 }
 footer span{ display: inline-flex; align-items: center; gap: 6px; }
-footer a{ display: inline-flex; align-items: center; gap: 6px; }
+.footer-credit{
+  display: inline-flex; align-items: center; gap: 6px;
+  color: var(--muted);
+  text-decoration: none;
+  transition: color .15s ease;
+}
+.footer-credit:hover{ color: var(--ink); }
 .footer-heart{
   display: inline-block;
   color: var(--accent);
   transition: transform .25s ease;
 }
-footer span:hover .footer-heart{ transform: scale(1.15); }
+.footer-credit:hover .footer-heart{ transform: scale(1.15); }
 .footer-metsa{
   display: inline-block;
   border-radius: 3px;
