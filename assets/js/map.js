@@ -25,13 +25,17 @@
   function easeInOut(t) { return t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2; }
 
   function buildRoute(coords) {
+    // Per-segment lengths + cumulative km at each vertex.
     const segLens = [];
+    const cumKm = [0];
     let totalKm = 0;
     for (let i = 1; i < coords.length; i++) {
       const d = haversine(coords[i - 1], coords[i]);
       segLens.push(d);
       totalKm += d;
+      cumKm.push(totalKm);
     }
+
     function pointAtT(t) {
       if (t <= 0) return coords[0];
       if (t >= 1) return coords[coords.length - 1];
@@ -49,28 +53,55 @@
       }
       return coords[coords.length - 1];
     }
-    function pointAtDistance(km) {
-      let acc = 0;
-      for (let i = 0; i < segLens.length; i++) {
-        if (acc + segLens[i] >= km) {
-          const f = (km - acc) / segLens[i];
-          return [
-            lerp(coords[i][0], coords[i + 1][0], f),
-            lerp(coords[i][1], coords[i + 1][1], f),
-          ];
-        }
-        acc += segLens[i];
+
+    // Build the polyline slice from 0 to t (0..1), keeping all intermediate
+    // GPX vertices and adding a final interpolated point at the cut.
+    function sliceAtT(t) {
+      if (t <= 0) return [coords[0], coords[0]];
+      if (t >= 1) return coords.slice();
+      const target = t * totalKm;
+      const out = [];
+      for (let i = 0; i < coords.length; i++) {
+        if (cumKm[i] <= target) out.push(coords[i]); else break;
       }
-      return coords[coords.length - 1];
+      // Add an interpolated tail at the exact cut for smooth animation.
+      const lastIdx = out.length - 1;
+      const segStart = cumKm[lastIdx];
+      const segEnd = cumKm[lastIdx + 1];
+      if (segEnd != null && segEnd > segStart) {
+        const f = (target - segStart) / (segEnd - segStart);
+        out.push([
+          lerp(coords[lastIdx][0], coords[lastIdx + 1][0], f),
+          lerp(coords[lastIdx][1], coords[lastIdx + 1][1], f),
+        ]);
+      }
+      // A LineString must have at least 2 distinct points to render.
+      if (out.length < 2) out.push(out[0]);
+      return out;
     }
+
+    // KM markers snapped to the nearest actual GPX vertex (rather than
+    // interpolating mid-segment) so the dots sit on real polyline corners.
     const kmPoints = [];
-    const whole = Math.floor(totalKm);
-    for (let k = 1; k <= whole; k++) kmPoints.push({ km: k, lngLat: pointAtDistance(k) });
+    {
+      const whole = Math.floor(totalKm);
+      for (let k = 1; k <= whole; k++) {
+        // Find vertex whose cumKm is closest to k.
+        let bestIdx = 0;
+        let bestDelta = Infinity;
+        for (let i = 0; i < cumKm.length; i++) {
+          const d = Math.abs(cumKm[i] - k);
+          if (d < bestDelta) { bestDelta = d; bestIdx = i; }
+        }
+        kmPoints.push({ km: k, lngLat: coords[bestIdx] });
+      }
+    }
+
     const bounds = coords.reduce(
       (b, c) => b.extend(c),
       new maplibregl.LngLatBounds(coords[0], coords[0])
     );
-    return { coords, totalKm, pointAtT, kmPoints, bounds };
+    return { coords, totalKm, pointAtT, sliceAtT, kmPoints, bounds };
   }
 
   const ROUTES = {
@@ -78,8 +109,6 @@
     "10k": ROUTES_RAW["10k"] && ROUTES_RAW["10k"].length ? buildRoute(ROUTES_RAW["10k"]) : buildRoute(ROUTES_RAW["5k"]),
   };
 
-  // Start/finish marker is pinned to the venue, not the first GPX point
-  // (Strava traces often start a few meters off the actual start line).
   const START_COORD = (Array.isArray(SITE.startCoord) && SITE.startCoord.length === 2)
     ? SITE.startCoord
     : ROUTES["5k"].coords[0];
@@ -122,6 +151,11 @@
     "#F5F4EF"
   );
   const GOLD = "#E0B341";
+  // Lap-2 highlight — neon-bright accent variant so the second pass over the
+  // already-drawn blue line reads clearly. Pulled toward yellow-green to
+  // contrast against the primary blue.
+  const LAP2 = "#F2B72B";
+  const LAP2_GLOW = hexToRgba(LAP2, 0.45);
 
   // ----- Map init -----------------------------------------------------------
   const initialTab = (SECTION && SECTION.dataset.activeTab) || "5k";
@@ -139,30 +173,49 @@
   });
   window.__mapInstance = map;
 
-  // Runner uses the accent (blue) with an ink ring + paper outer ring so it
-  // reads clearly against the gold start/finish/aid marker.
+  // Runner — accent (blue) with ink + paper rings; pulses on lap 2.
   const runnerEl = document.createElement("div");
-  runnerEl.style.cssText = `width:18px;height:18px;border-radius:50%;background:${ACCENT};box-shadow:0 0 0 2.5px ${PAPER}, 0 0 0 4.5px ${INK}, 0 0 14px ${hexToRgba(ACCENT, 0.55)};transition:opacity .25s;opacity:0;`;
+  function paintRunner(color, glowColor) {
+    runnerEl.style.cssText = `width:18px;height:18px;border-radius:50%;background:${color};box-shadow:0 0 0 2.5px ${PAPER}, 0 0 0 4.5px ${INK}, 0 0 14px ${glowColor};transition:opacity .25s, background .35s, box-shadow .35s;opacity:0;`;
+  }
+  paintRunner(ACCENT, hexToRgba(ACCENT, 0.55));
   const runnerMarker = new maplibregl.Marker({ element: runnerEl }).setLngLat(initialRoute.coords[0]);
 
+  // Start / finish line marker — sits on the route.
   let startMarker = null;
   function placeStartMarker(lngLat) {
     if (!startMarker) {
       const startEl = document.createElement("div");
-      startEl.style.cssText = `width:16px;height:16px;border-radius:50%;background:${GOLD};box-shadow:0 0 0 2.5px ${PAPER}, 0 0 0 4.5px ${INK};`;
+      startEl.style.cssText = `width:14px;height:14px;border-radius:50%;background:${ACCENT};box-shadow:0 0 0 2px ${PAPER}, 0 0 0 4px ${INK};`;
       startMarker = new maplibregl.Marker({ element: startEl })
         .setLngLat(lngLat)
-        .setPopup(
-          new maplibregl.Popup({ offset: 16 }).setHTML(
-            "<strong>" + (SITE.startLabel || "Start / Finish") + "</strong><br/>" + (SITE.startVenue || "")
-          )
-        )
+        .setPopup(new maplibregl.Popup({ offset: 14 }).setHTML(
+          "<strong>" + (SITE.startLabel || "Start / Finish") + "</strong>"
+        ))
         .addTo(map);
     } else {
       startMarker.setLngLat(lngLat);
     }
   }
 
+  // Meeting point — sits off the route, on the grass.
+  let meetingMarker = null;
+  function placeMeetingMarker() {
+    const mp = SITE.meetingPoint;
+    if (!mp || !mp.coord) return;
+    if (!meetingMarker) {
+      const el = document.createElement("div");
+      el.style.cssText = `width:16px;height:16px;border-radius:50%;background:${GOLD};box-shadow:0 0 0 2.5px ${PAPER}, 0 0 0 4.5px ${INK};`;
+      const popupHtml = "<strong>" + (mp.label || "Meeting Point") + "</strong>" +
+        (mp.venue ? "<br/>" + mp.venue : "");
+      meetingMarker = new maplibregl.Marker({ element: el })
+        .setLngLat(mp.coord)
+        .setPopup(new maplibregl.Popup({ offset: 16 }).setHTML(popupHtml))
+        .addTo(map);
+    }
+  }
+
+  // ----- KM marker DOM ------------------------------------------------------
   let kmMarkers = {};
   function clearKmMarkers() {
     Object.values(kmMarkers).forEach((m) => m && m.remove && m.remove());
@@ -194,29 +247,52 @@
   let animToken = 0;
   let pendingTimer = null;
 
-  function laneStop(stop, color) {
-    return ["step", ["line-progress"], color, Math.max(0.0001, stop), "rgba(0,0,0,0)"];
+  function emptyLine() {
+    // A 1-point LineString is invalid; use a degenerate 2-point version.
+    const c = ROUTES[currentTab].coords[0];
+    return { type: "Feature", geometry: { type: "LineString", coordinates: [c, c] } };
+  }
+  function fullLine(coords) {
+    return { type: "Feature", geometry: { type: "LineString", coordinates: coords } };
   }
 
   function ensureLayers() {
-    if (!map.getSource("route")) {
-      map.addSource("route", {
+    // Two sources: the full route (used by the soft halo so the glow doesn't
+    // have to redraw every frame) and a progressive slice that the main blue
+    // + dashed-black overlay both follow. Sharing a single source means the
+    // dashes mask the live tip of the line on every frame, which is what
+    // gives us "dashes draw together with the blue line".
+    if (!map.getSource("route-full")) {
+      map.addSource("route-full", {
         type: "geojson",
         lineMetrics: true,
-        data: { type: "Feature", geometry: { type: "LineString", coordinates: ROUTES[currentTab].coords } },
+        data: fullLine(ROUTES[currentTab].coords),
       });
     }
+    if (!map.getSource("route-progress")) {
+      map.addSource("route-progress", {
+        type: "geojson",
+        data: emptyLine(),
+      });
+    }
+    if (!map.getSource("route-lap2")) {
+      map.addSource("route-lap2", {
+        type: "geojson",
+        data: emptyLine(),
+      });
+    }
+
     if (!map.getLayer("route-glow")) {
       map.addLayer({
         id: "route-glow",
         type: "line",
-        source: "route",
+        source: "route-full",
         layout: { "line-cap": "round", "line-join": "round" },
         paint: {
           "line-color": ACCENT_GLOW,
           "line-width": 14,
           "line-blur": 6,
-          "line-gradient": laneStop(0, ACCENT_GLOW),
+          "line-gradient": ["step", ["line-progress"], ACCENT_GLOW, 0.0001, "rgba(0,0,0,0)"],
         },
       });
     }
@@ -224,57 +300,78 @@
       map.addLayer({
         id: "route-main",
         type: "line",
-        source: "route",
+        source: "route-progress",
         layout: { "line-cap": "round", "line-join": "round" },
-        paint: {
-          "line-color": ACCENT,
-          "line-width": 6,
-          "line-gradient": laneStop(0, ACCENT),
-        },
+        paint: { "line-color": ACCENT, "line-width": 6 },
       });
     }
     if (!map.getLayer("route-dash")) {
-      // line-dasharray is silently ignored when line-gradient is set on the
-      // same layer, so the dash layer cannot also do the reveal. Hide it via
-      // line-opacity during the draw phase and fade in after.
       map.addLayer({
         id: "route-dash",
         type: "line",
-        source: "route",
+        source: "route-progress",
         layout: { "line-cap": "butt", "line-join": "round" },
         paint: {
           "line-color": INK,
           "line-width": 2,
           "line-dasharray": [2, 3],
-          "line-opacity": 0,
+          "line-opacity": 0.85,
         },
+      });
+    }
+    if (!map.getLayer("route-lap2-glow")) {
+      map.addLayer({
+        id: "route-lap2-glow",
+        type: "line",
+        source: "route-lap2",
+        layout: { "line-cap": "round", "line-join": "round" },
+        paint: { "line-color": LAP2_GLOW, "line-width": 14, "line-blur": 8 },
+      });
+    }
+    if (!map.getLayer("route-lap2")) {
+      map.addLayer({
+        id: "route-lap2",
+        type: "line",
+        source: "route-lap2",
+        layout: { "line-cap": "round", "line-join": "round" },
+        paint: { "line-color": LAP2, "line-width": 3 },
       });
     }
   }
 
-  function setLineProgress(stop) {
-    if (map.getLayer("route-main")) map.setPaintProperty("route-main", "line-gradient", laneStop(stop, ACCENT));
-    if (map.getLayer("route-glow")) map.setPaintProperty("route-glow", "line-gradient", laneStop(stop, ACCENT_GLOW));
+  function setGlowProgress(stop) {
+    if (!map.getLayer("route-glow")) return;
+    map.setPaintProperty("route-glow", "line-gradient",
+      ["step", ["line-progress"], ACCENT_GLOW, Math.max(0.0001, stop), "rgba(0,0,0,0)"]);
   }
 
-  function setLineComplete() {
-    const fill = (color) => ["step", ["line-progress"], color, 1, color];
-    if (map.getLayer("route-main")) map.setPaintProperty("route-main", "line-gradient", fill(ACCENT));
-    if (map.getLayer("route-glow")) map.setPaintProperty("route-glow", "line-gradient", fill(ACCENT_GLOW));
+  function setMainSlice(coords) {
+    const src = map.getSource("route-progress");
+    if (src) src.setData(fullLine(coords));
   }
 
-  function setDashOpacity(o) {
-    if (map.getLayer("route-dash")) map.setPaintProperty("route-dash", "line-opacity", o);
+  function setLap2Slice(coords) {
+    const src = map.getSource("route-lap2");
+    if (src) src.setData(fullLine(coords));
+  }
+
+  function setRouteFull(coords) {
+    const src = map.getSource("route-full");
+    if (src) src.setData(fullLine(coords));
   }
 
   // ----- Animation ----------------------------------------------------------
   function runAnimation(route, laps) {
     const myToken = ++animToken;
     clearKmMarkers();
+    paintRunner(ACCENT, hexToRgba(ACCENT, 0.55));
+
+    setRouteFull(route.coords);
 
     if (REDUCED_MOTION) {
-      setLineComplete();
-      setDashOpacity(0.85);
+      setGlowProgress(1);
+      setMainSlice(route.coords);
+      setLap2Slice(laps > 1 ? route.coords : [route.coords[0], route.coords[0]]);
       runnerEl.style.opacity = "0";
       route.kmPoints.forEach((m, idx) => {
         addKmMarker(`r-${idx}`, `${m.km}K`, m.lngLat);
@@ -284,11 +381,11 @@
 
     runnerMarker.setLngLat(route.coords[0]);
     runnerEl.style.opacity = "0";
-    setLineProgress(0);
-    setDashOpacity(0);
+    setGlowProgress(0);
+    setMainSlice([route.coords[0], route.coords[0]]);
+    setLap2Slice([route.coords[0], route.coords[0]]);
 
     const drawMs = 4000;
-    const dashFadeMs = 600;
     const traceTotalMs = 21000;
     const traceMs = traceTotalMs / laps;
     const pauseMs = 2200;
@@ -299,16 +396,32 @@
       if (animToken !== myToken) return;
       const elapsed = now - start;
       if (elapsed < drawMs) {
+        // Phase 1: draw the line. Blue + dashed grow together via the
+        // shared progressive source; the soft halo uses line-gradient.
         const t = easeInOut(elapsed / drawMs);
-        setLineProgress(t);
+        setGlowProgress(t);
+        setMainSlice(route.sliceAtT(t));
         requestAnimationFrame(frame);
       } else if (elapsed < drawMs + traceMs * laps) {
-        setLineComplete();
-        const dashT = Math.min(1, (elapsed - drawMs) / dashFadeMs);
-        setDashOpacity(dashT * 0.85);
+        // Phase 2: runner traces. Main line stays fully drawn.
+        setGlowProgress(1);
+        setMainSlice(route.coords);
+
         const traceElapsed = elapsed - drawMs;
         const lapIdx = Math.min(laps - 1, Math.floor(traceElapsed / traceMs));
         const lapT = easeInOut((traceElapsed - lapIdx * traceMs) / traceMs);
+
+        if (laps > 1 && lapIdx > 0) {
+          // Lap 2 overlay grows on top of the existing blue line in the
+          // brighter LAP2 color, plus a soft halo. Runner ring shifts to
+          // match the LAP2 color.
+          setLap2Slice(route.sliceAtT(lapT));
+          paintRunner(LAP2, LAP2_GLOW);
+        } else {
+          setLap2Slice([route.coords[0], route.coords[0]]);
+          paintRunner(ACCENT, hexToRgba(ACCENT, 0.55));
+        }
+
         runnerEl.style.opacity = "1";
         runnerMarker.setLngLat(route.pointAtT(lapT));
 
@@ -345,19 +458,18 @@
   function swapRoute(tab) {
     const route = ROUTES[tab];
     if (!route) return;
-    // Cancel any in-flight animation and pending start.
     animToken++;
     if (pendingTimer) { clearTimeout(pendingTimer); pendingTimer = null; }
     clearKmMarkers();
     runnerEl.style.opacity = "0";
+    paintRunner(ACCENT, hexToRgba(ACCENT, 0.55));
 
-    // Swap source geometry & start marker, then refit.
-    const src = map.getSource("route");
-    if (src) src.setData({ type: "Feature", geometry: { type: "LineString", coordinates: route.coords } });
+    setRouteFull(route.coords);
+    setMainSlice([route.coords[0], route.coords[0]]);
+    setLap2Slice([route.coords[0], route.coords[0]]);
     placeStartMarker(START_COORD);
     runnerMarker.setLngLat(route.coords[0]);
-    setLineProgress(0);
-    setDashOpacity(0);
+    setGlowProgress(0);
 
     map.fitBounds(route.bounds, {
       padding: { top: 60, bottom: 60, left: 60, right: 60 },
@@ -411,6 +523,7 @@
   // ----- Map load -----------------------------------------------------------
   map.on("load", () => {
     ensureLayers();
+    placeMeetingMarker();
     placeStartMarker(START_COORD);
     runnerMarker.addTo(map);
 
