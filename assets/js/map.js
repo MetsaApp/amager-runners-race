@@ -80,20 +80,27 @@
       return out;
     }
 
-    // KM markers snapped to the nearest actual GPX vertex (rather than
-    // interpolating mid-segment) so the dots sit on real polyline corners.
+    // KM markers — interpolate to the exact 1.0 km, 2.0 km, … position
+    // along the polyline. The line is drawn 6px wide so the dot reads as
+    // sitting cleanly on it. Nearest-vertex snapping was up to 15 m off
+    // the true km, which was visible at zoom 13.
     const kmPoints = [];
     {
       const whole = Math.floor(totalKm);
       for (let k = 1; k <= whole; k++) {
-        // Find vertex whose cumKm is closest to k.
-        let bestIdx = 0;
-        let bestDelta = Infinity;
-        for (let i = 0; i < cumKm.length; i++) {
-          const d = Math.abs(cumKm[i] - k);
-          if (d < bestDelta) { bestDelta = d; bestIdx = i; }
+        // Walk segments to find the one containing the k-th km mark.
+        let lngLat = coords[coords.length - 1];
+        for (let i = 0; i < segLens.length; i++) {
+          if (cumKm[i] + segLens[i] >= k) {
+            const f = (k - cumKm[i]) / segLens[i];
+            lngLat = [
+              lerp(coords[i][0], coords[i + 1][0], f),
+              lerp(coords[i][1], coords[i + 1][1], f),
+            ];
+            break;
+          }
         }
-        kmPoints.push({ km: k, lngLat: coords[bestIdx] });
+        kmPoints.push({ km: k, lngLat });
       }
     }
 
@@ -108,10 +115,6 @@
     "5k": buildRoute(ROUTES_RAW["5k"]),
     "10k": ROUTES_RAW["10k"] && ROUTES_RAW["10k"].length ? buildRoute(ROUTES_RAW["10k"]) : buildRoute(ROUTES_RAW["5k"]),
   };
-
-  const START_COORD = (Array.isArray(SITE.startCoord) && SITE.startCoord.length === 2)
-    ? SITE.startCoord
-    : ROUTES["5k"].coords[0];
 
   // ----- Color helpers -------------------------------------------------------
   function resolveColorToHex(cssColor, fallback) {
@@ -151,11 +154,6 @@
     "#F5F4EF"
   );
   const GOLD = "#E0B341";
-  // Lap-2 highlight — neon-bright accent variant so the second pass over the
-  // already-drawn blue line reads clearly. Pulled toward yellow-green to
-  // contrast against the primary blue.
-  const LAP2 = "#F2B72B";
-  const LAP2_GLOW = hexToRgba(LAP2, 0.45);
 
   // ----- Map init -----------------------------------------------------------
   const initialTab = (SECTION && SECTION.dataset.activeTab) || "5k";
@@ -180,23 +178,6 @@
   }
   paintRunner(ACCENT, hexToRgba(ACCENT, 0.55));
   const runnerMarker = new maplibregl.Marker({ element: runnerEl }).setLngLat(initialRoute.coords[0]);
-
-  // Start / finish line marker — sits on the route.
-  let startMarker = null;
-  function placeStartMarker(lngLat) {
-    if (!startMarker) {
-      const startEl = document.createElement("div");
-      startEl.style.cssText = `width:14px;height:14px;border-radius:50%;background:${ACCENT};box-shadow:0 0 0 2px ${PAPER}, 0 0 0 4px ${INK};`;
-      startMarker = new maplibregl.Marker({ element: startEl })
-        .setLngLat(lngLat)
-        .setPopup(new maplibregl.Popup({ offset: 14 }).setHTML(
-          "<strong>" + (SITE.startLabel || "Start / Finish") + "</strong>"
-        ))
-        .addTo(map);
-    } else {
-      startMarker.setLngLat(lngLat);
-    }
-  }
 
   // Meeting point — sits off the route, on the grass.
   let meetingMarker = null;
@@ -275,13 +256,6 @@
         data: emptyLine(),
       });
     }
-    if (!map.getSource("route-lap2")) {
-      map.addSource("route-lap2", {
-        type: "geojson",
-        data: emptyLine(),
-      });
-    }
-
     if (!map.getLayer("route-glow")) {
       map.addLayer({
         id: "route-glow",
@@ -319,24 +293,6 @@
         },
       });
     }
-    if (!map.getLayer("route-lap2-glow")) {
-      map.addLayer({
-        id: "route-lap2-glow",
-        type: "line",
-        source: "route-lap2",
-        layout: { "line-cap": "round", "line-join": "round" },
-        paint: { "line-color": LAP2_GLOW, "line-width": 14, "line-blur": 8 },
-      });
-    }
-    if (!map.getLayer("route-lap2")) {
-      map.addLayer({
-        id: "route-lap2",
-        type: "line",
-        source: "route-lap2",
-        layout: { "line-cap": "round", "line-join": "round" },
-        paint: { "line-color": LAP2, "line-width": 3 },
-      });
-    }
   }
 
   function setGlowProgress(stop) {
@@ -350,18 +306,16 @@
     if (src) src.setData(fullLine(coords));
   }
 
-  function setLap2Slice(coords) {
-    const src = map.getSource("route-lap2");
-    if (src) src.setData(fullLine(coords));
-  }
-
   function setRouteFull(coords) {
     const src = map.getSource("route-full");
     if (src) src.setData(fullLine(coords));
   }
 
   // ----- Animation ----------------------------------------------------------
-  function runAnimation(route, laps) {
+  // The polyline already contains every kilometer of the actual race
+  // (the 10K array is the 5K loop laid out end-to-end). So we just trace
+  // it once from start to finish — no looping, no lap-2 overlay.
+  function runAnimation(route) {
     const myToken = ++animToken;
     clearKmMarkers();
     paintRunner(ACCENT, hexToRgba(ACCENT, 0.55));
@@ -371,7 +325,6 @@
     if (REDUCED_MOTION) {
       setGlowProgress(1);
       setMainSlice(route.coords);
-      setLap2Slice(laps > 1 ? route.coords : [route.coords[0], route.coords[0]]);
       runnerEl.style.opacity = "0";
       route.kmPoints.forEach((m, idx) => {
         addKmMarker(`r-${idx}`, `${m.km}K`, m.lngLat);
@@ -383,73 +336,45 @@
     runnerEl.style.opacity = "0";
     setGlowProgress(0);
     setMainSlice([route.coords[0], route.coords[0]]);
-    setLap2Slice([route.coords[0], route.coords[0]]);
 
     const drawMs = 4000;
-    const traceTotalMs = 21000;
-    const traceMs = traceTotalMs / laps;
+    // Longer routes get a proportionally longer trace so the runner pace
+    // stays consistent across 5K and 10K.
+    const traceMs = Math.round(4200 * route.totalKm);
     const pauseMs = 2200;
     const start = performance.now();
-    const wholeLap = Math.floor(route.totalKm);
 
     function frame(now) {
       if (animToken !== myToken) return;
       const elapsed = now - start;
       if (elapsed < drawMs) {
-        // Phase 1: draw the line. Blue + dashed grow together via the
-        // shared progressive source; the soft halo uses line-gradient.
         const t = easeInOut(elapsed / drawMs);
         setGlowProgress(t);
         setMainSlice(route.sliceAtT(t));
         requestAnimationFrame(frame);
-      } else if (elapsed < drawMs + traceMs * laps) {
-        // Phase 2: runner traces. Main line stays fully drawn.
+      } else if (elapsed < drawMs + traceMs) {
         setGlowProgress(1);
         setMainSlice(route.coords);
 
-        const traceElapsed = elapsed - drawMs;
-        const lapIdx = Math.min(laps - 1, Math.floor(traceElapsed / traceMs));
-        const lapT = easeInOut((traceElapsed - lapIdx * traceMs) / traceMs);
-
-        if (laps > 1 && lapIdx > 0) {
-          // Lap 2 overlay grows on top of the existing blue line in the
-          // brighter LAP2 color, plus a soft halo. Runner ring shifts to
-          // match the LAP2 color.
-          setLap2Slice(route.sliceAtT(lapT));
-          paintRunner(LAP2, LAP2_GLOW);
-        } else {
-          setLap2Slice([route.coords[0], route.coords[0]]);
-          paintRunner(ACCENT, hexToRgba(ACCENT, 0.55));
-        }
-
+        const t = easeInOut((elapsed - drawMs) / traceMs);
         runnerEl.style.opacity = "1";
-        runnerMarker.setLngLat(route.pointAtT(lapT));
+        runnerMarker.setLngLat(route.pointAtT(t));
 
-        const runnerKm = lapT * route.totalKm;
+        const runnerKm = t * route.totalKm;
         route.kmPoints.forEach((m, idx) => {
-          const key = `${lapIdx}-${idx}`;
+          const key = `m-${idx}`;
           if (kmMarkers[key]) return;
           if (runnerKm >= m.km - 0.05) {
-            const label = laps > 1 ? `${m.km + lapIdx * wholeLap}K` : `${m.km}K`;
-            addKmMarker(key, label, m.lngLat);
+            addKmMarker(key, `${m.km}K`, m.lngLat);
           }
         });
 
-        if (laps > 1 && lapT < 0.05 && lapIdx > 0) {
-          Object.keys(kmMarkers).forEach((k) => {
-            if (k.startsWith(`${lapIdx - 1}-`)) {
-              kmMarkers[k].remove();
-              delete kmMarkers[k];
-            }
-          });
-        }
-
         requestAnimationFrame(frame);
-      } else if (elapsed < drawMs + traceMs * laps + pauseMs) {
+      } else if (elapsed < drawMs + traceMs + pauseMs) {
         runnerMarker.setLngLat(route.coords[route.coords.length - 1]);
         requestAnimationFrame(frame);
       } else {
-        if (animToken === myToken) runAnimation(route, laps);
+        if (animToken === myToken) runAnimation(route);
       }
     }
     requestAnimationFrame(frame);
@@ -466,8 +391,6 @@
 
     setRouteFull(route.coords);
     setMainSlice([route.coords[0], route.coords[0]]);
-    setLap2Slice([route.coords[0], route.coords[0]]);
-    placeStartMarker(START_COORD);
     runnerMarker.setLngLat(route.coords[0]);
     setGlowProgress(0);
 
@@ -477,11 +400,10 @@
       essential: true,
     });
 
-    const laps = Number((STATS[tab] && STATS[tab].laps) || 1);
     const delay = REDUCED_MOTION ? 0 : 750;
     pendingTimer = setTimeout(() => {
       pendingTimer = null;
-      runAnimation(route, laps);
+      runAnimation(route);
     }, delay);
   }
 
@@ -508,7 +430,6 @@
     setText('[data-stat="surface"]', s.surface);
     setText('[data-stat="aid"]', s.aidStations);
     setText("[data-legend-distance]", s.legendDistance);
-    setText("[data-legend-start]", s.legendStart);
   }
 
   document.querySelectorAll(".route-tab").forEach((btn) => {
@@ -524,7 +445,6 @@
   map.on("load", () => {
     ensureLayers();
     placeMeetingMarker();
-    placeStartMarker(START_COORD);
     runnerMarker.addTo(map);
 
     map.fitBounds(initialRoute.bounds, {
@@ -532,10 +452,9 @@
       duration: 0,
     });
 
-    const initialLaps = Number((STATS[currentTab] && STATS[currentTab].laps) || 1);
     pendingTimer = setTimeout(() => {
       pendingTimer = null;
-      runAnimation(initialRoute, initialLaps);
+      runAnimation(initialRoute);
     }, REDUCED_MOTION ? 0 : 600);
   });
 })();

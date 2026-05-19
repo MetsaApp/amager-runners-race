@@ -24,8 +24,6 @@
 <script>
   window.__SITE = JSON.parse({{ (dict
     "routePoints" (dict "5k" $routeData.points5k "10k" $routeData.points10k)
-    "startLabel" (index $routeData.startLabel $lang)
-    "startCoord" $routeData.startCoord
     "meetingPoint" (dict
       "coord" $mp.coord
       "label" (index $mp.label $lang)
