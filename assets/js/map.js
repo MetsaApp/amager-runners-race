@@ -78,6 +78,12 @@
     "10k": ROUTES_RAW["10k"] && ROUTES_RAW["10k"].length ? buildRoute(ROUTES_RAW["10k"]) : buildRoute(ROUTES_RAW["5k"]),
   };
 
+  // Start/finish marker is pinned to the venue, not the first GPX point
+  // (Strava traces often start a few meters off the actual start line).
+  const START_COORD = (Array.isArray(SITE.startCoord) && SITE.startCoord.length === 2)
+    ? SITE.startCoord
+    : ROUTES["5k"].coords[0];
+
   // ----- Color helpers -------------------------------------------------------
   function resolveColorToHex(cssColor, fallback) {
     try {
@@ -348,7 +354,7 @@
     // Swap source geometry & start marker, then refit.
     const src = map.getSource("route");
     if (src) src.setData({ type: "Feature", geometry: { type: "LineString", coordinates: route.coords } });
-    placeStartMarker(route.coords[0]);
+    placeStartMarker(START_COORD);
     runnerMarker.setLngLat(route.coords[0]);
     setLineProgress(0);
     setDashOpacity(0);
@@ -405,7 +411,7 @@
   // ----- Map load -----------------------------------------------------------
   map.on("load", () => {
     ensureLayers();
-    placeStartMarker(initialRoute.coords[0]);
+    placeStartMarker(START_COORD);
     runnerMarker.addTo(map);
 
     map.fitBounds(initialRoute.bounds, {
