@@ -61,6 +61,41 @@ img { max-width: 100%; height: auto; display: block; }
 }
 .lang-toggle a.on{ background: var(--ink); color: var(--bg); }
 
+/* ---------------- TOPBAR OVERLAY VARIANT ---------------- */
+/* Sits transparent over the hero image; snaps to the solid sticky form
+   once the hero leaves the viewport (body.is-scrolled is toggled by JS). */
+body[data-topbar="overlay"] .topbar{
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  background: transparent;
+  border-bottom: 0;
+  padding-top: 20px;
+}
+body[data-topbar="overlay"] .nav a{ color: #fff; opacity: .9; }
+body[data-topbar="overlay"] .nav a:hover{ opacity: 1; }
+body[data-topbar="overlay"] .brand{ color: #fff; }
+body[data-topbar="overlay"] .brand img{ content: url('/img/logo-white.png'); }
+body[data-topbar="overlay"] .lang-toggle{ border-color: rgba(255,255,255,.6); }
+body[data-topbar="overlay"] .lang-toggle a{ color: #fff; }
+body[data-topbar="overlay"] .lang-toggle a.on{ background: #fff; color: var(--ink); }
+
+/* Hero needs extra top padding so the eyebrow/title clear the overlay bar. */
+body[data-topbar="overlay"] .hero-inner{ padding-top: 88px; }
+
+/* After scrolling past the hero, revert to the solid sticky topbar. */
+body[data-topbar="overlay"].is-scrolled .topbar{
+  position: sticky;
+  background: var(--bg);
+  border-bottom: 1px solid var(--line-soft);
+  padding-top: 14px;
+}
+body[data-topbar="overlay"].is-scrolled .nav a,
+body[data-topbar="overlay"].is-scrolled .brand{ color: var(--ink); }
+body[data-topbar="overlay"].is-scrolled .brand img{ content: normal; }
+body[data-topbar="overlay"].is-scrolled .lang-toggle{ border-color: var(--ink); }
+body[data-topbar="overlay"].is-scrolled .lang-toggle a{ color: var(--ink); }
+body[data-topbar="overlay"].is-scrolled .lang-toggle a.on{ background: var(--ink); color: var(--bg); }
+
 /* ---------------- HERO ---------------- */
 .hero{
   position: relative;
@@ -108,11 +143,14 @@ img { max-width: 100%; height: auto; display: block; }
 }
 .hero-title .slash{ color: var(--accent); }
 .hero-sub{
-  font-family: var(--f-display);
-  font-size: clamp(28px, 4vw, 64px);
-  line-height: 1;
-  margin: 16px 0 0;
+  font-family: var(--f-mono);
+  font-size: clamp(14px, 1.4vw, 18px);
+  font-weight: 500;
+  line-height: 1.3;
+  letter-spacing: .14em;
+  margin: 18px 0 0;
   text-transform: uppercase;
+  color: rgba(255,255,255,.9);
 }
 .hero-kicker{
   font-family: var(--f-mono);
@@ -632,7 +670,7 @@ body[data-fonts="modern"]{
   }
   .hero-meta{ grid-template-columns: 1fr 1fr; gap: 18px; }
   .hero-title{ font-size: clamp(64px, 18vw, 140px); }
-  .hero-sub{ font-size: clamp(22px, 6.5vw, 32px); }
+  .hero-sub{ font-size: 13px; letter-spacing: .12em; }
   body[data-hero="type"] .hero-title{ font-size: clamp(72px, 22vw, 160px); }
 
   .section-title{ font-size: clamp(38px, 12vw, 72px); }
