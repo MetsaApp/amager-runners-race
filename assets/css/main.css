@@ -637,6 +637,8 @@ body[data-fonts="modern"]{
   .nav{ display: none; }
   .topbar{ padding: 12px 20px; }
   .hero-inner{ padding: 32px 20px 24px; }
+  .hero-kicker{ display: none; }
+  .hero-edition{ display: none; }
   .hero-bottom{ grid-template-columns: 1fr; gap: 28px; }
   .hero-meta{ grid-template-columns: repeat(2, auto); gap: 22px; }
   .hero-cta{ justify-content: flex-start; }
