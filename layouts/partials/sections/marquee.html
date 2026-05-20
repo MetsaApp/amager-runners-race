@@ -3,8 +3,8 @@
 {{- $p := .site.Params -}}
 {{- $starts := where (index .site.Data.schedule "rows") "kind.en" "Start" -}}
 {{- $marqueeDate := dateFormat "02 · 01 · 2006" $p.eventDate -}}
-<div class="marquee" aria-hidden="true">
-  <div class="marquee-track">
+<div class="overflow-hidden border-y border-ink bg-ink py-3.5 font-display text-[28px] uppercase tracking-[.02em] text-bg max-[560px]:py-3 max-[560px]:text-[22px]" aria-hidden="true">
+  <div class="inline-flex animate-marquee gap-12 whitespace-nowrap pr-12 [&>span:nth-child(even)]:text-accent max-[560px]:gap-9 max-[560px]:pr-9">
     {{- range $i, $item := $t.marquee.items -}}
       <span>{{ replace $item "{date}" $marqueeDate }}</span>
     {{- end -}}

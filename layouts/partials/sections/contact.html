@@ -6,15 +6,15 @@
     <span class="section-num">{{ $num }} / <span>{{ $t.contact.sectionLabel }}</span></span>
     <h2 class="section-title">{{ $t.contact.sectionTitle }}</h2>
   </div>
-  <div class="contact-grid">
-    <div class="contact-col">
+  <div class="grid grid-cols-2 gap-12 max-[820px]:grid-cols-1 max-[820px]:gap-[22px]">
+    <div class="[&_h4]:m-0 [&_h4]:mb-3.5 [&_h4]:font-mono [&_h4]:text-[11px] [&_h4]:uppercase [&_h4]:tracking-[.14em] [&_h4]:text-muted [&_p]:m-0 [&_p]:mb-1.5 [&_p]:text-[15px] [&_p]:leading-[1.55]">
       <h4>{{ $t.contact.organiser }}</h4>
       <p>{{ $p.organiser }}</p>
       <p>{{ $p.organiserStreet }}, {{ $p.organiserPostalCode }} {{ $p.organiserLocality }}</p>
       <p>CVR {{ $p.organiserCVR }}</p>
-      <p style="margin-top:10px"><a href="mailto:{{ $p.organiserEmail }}">{{ $p.organiserEmail }}</a></p>
+      <p class="!mt-2.5"><a href="mailto:{{ $p.organiserEmail }}">{{ $p.organiserEmail }}</a></p>
     </div>
-    <div class="contact-col">
+    <div class="[&_h4]:m-0 [&_h4]:mb-3.5 [&_h4]:font-mono [&_h4]:text-[11px] [&_h4]:uppercase [&_h4]:tracking-[.14em] [&_h4]:text-muted [&_p]:m-0 [&_p]:mb-1.5 [&_p]:text-[15px] [&_p]:leading-[1.55]">
       <h4>{{ $t.contact.follow }}</h4>
       <p><a href="{{ $p.social.website }}">amagerrunners.dk</a></p>
       <p><a href="{{ $p.social.strava }}">strava.com/clubs/amagerrunners</a></p>

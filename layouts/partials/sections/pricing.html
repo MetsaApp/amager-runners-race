@@ -12,7 +12,7 @@
   </div>
   <div class="pricing" style="--grid-cols: {{ $cols }};">
     {{ range $data.tiers }}
-      <div class="price-card{{ if .feature }} feature{{ end }}"{{ if eq $cols 1 }} style="max-width: {{ $maxW }}; margin: 0 auto; width: 100%;"{{ end }}>
+      <div class="price-card relative flex flex-col gap-3.5 border border-ink px-[26px] pb-8 pt-7{{ if .feature }} feature{{ end }}"{{ if eq $cols 1 }} style="max-width: {{ $maxW }}; margin: 0 auto; width: 100%;"{{ end }}>
         <div class="price-tier">{{ index .tier $lang }}</div>
         <div class="price-amount">{{ $p.priceDKK }}<small>{{ $p.currency }}</small></div>
         <div class="price-window muted">{{ index .window $lang }}</div>

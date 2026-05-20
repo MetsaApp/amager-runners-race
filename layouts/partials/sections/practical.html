@@ -14,11 +14,11 @@
     {{ range $data.cards }}
       {{- $body := index .body $lang -}}
       {{- $body = replace $body "{location}" $p.location -}}
-      <div class="prac-card">
-        <div class="prac-icon" aria-hidden="true">{{ .icon }}</div>
+      <div class="flex min-h-[220px] flex-col justify-between border-b border-r border-line-soft px-6 pb-9 pt-8 max-[560px]:min-h-0 max-[560px]:px-[22px] max-[560px]:pb-7 max-[560px]:pt-7">
+        <div class="grid h-9 w-9 place-items-center rounded border-[1.5px] border-ink font-mono text-sm font-bold" aria-hidden="true">{{ .icon }}</div>
         <div>
-          <div class="prac-title">{{ index .title $lang }}</div>
-          <div class="prac-body">{{ $body }}</div>
+          <div class="mb-2 mt-[18px] font-display text-[22px] uppercase">{{ index .title $lang }}</div>
+          <div class="text-[14.5px] leading-[1.5] text-ink-2 max-[820px]:text-[15.5px] max-[820px]:leading-[1.55]">{{ $body }}</div>
         </div>
       </div>
     {{ end }}

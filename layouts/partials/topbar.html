@@ -1,5 +1,5 @@
 {{- $t := index hugo.Data.i18n .Site.Language.Lang -}}
-<div class="topbar">
+<div class="topbar sticky top-0 z-40 flex items-center justify-between px-7 py-3.5 max-[820px]:px-5 max-[820px]:py-3">
   <a href="#top" class="brand" aria-label="{{ .Site.Title }} — home">
     <img src="{{ "/img/logo.png" | relURL }}" alt="{{ .Site.Params.organiser }}" width="120" height="40" />
   </a>

@@ -1,167 +1,68 @@
+import "./types";
+import { buildRouteGeometry, easeInOut } from "./lib/geo";
+import type { Coord, RouteGeometry } from "./lib/geo";
+import { hexToRgba, resolveColorToHex } from "./lib/color";
+import type { SiteData } from "./types";
+
 (function () {
   if (typeof maplibregl === "undefined") return;
   const mapEl = document.getElementById("map");
   if (!mapEl) return;
 
-  const SITE = window.__SITE || {};
-  const ROUTES_RAW = SITE.routePoints || {};
+  const SITE: Partial<SiteData> = window.__SITE || {};
+  const ROUTES_RAW = SITE.routePoints || ({} as SiteData["routePoints"]);
   if (!ROUTES_RAW["5k"] || !ROUTES_RAW["5k"].length) return;
-  const STATS = SITE.routeStats || {};
+  const STATS = SITE.routeStats || ({} as SiteData["routeStats"]);
   const SECTION = document.getElementById("route");
-  const REDUCED_MOTION = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const REDUCED_MOTION =
+    window.matchMedia &&
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   // Tracks whether the map is currently in the viewport. Set by an
   // IntersectionObserver wired up after init below. The animation's frame()
   // loop checks this and pauses (stashing its elapsed time) when false.
   let mapVisible = true;
 
-  // ----- Geometry helpers ----------------------------------------------------
-  function haversine(a, b) {
-    const R = 6371;
-    const toRad = (d) => (d * Math.PI) / 180;
-    const dLat = toRad(b[1] - a[1]);
-    const dLng = toRad(b[0] - a[0]);
-    const lat1 = toRad(a[1]);
-    const lat2 = toRad(b[1]);
-    const h = Math.sin(dLat / 2) ** 2 + Math.cos(lat1) * Math.cos(lat2) * Math.sin(dLng / 2) ** 2;
-    return 2 * R * Math.asin(Math.sqrt(h));
-  }
-  function lerp(a, b, t) { return a + (b - a) * t; }
-  function easeInOut(t) { return t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2; }
+  // ----- Route construction --------------------------------------------------
+  // Pure geometry comes from buildRouteGeometry (lib/geo); the MapLibre
+  // LngLatBounds is the only impure part and is added here in the adapter.
+  type Route = RouteGeometry & { bounds: maplibregl.LngLatBounds };
 
-  function buildRoute(coords) {
-    // Per-segment lengths + cumulative km at each vertex.
-    const segLens = [];
-    const cumKm = [0];
-    let totalKm = 0;
-    for (let i = 1; i < coords.length; i++) {
-      const d = haversine(coords[i - 1], coords[i]);
-      segLens.push(d);
-      totalKm += d;
-      cumKm.push(totalKm);
-    }
-
-    function pointAtT(t) {
-      if (t <= 0) return coords[0];
-      if (t >= 1) return coords[coords.length - 1];
-      const target = t * totalKm;
-      let acc = 0;
-      for (let i = 0; i < segLens.length; i++) {
-        if (acc + segLens[i] >= target) {
-          const f = (target - acc) / segLens[i];
-          return [
-            lerp(coords[i][0], coords[i + 1][0], f),
-            lerp(coords[i][1], coords[i + 1][1], f),
-          ];
-        }
-        acc += segLens[i];
-      }
-      return coords[coords.length - 1];
-    }
-
-    // Build the polyline slice from 0 to t (0..1), keeping all intermediate
-    // GPX vertices and adding a final interpolated point at the cut.
-    function sliceAtT(t) {
-      if (t <= 0) return [coords[0], coords[0]];
-      if (t >= 1) return coords.slice();
-      const target = t * totalKm;
-      const out = [];
-      for (let i = 0; i < coords.length; i++) {
-        if (cumKm[i] <= target) out.push(coords[i]); else break;
-      }
-      // Add an interpolated tail at the exact cut for smooth animation.
-      const lastIdx = out.length - 1;
-      const segStart = cumKm[lastIdx];
-      const segEnd = cumKm[lastIdx + 1];
-      if (segEnd != null && segEnd > segStart) {
-        const f = (target - segStart) / (segEnd - segStart);
-        out.push([
-          lerp(coords[lastIdx][0], coords[lastIdx + 1][0], f),
-          lerp(coords[lastIdx][1], coords[lastIdx + 1][1], f),
-        ]);
-      }
-      // A LineString must have at least 2 distinct points to render.
-      if (out.length < 2) out.push(out[0]);
-      return out;
-    }
-
-    // KM markers — interpolate to the exact 1.0 km, 2.0 km, … position
-    // along the polyline. The line is drawn 6px wide so the dot reads as
-    // sitting cleanly on it. Nearest-vertex snapping was up to 15 m off
-    // the true km, which was visible at zoom 13.
-    const kmPoints = [];
-    {
-      const whole = Math.floor(totalKm);
-      for (let k = 1; k <= whole; k++) {
-        // Walk segments to find the one containing the k-th km mark.
-        let lngLat = coords[coords.length - 1];
-        for (let i = 0; i < segLens.length; i++) {
-          if (cumKm[i] + segLens[i] >= k) {
-            const f = (k - cumKm[i]) / segLens[i];
-            lngLat = [
-              lerp(coords[i][0], coords[i + 1][0], f),
-              lerp(coords[i][1], coords[i + 1][1], f),
-            ];
-            break;
-          }
-        }
-        kmPoints.push({ km: k, lngLat });
-      }
-    }
-
+  function buildRoute(coords: Coord[]): Route {
+    const geo = buildRouteGeometry(coords);
     const bounds = coords.reduce(
-      (b, c) => b.extend(c),
-      new maplibregl.LngLatBounds(coords[0], coords[0])
+      (b, c) => b.extend(c as [number, number]),
+      new maplibregl.LngLatBounds(coords[0], coords[0]),
     );
-    return { coords, totalKm, pointAtT, sliceAtT, kmPoints, bounds };
+    return { ...geo, bounds };
   }
 
-  const ROUTES = {
+  const ROUTES: Record<"5k" | "10k", Route> = {
     "5k": buildRoute(ROUTES_RAW["5k"]),
-    "10k": ROUTES_RAW["10k"] && ROUTES_RAW["10k"].length ? buildRoute(ROUTES_RAW["10k"]) : buildRoute(ROUTES_RAW["5k"]),
+    "10k":
+      ROUTES_RAW["10k"] && ROUTES_RAW["10k"].length
+        ? buildRoute(ROUTES_RAW["10k"])
+        : buildRoute(ROUTES_RAW["5k"]),
   };
 
-  // ----- Color helpers -------------------------------------------------------
-  function resolveColorToHex(cssColor, fallback) {
-    try {
-      const probe = document.createElement("div");
-      probe.style.display = "none";
-      probe.style.color = cssColor;
-      document.body.appendChild(probe);
-      const rgb = getComputedStyle(probe).color;
-      probe.remove();
-      const m = rgb.match(/rgba?\(([^)]+)\)/);
-      if (m) {
-        const [r, g, b] = m[1].split(",").map((s) => parseInt(s.trim(), 10));
-        return "#" + [r, g, b].map((v) => v.toString(16).padStart(2, "0")).join("");
-      }
-      if (/^#[0-9a-f]{6}$/i.test(rgb)) return rgb;
-      return fallback;
-    } catch (e) {
-      return fallback;
-    }
-  }
-  function hexToRgba(hex, a) {
-    const m = hex.replace("#", "");
-    const r = parseInt(m.substring(0, 2), 16);
-    const g = parseInt(m.substring(2, 4), 16);
-    const b = parseInt(m.substring(4, 6), 16);
-    return `rgba(${r},${g},${b},${a})`;
-  }
+  // ----- Colors --------------------------------------------------------------
   const ACCENT = resolveColorToHex(
-    getComputedStyle(document.documentElement).getPropertyValue("--accent").trim(),
-    "#2D5BFF"
+    getComputedStyle(document.documentElement)
+      .getPropertyValue("--accent")
+      .trim(),
+    "#2D5BFF",
   );
   const ACCENT_GLOW = hexToRgba(ACCENT, 0.28);
   const INK = "#0B0D10";
   const PAPER = resolveColorToHex(
     getComputedStyle(document.documentElement).getPropertyValue("--bg").trim(),
-    "#F5F4EF"
+    "#F5F4EF",
   );
   const GOLD = "#E0B341";
 
   // ----- Map init -----------------------------------------------------------
-  const initialTab = (SECTION && SECTION.dataset.activeTab) || "5k";
+  const initialTab: "5k" | "10k" =
+    (SECTION && (SECTION.dataset.activeTab as "5k" | "10k")) || "5k";
   const initialRoute = ROUTES[initialTab];
 
   const map = new maplibregl.Map({
@@ -205,23 +106,25 @@
           resumeAnimation();
         }
       },
-      { threshold: 0 }
+      { threshold: 0 },
     );
     visibilityObserver.observe(mapEl);
   }
 
   // Runner — accent (blue) with ink + paper rings; pulses on lap 2.
   const runnerEl = document.createElement("div");
-  function paintRunner(color, glowColor) {
+  function paintRunner(color: string, glowColor: string): void {
     runnerEl.style.cssText = `width:18px;height:18px;border-radius:50%;background:${color};box-shadow:0 0 0 2.5px ${PAPER}, 0 0 0 4.5px ${INK}, 0 0 14px ${glowColor};transition:opacity .25s, background .35s, box-shadow .35s;opacity:0;`;
   }
   paintRunner(ACCENT, hexToRgba(ACCENT, 0.55));
-  const runnerMarker = new maplibregl.Marker({ element: runnerEl }).setLngLat(initialRoute.coords[0]);
+  const runnerMarker = new maplibregl.Marker({ element: runnerEl }).setLngLat(
+    initialRoute.coords[0],
+  );
 
   // Meeting point — sits off the route, on the grass. Decorative only
   // (no popup, no link) so the map stays presentational.
-  let meetingMarker = null;
-  function placeMeetingMarker() {
+  let meetingMarker: maplibregl.Marker | null = null;
+  function placeMeetingMarker(): void {
     const mp = SITE.meetingPoint;
     if (!mp || !mp.coord) return;
     if (!meetingMarker) {
@@ -234,12 +137,12 @@
   }
 
   // ----- KM marker DOM ------------------------------------------------------
-  let kmMarkers = {};
-  function clearKmMarkers() {
+  let kmMarkers: Record<string, maplibregl.Marker> = {};
+  function clearKmMarkers(): void {
     Object.values(kmMarkers).forEach((m) => m && m.remove && m.remove());
     kmMarkers = {};
   }
-  function addKmMarker(key, label, lngLat) {
+  function addKmMarker(key: string, label: string, lngLat: Coord): void {
     if (kmMarkers[key]) return;
     // Wrapper sits at the lngLat (anchor: center). Both children are
     // absolutely positioned so the dot's center lands exactly on the
@@ -253,10 +156,15 @@
     tag.style.cssText = `position:absolute;left:8px;top:-14px;font:600 10px/1 "JetBrains Mono", ui-monospace, monospace;color:${PAPER};background:${INK};padding:2px 5px;border-radius:3px;box-shadow:0 1px 4px rgba(0,0,0,.15);letter-spacing:.04em;white-space:nowrap;`;
     el.appendChild(dot);
     el.appendChild(tag);
-    const mk = new maplibregl.Marker({ element: el, anchor: "center" }).setLngLat(lngLat).addTo(map);
+    const mk = new maplibregl.Marker({ element: el, anchor: "center" })
+      .setLngLat(lngLat)
+      .addTo(map);
     el.style.opacity = "0";
     if (el.animate) {
-      el.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 280, easing: "cubic-bezier(.2,.7,.3,1)", fill: "forwards" });
+      el.animate(
+        [{ opacity: 0 }, { opacity: 1 }],
+        { duration: 280, easing: "cubic-bezier(.2,.7,.3,1)", fill: "forwards" },
+      );
     } else {
       el.style.opacity = "1";
     }
@@ -264,20 +172,31 @@
   }
 
   // ----- Tab / animation state ---------------------------------------------
-  let currentTab = initialTab;
+  let currentTab: "5k" | "10k" = initialTab;
   let animToken = 0;
-  let pendingTimer = null;
+  let pendingTimer: ReturnType<typeof setTimeout> | null = null;
 
-  function emptyLine() {
+  type LineFeature = {
+    type: "Feature";
+    geometry: { type: "LineString"; coordinates: Coord[] };
+  };
+
+  function emptyLine(): LineFeature {
     // A 1-point LineString is invalid; use a degenerate 2-point version.
     const c = ROUTES[currentTab].coords[0];
-    return { type: "Feature", geometry: { type: "LineString", coordinates: [c, c] } };
+    return {
+      type: "Feature",
+      geometry: { type: "LineString", coordinates: [c, c] },
+    };
   }
-  function fullLine(coords) {
-    return { type: "Feature", geometry: { type: "LineString", coordinates: coords } };
+  function fullLine(coords: Coord[]): LineFeature {
+    return {
+      type: "Feature",
+      geometry: { type: "LineString", coordinates: coords },
+    };
   }
 
-  function ensureLayers() {
+  function ensureLayers(): void {
     // Two sources: the full route (used by the soft halo so the glow doesn't
     // have to redraw every frame) and a progressive slice that the main blue
     // + dashed-black overlay both follow. Sharing a single source means the
@@ -287,13 +206,13 @@
       map.addSource("route-full", {
         type: "geojson",
         lineMetrics: true,
-        data: fullLine(ROUTES[currentTab].coords),
+        data: fullLine(ROUTES[currentTab].coords) as never,
       });
     }
     if (!map.getSource("route-progress")) {
       map.addSource("route-progress", {
         type: "geojson",
-        data: emptyLine(),
+        data: emptyLine() as never,
       });
     }
     if (!map.getLayer("route-glow")) {
@@ -306,7 +225,13 @@
           "line-color": ACCENT_GLOW,
           "line-width": 14,
           "line-blur": 6,
-          "line-gradient": ["step", ["line-progress"], ACCENT_GLOW, 0.0001, "rgba(0,0,0,0)"],
+          "line-gradient": [
+            "step",
+            ["line-progress"],
+            ACCENT_GLOW,
+            0.0001,
+            "rgba(0,0,0,0)",
+          ],
         },
       });
     }
@@ -335,20 +260,29 @@
     }
   }
 
-  function setGlowProgress(stop) {
+  function setGlowProgress(stop: number): void {
     if (!map.getLayer("route-glow")) return;
-    map.setPaintProperty("route-glow", "line-gradient",
-      ["step", ["line-progress"], ACCENT_GLOW, Math.max(0.0001, stop), "rgba(0,0,0,0)"]);
+    map.setPaintProperty("route-glow", "line-gradient", [
+      "step",
+      ["line-progress"],
+      ACCENT_GLOW,
+      Math.max(0.0001, stop),
+      "rgba(0,0,0,0)",
+    ]);
   }
 
-  function setMainSlice(coords) {
-    const src = map.getSource("route-progress");
-    if (src) src.setData(fullLine(coords));
+  function setMainSlice(coords: Coord[]): void {
+    const src = map.getSource("route-progress") as
+      | maplibregl.GeoJSONSource
+      | undefined;
+    if (src) src.setData(fullLine(coords) as never);
   }
 
-  function setRouteFull(coords) {
-    const src = map.getSource("route-full");
-    if (src) src.setData(fullLine(coords));
+  function setRouteFull(coords: Coord[]): void {
+    const src = map.getSource("route-full") as
+      | maplibregl.GeoJSONSource
+      | undefined;
+    if (src) src.setData(fullLine(coords) as never);
   }
 
   // ----- Animation ----------------------------------------------------------
@@ -356,11 +290,11 @@
   // (the 10K array is the 5K loop laid out end-to-end). So we just trace
   // it once from start to finish — no looping, no lap-2 overlay.
   // Resume hook set by the current frame() closure when it pauses because
-  // the map is offscreen. Called by the IntersectionObserver below when
+  // the map is offscreen. Called by the IntersectionObserver above when
   // the map re-enters the viewport.
-  let resumeAnimation = null;
+  let resumeAnimation: (() => void) | null = null;
 
-  function runAnimation(route) {
+  function runAnimation(route: Route): void {
     const myToken = ++animToken;
     clearKmMarkers();
     paintRunner(ACCENT, hexToRgba(ACCENT, 0.55));
@@ -389,7 +323,7 @@
     const pauseMs = 2200;
     let start = performance.now();
 
-    function frame(now) {
+    function frame(now: number): void {
       if (animToken !== myToken) return;
       // Pause if the map has scrolled out of view. Don't schedule the next
       // rAF; instead expose a resume callback that the observer will fire
@@ -440,11 +374,14 @@
     requestAnimationFrame(frame);
   }
 
-  function swapRoute(tab) {
+  function swapRoute(tab: "5k" | "10k"): void {
     const route = ROUTES[tab];
     if (!route) return;
     animToken++;
-    if (pendingTimer) { clearTimeout(pendingTimer); pendingTimer = null; }
+    if (pendingTimer) {
+      clearTimeout(pendingTimer);
+      pendingTimer = null;
+    }
     clearKmMarkers();
     runnerEl.style.opacity = "0";
     paintRunner(ACCENT, hexToRgba(ACCENT, 0.55));
@@ -468,19 +405,19 @@
   }
 
   // ----- Stat panel sync ----------------------------------------------------
-  function applyTab(tab) {
+  function applyTab(tab: "5k" | "10k"): void {
     currentTab = tab;
     const s = STATS[tab];
     if (!s) return;
     if (SECTION) SECTION.dataset.activeTab = tab;
 
-    document.querySelectorAll(".route-tab").forEach((btn) => {
+    document.querySelectorAll<HTMLElement>(".route-tab").forEach((btn) => {
       const on = btn.dataset.tab === tab;
       btn.classList.toggle("is-active", on);
       btn.setAttribute("aria-selected", on ? "true" : "false");
     });
 
-    const setText = (sel, val) => {
+    const setText = (sel: string, val: string | null | undefined): void => {
       const el = document.querySelector(sel);
       if (el != null && val != null) el.textContent = val;
     };
@@ -492,9 +429,9 @@
     setText("[data-legend-distance]", s.legendDistance);
   }
 
-  document.querySelectorAll(".route-tab").forEach((btn) => {
+  document.querySelectorAll<HTMLElement>(".route-tab").forEach((btn) => {
     btn.addEventListener("click", () => {
-      const tab = btn.dataset.tab;
+      const tab = btn.dataset.tab as "5k" | "10k" | undefined;
       if (!tab || tab === currentTab) return;
       applyTab(tab);
       swapRoute(tab);
@@ -512,9 +449,12 @@
       duration: 0,
     });
 
-    pendingTimer = setTimeout(() => {
-      pendingTimer = null;
-      runAnimation(initialRoute);
-    }, REDUCED_MOTION ? 0 : 600);
+    pendingTimer = setTimeout(
+      () => {
+        pendingTimer = null;
+        runAnimation(initialRoute);
+      },
+      REDUCED_MOTION ? 0 : 600,
+    );
   });
 })();

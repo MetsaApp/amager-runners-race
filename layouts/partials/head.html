@@ -61,9 +61,14 @@
 {{/* MapLibre */}}
 <link href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css" rel="stylesheet" />
 
-{{/* Site CSS via Hugo Pipes */}}
-{{- $css := resources.Get "css/main.css" | resources.Minify | resources.Fingerprint -}}
-<link rel="stylesheet" href="{{ $css.RelPermalink }}" integrity="{{ $css.Data.Integrity }}" />
+{{/* Site CSS: Tailwind-compiled (assets/css/app.gen.css) via Hugo Pipes.
+     Run `npm run build:css` before hugo — see README. */}}
+{{- with resources.Get "css/app.gen.css" -}}
+  {{- $css := . | resources.Minify | resources.Fingerprint -}}
+  <link rel="stylesheet" href="{{ $css.RelPermalink }}" integrity="{{ $css.Data.Integrity }}" />
+{{- else -}}
+  {{- warnf "app.gen.css not found — run `npm run build:css` before hugo" -}}
+{{- end -}}
 
 {{/* JSON-LD: SportsEvent */}}
 {{ partial "seo/jsonld.html" . }}

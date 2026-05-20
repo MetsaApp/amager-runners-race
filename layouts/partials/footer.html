@@ -1,12 +1,12 @@
-<footer>
-  <span>&copy; {{ now.Format "2006" }} {{ .Site.Params.organiser }}</span>
-  <a class="footer-credit" href="https://metsa.app" rel="noopener" target="_blank">
+<footer class="flex justify-between border-t border-line-soft px-7 py-7 font-mono text-[11px] uppercase tracking-[.1em] text-muted max-[820px]:flex-wrap max-[820px]:gap-2.5 max-[820px]:px-5 max-[820px]:py-[22px]">
+  <span class="inline-flex items-center gap-1.5">&copy; {{ now.Format "2006" }} {{ .Site.Params.organiser }}</span>
+  <a class="group inline-flex items-center gap-1.5 text-muted no-underline transition-colors duration-150 ease-in-out hover:text-ink" href="https://metsa.app" rel="noopener" target="_blank">
     Made with
-    <svg class="footer-heart" viewBox="0 0 24 24" width="12" height="12" aria-hidden="true" focusable="false">
+    <svg class="inline-block text-accent transition-transform duration-[250ms] ease-in-out group-hover:scale-[1.15]" viewBox="0 0 24 24" width="12" height="12" aria-hidden="true" focusable="false">
       <path fill="currentColor" d="M12 21s-7.5-4.6-10-9.2C.4 8.5 2.4 4 6.3 4c2.2 0 3.8 1.2 4.7 2.7l1 1.6 1-1.6C13.9 5.2 15.5 4 17.7 4c3.9 0 5.9 4.5 4.3 7.8C19.5 16.4 12 21 12 21z"/>
     </svg>
     by
-    <svg class="footer-metsa" viewBox="0 0 92 92" width="14" height="14" aria-hidden="true" focusable="false">
+    <svg class="footer-metsa inline-block rounded-[3px] align-middle" viewBox="0 0 92 92" width="14" height="14" aria-hidden="true" focusable="false">
       <rect fill="#fff" x=".23" y=".5" width="91" height="91" rx="15.27" ry="15.27"/>
       <path fill="none" stroke="#00a26d" stroke-width="5" stroke-miterlimit="10" d="M.3,42.24c24.04,0,24.89,14.52,38.54,14.52s10.04-16.31,52.31-10.86"/>
       <path fill="none" stroke="#ffba36" stroke-width="5" stroke-miterlimit="10" d="M.3,57.08c35.04,0,36.07-18.11,54.95-20.22,21.09-2.35,13.35,6.4,35.9,9.05"/>

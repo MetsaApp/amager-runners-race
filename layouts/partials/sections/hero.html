@@ -10,13 +10,13 @@
   <div class="hero-media" role="img" aria-label="Runners along the Amager coast"></div>
   <div class="hero-inner">
     <div class="hero-top">
-      <span class="pill"><span class="dot" aria-hidden="true"></span><span>{{ $pill }}</span></span>
+      <span class="pill"><span class="dot inline-block h-1.5 w-1.5 rounded-full bg-accent shadow-[0_0_0_4px_oklch(from_var(--accent)_l_c_h/.25)]" aria-hidden="true"></span><span>{{ $pill }}</span></span>
       <span class="hero-edition">{{ $t.hero.edition }}</span>
     </div>
 
     <div>
       <div class="hero-kicker">{{ $kicker }}</div>
-      <div class="hero-eyebrow">{{ $t.hero.eyebrow }}</div>
+      <div class="mb-3.5 font-display text-[clamp(22px,2.6vw,36px)] uppercase leading-none tracking-[.01em] text-white">{{ $t.hero.eyebrow }}</div>
       <h1 class="hero-title">5K<span class="slash">/</span>10K</h1>
       <p class="hero-sub">{{ $sub }}</p>
     </div>
@@ -30,7 +30,7 @@
         <div><dt>{{ $t.hero.metaStart }}</dt><dd>{{ delimit $times " · " }}</dd></div>
         <div><dt>{{ $t.hero.metaWhere }}</dt><dd>{{ $p.location }}</dd></div>
       </dl>
-      <div class="hero-cta">
+      <div class="flex flex-wrap justify-end gap-2.5 max-[820px]:justify-start">
         <a href="#pricing" class="btn btn-primary">
           <span>{{ $t.hero.ctaSignup }}</span>
           <span class="arrow" aria-hidden="true">→</span>

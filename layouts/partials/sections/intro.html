@@ -20,13 +20,13 @@
     <span class="section-num">{{ $num }} / <span>{{ $t.intro.sectionLabel }}</span></span>
     <h2 class="section-title">{{ $t.intro.sectionTitle }}</h2>
   </div>
-  <div class="intro-grid">
+  <div class="grid max-w-[1320px] grid-cols-[1fr_1.6fr] gap-20 max-[820px]:grid-cols-1 max-[820px]:gap-[30px]">
     <div>
-      <div class="intro-label">{{ $t.intro.label }}</div>
+      <div class="font-mono text-xs uppercase tracking-[.14em] text-muted">{{ $t.intro.label }}</div>
     </div>
     <div>
-      <p class="intro-lead">{{ $lead }}</p>
-      <div class="intro-body">
+      <p class="m-0 mb-6 font-display text-[clamp(28px,3.2vw,44px)] uppercase leading-[1.05] tracking-[-.01em]">{{ $lead }}</p>
+      <div class="max-w-[62ch] text-[17px] leading-[1.55] text-ink-2 [&_p+p]:mt-3.5">
         {{ $body | safeHTML }}
       </div>
     </div>

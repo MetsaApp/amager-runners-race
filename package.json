@@ -1,0 +1,20 @@
+{
+  "name": "amager-runners-race",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build:css": "tailwindcss -i ./assets/css/app.css -o ./assets/css/app.gen.css --minify",
+    "watch:css": "tailwindcss -i ./assets/css/app.css -o ./assets/css/app.gen.css --watch",
+    "dev": "npm run watch:css",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.1.0",
+    "tailwindcss": "^4.1.0",
+    "typescript": "^5.6.0",
+    "vitest": "^2.1.0",
+    "maplibre-gl": "^4.7.1"
+  }
+}

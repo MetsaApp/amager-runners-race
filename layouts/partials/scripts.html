@@ -35,8 +35,20 @@
 
 <script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js" defer></script>
 
-{{- $main := resources.Get "js/main.js" | resources.Minify | resources.Fingerprint -}}
-<script src="{{ $main.RelPermalink }}" integrity="{{ $main.Data.Integrity }}" defer></script>
+{{/* Site JS: TypeScript bundled via Hugo's js.Build (esbuild). IIFE format
+     keeps classic `defer` semantics so SRI + ordering match the CDN MapLibre
+     tag above. Minified for production (hugo --minify sets IsDevelopment=false). */}}
+{{- $jsOpts := dict
+    "minify" (not hugo.IsDevelopment)
+    "target" "es2020"
+    "format" "iife"
+    "sourceMap" (cond hugo.IsDevelopment "linked" "none")
+-}}
 
-{{- $map := resources.Get "js/map.js" | resources.Minify | resources.Fingerprint -}}
-<script src="{{ $map.RelPermalink }}" integrity="{{ $map.Data.Integrity }}" defer></script>
+{{- with resources.Get "js/main.ts" | js.Build $jsOpts | resources.Fingerprint -}}
+<script src="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" defer></script>
+{{- end -}}
+
+{{- with resources.Get "js/map.ts" | js.Build $jsOpts | resources.Fingerprint -}}
+<script src="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" defer></script>
+{{- end -}}

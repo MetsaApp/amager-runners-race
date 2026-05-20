@@ -2,17 +2,36 @@
 
 Hugo source for the Amager Runners Race event site. Deployed to Cloudflare Pages.
 
+## Tooling
+
+CSS is [Tailwind CSS v4](https://tailwindcss.com) (`assets/css/app.css` →
+generated `assets/css/app.gen.css`, which Hugo fingerprints). JS is TypeScript
+in `assets/js/`, bundled by Hugo's built-in `js.Build` (esbuild). Pure route
+geometry lives in `assets/js/lib/` and is unit-tested with [Vitest](https://vitest.dev).
+
+```bash
+npm ci             # install dev tooling (first time)
+npm run build:css  # compile Tailwind → assets/css/app.gen.css (required before hugo)
+npm run dev        # watch + recompile Tailwind while editing
+npm test           # run the Vitest suite
+npm run typecheck  # tsc --noEmit
+```
+
+`assets/css/app.gen.css` is generated and git-ignored — `npm run build:css`
+(or `npm run dev`) must run before/while `hugo` builds, or the page renders
+unstyled (Hugo logs a warning).
+
 ## Local development
 
 ```bash
-hugo server -D
-# open http://localhost:1313
+npm run dev        # terminal 1 — Tailwind watch
+hugo server -D     # terminal 2 — open http://localhost:1313
 ```
 
 ## Production build
 
 ```bash
-hugo --minify
+npm ci && npm run build:css && hugo --minify
 # output → ./public
 ```
 
@@ -58,15 +77,16 @@ Drop a PNG/SVG in `static/img/` and reference it in `data/sponsors.yaml`:
 
 In the Pages dashboard:
 
-- **Build command:** `hugo --minify --gc`
+- **Build command:** `npm ci && npm run build:css && hugo --minify --gc`
 - **Build output:** `public`
 - **Environment variables:**
-  - `HUGO_VERSION` = `0.144.0`
+  - `HUGO_VERSION` = `0.161.1`
+  - `NODE_VERSION` = `22` (or rely on `.nvmrc`)
   - `HUGO_ENV` = `production`
 - **Custom domain:** `race.amagerrunners.dk`
 
-`static/_headers` adds security & cache headers. Hugo Pipes already
-fingerprints CSS/JS so they can be cached for a year.
+`static/_headers` adds security & cache headers. Hugo fingerprints the
+compiled CSS/JS so they can be cached for a year.
 
 ## SEO
 

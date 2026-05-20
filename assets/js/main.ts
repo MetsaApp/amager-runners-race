@@ -1,3 +1,5 @@
+import "./types";
+
 // Smooth scroll for in-page anchors + nudge route map on demand
 (function () {
   const viewRouteBtn = document.getElementById("viewRouteBtn");
@@ -7,7 +9,10 @@
       if (target) {
         e.preventDefault();
         target.scrollIntoView({ behavior: "smooth", block: "start" });
-        if (window.__mapInstance) setTimeout(() => window.__mapInstance.resize(), 400);
+        if (window.__mapInstance) {
+          const map = window.__mapInstance;
+          setTimeout(() => map.resize(), 400);
+        }
       }
     });
   }
@@ -22,7 +27,7 @@
     ([entry]) => {
       document.body.classList.toggle("is-scrolled", !entry.isIntersecting);
     },
-    { rootMargin: "-60px 0px 0px 0px" }
+    { rootMargin: "-60px 0px 0px 0px" },
   );
   io.observe(hero);
 })();
