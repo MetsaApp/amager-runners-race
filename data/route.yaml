@@ -7,8 +7,8 @@ stats:
     laps: 1
     elevation: "~6 M"
     surface:
-      en: "Paved path"
-      da: "Asfalteret sti"
+      en: "Asphalt and gravel"
+      da: "Asfalt og grus"
     aidStations: "—"
     legendStart:
       en: "Start / Finish"
@@ -19,8 +19,8 @@ stats:
     laps: 2
     elevation: "~12 M"
     surface:
-      en: "Paved path"
-      da: "Asfalteret sti"
+      en: "Asphalt and gravel"
+      da: "Asfalt og grus"
     aidStations: "1"
     legendStart:
       en: "Start / Finish / Aid"
@@ -34,7 +34,6 @@ meetingPoint:
     en: "Meeting Point"
     da: "Mødested"
   venue: "Tiøren"
-
 
 points5k:
   - [12.64287, 55.64732]

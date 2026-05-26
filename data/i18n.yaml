@@ -25,14 +25,14 @@ en:
     items:
       - "{date}"
       - "Two distances"
-      - "Flat and fast"
+      - "Fast and scenic"
       - "One loop on the coast"
 
   intro:
     sectionLabel: "About the race"
     sectionTitle: "Run the coast"
     label: "A club race, open to everyone."
-    lead: "A flat, fast loop along {location}. Run it once for the 5K, twice for the 10K."
+    lead: "A fast loop along {location}. Run it once for the 5K, twice for the 10K."
     startsSentence: "The {dist0} sets off at {time0}, the {dist1} at {time1}."
     body: |
       <p>{organiser} is hosting the first edition of our evening race. Same course, same start line, same finish. {starts}</p>
@@ -54,7 +54,7 @@ en:
   route:
     sectionLabel: "Route"
     sectionTitle: "The loop"
-    intro: 'One course for both races. The 5K runs the loop below once. The 10K runs it <strong>twice</strong>, with a single aid station at the start / finish line that you pass through at halfway.'
+    intro: "One course for both races. The 5K runs the loop below once. The 10K runs it <strong>twice</strong>, with a single aid station at the start / finish line that you pass through at halfway."
     tab5k: "5 KM"
     tab10k: "10 KM"
     statDist: "Lap distance"
@@ -98,14 +98,14 @@ da:
     items:
       - "{date}"
       - "To distancer"
-      - "Fladt og hurtigt"
+      - "Flot og hurtigt"
       - "Én rute langs kysten"
 
   intro:
     sectionLabel: "Om løbet"
     sectionTitle: "Løb langs kysten"
     label: "Et klubløb. Åbent for alle."
-    lead: "En flad, hurtig rute gennem {location}. Én omgang på 5K, to omgange på 10K."
+    lead: "En hurtig rute gennem {location}. Én omgang på 5K, to omgange på 10K."
     startsSentence: "{dist0} starter {time0}, {dist1} starter {time1}."
     body: |
       <p>{organiser} holder første udgave af vores aftensløb. Samme rute, samme startlinje, samme mål. {starts}</p>
@@ -127,7 +127,7 @@ da:
   route:
     sectionLabel: "Rute"
     sectionTitle: "Ruten"
-    intro: 'Én rute til begge løb. 5K løber ruten herunder én gang. 10K løber den <strong>to gange</strong>, med ét depot ved start/mål som du passerer halvvejs.'
+    intro: "Én rute til begge løb. 5K løber ruten herunder én gang. 10K løber den <strong>to gange</strong>, med ét depot ved start/mål som du passerer halvvejs."
     tab5k: "5 KM"
     tab10k: "10 KM"
     statDist: "Omgangsdistance"
