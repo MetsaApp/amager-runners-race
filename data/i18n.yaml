@@ -50,6 +50,7 @@ en:
     sectionLabel: "Registration"
     sectionTitle: "Sign up"
     register: "Register →"
+    feeText: "+ fee"
 
   route:
     sectionLabel: "Route"
@@ -123,6 +124,7 @@ da:
     sectionLabel: "Tilmelding"
     sectionTitle: "Tilmeld dig"
     register: "Tilmeld →"
+    feeText: "+ gebyr"
 
   route:
     sectionLabel: "Rute"

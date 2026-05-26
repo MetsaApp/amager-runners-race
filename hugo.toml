@@ -1,5 +1,5 @@
 baseURL = "https://race.amagerrunners.dk/"
-title = "Amager Runners Race"
+title = "Strandparkløbet Amager"
 locale = "en"
 defaultContentLanguage = "en"
 defaultContentLanguageInSubdir = false
@@ -64,15 +64,15 @@ disableKinds = ["taxonomy", "term", "section"]
   organiser = "Amager Runners"
   organiserUrl = "https://amagerrunners.dk"
   organiserEmail = "info@amagerrunners.dk"
-  organiserStreet = "Erantisvej 28"
-  organiserPostalCode = "2300"
-  organiserLocality = "København S"
+  #organiserStreet = "Erantisvej 28"
+  #organiserPostalCode = "2300"
+  #organiserLocality = "København S"
   organiserCVR = "44864932"
   registrationStatus = "open"
   # NOTE: maxRunners is also referenced in content/_index.md and content/da/_index.md
   # front-matter descriptions, which can't read params. Update those by hand.
   maxRunners = 900
-  priceDKK = 200
+  priceDKK = 180
   currency = "DKK"
   # SEO defaults
   ogImage = "/img/hero.jpg"
