@@ -1,7 +1,7 @@
 # Practical info cards. Grid columns adjustable via `cols`.
 # Add a new card by appending to `cards`.
-cols: 4          # desktop columns
-colsMobile: 2    # mobile columns
+cols: 4 # desktop columns
+colsMobile: 2 # mobile columns
 
 cards:
   - icon: "P"
@@ -9,8 +9,8 @@ cards:
       en: "Parking"
       da: "Parkering"
     body:
-      en: "Parking at {location}, north and south. Spaces are limited, so take the Metro to Øresund (4 min walk) if you can."
-      da: "Parkering ved {location}, nord og syd. Pladserne er begrænsede, så tag Metroen til Øresund (4 min. gang), hvis du kan."
+      en: "Parking at {location}, north and south. Spaces are limited, so take the Metro to Femøren (4 min walk) if you can."
+      da: "Parkering ved {location}, nord og syd. Pladserne er begrænsede, så tag Metroen til Femøren (4 min. gang), hvis du kan."
 
   - icon: "B"
     title:
