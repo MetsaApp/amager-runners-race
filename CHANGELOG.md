@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.1](https://github.com/MetsaApp/amager-runners-race/compare/v1.0.0...v1.0.1) (2026-05-29)
+
+
+### Bug Fixes
+
+* trigger release, opdatering af rute og event navn ([#44](https://github.com/MetsaApp/amager-runners-race/issues/44)) ([8a79a52](https://github.com/MetsaApp/amager-runners-race/commit/8a79a5209ceb60c80b03f1c66c2db13bb38bd38b))
+
 ## 1.0.0 (2026-05-26)
 
 
