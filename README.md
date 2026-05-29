@@ -1,6 +1,6 @@
 # race.amagerrunners.dk
 
-Hugo source for the Amager Runners Race event site. Deployed to Cloudflare Pages.
+Hugo source for the Strandparkløbet Amager event site. Deployed to Cloudflare Pages.
 
 ## Local development
 
@@ -21,18 +21,18 @@ hugo --minify
 Everything visible on the page is driven by data files in [`data/`](./data) and
 translations in [`data/i18n.yaml`](./data/i18n.yaml). The most common edits:
 
-| What                          | Where                                  |
-|-------------------------------|----------------------------------------|
-| Add a sponsor / logo          | `data/sponsors.yaml` (`items:`)        |
-| Change sponsor grid columns   | `data/sponsors.yaml` → `cols`, `colsMobile` |
-| Add a schedule row            | `data/schedule.yaml` (`rows:`)         |
-| Add a practical info card     | `data/practical.yaml` (`cards:`)       |
+| What                          | Where                                        |
+| ----------------------------- | -------------------------------------------- |
+| Add a sponsor / logo          | `data/sponsors.yaml` (`items:`)              |
+| Change sponsor grid columns   | `data/sponsors.yaml` → `cols`, `colsMobile`  |
+| Add a schedule row            | `data/schedule.yaml` (`rows:`)               |
+| Add a practical info card     | `data/practical.yaml` (`cards:`)             |
 | Change practical grid columns | `data/practical.yaml` → `cols`, `colsMobile` |
-| Add / change pricing tier     | `data/pricing.yaml` (`tiers:`)         |
-| Update route polyline         | `data/route.yaml` (`points:`)          |
-| Reorder / hide a section      | `data/sections.yaml` (`order:`)        |
-| English / Danish text         | `data/i18n.yaml`                       |
-| Event date, name, prices, …   | `hugo.toml` → `[params]`               |
+| Add / change pricing tier     | `data/pricing.yaml` (`tiers:`)               |
+| Update route polyline         | `data/route.yaml` (`points:`)                |
+| Reorder / hide a section      | `data/sections.yaml` (`order:`)              |
+| English / Danish text         | `data/i18n.yaml`                             |
+| Event date, name, prices, …   | `hugo.toml` → `[params]`                     |
 
 Each section has a partial in [`layouts/partials/sections/`](./layouts/partials/sections)
 that reads from a matching data file. Hide a section by setting its
@@ -41,11 +41,13 @@ partial in `layouts/partials/sections/<id>.html` and listing it in
 `data/sections.yaml`.
 
 ### Grids
+
 The `practical`, `pricing`, and `sponsors` sections expose `cols` (desktop) and
 `colsMobile` knobs in their data files — change them to retune the grid without
 touching CSS.
 
 ### Sponsors with logo images
+
 Drop a PNG/SVG in `static/img/` and reference it in `data/sponsors.yaml`:
 
 ```yaml
