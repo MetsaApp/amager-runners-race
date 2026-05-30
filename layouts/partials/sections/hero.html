@@ -25,9 +25,8 @@
       <dl class="hero-meta">
         <div><dt>{{ $t.hero.metaDate }}</dt><dd>{{ dateFormat "02.01.2006" $p.eventDate }}</dd></div>
         {{- $starts := where (index .site.Data.schedule "rows") "kind.en" "Start" -}}
-        {{- $times := slice -}}
-        {{- range $starts }}{{ $times = $times | append .time }}{{ end -}}
-        <div><dt>{{ $t.hero.metaStart }}</dt><dd>{{ delimit $times " · " }}</dd></div>
+        {{- $lastStart := index $starts (sub (len $starts) 1) -}}
+        <div><dt>{{ $t.hero.metaStart }}</dt><dd>{{ $lastStart.time }}</dd></div>
         <div><dt>{{ $t.hero.metaWhere }}</dt><dd>{{ $p.location }}</dd></div>
       </dl>
       <div class="hero-cta">
