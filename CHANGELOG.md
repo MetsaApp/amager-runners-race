@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.0.2](https://github.com/MetsaApp/amager-runners-race/compare/v1.0.1...v1.0.2) (2026-05-30)
+
+
+### Bug Fixes
+
+* ret til kun et starttidspunkt samt tilpasning af rute ([#51](https://github.com/MetsaApp/amager-runners-race/issues/51)) ([5f08dbd](https://github.com/MetsaApp/amager-runners-race/commit/5f08dbd560feaf9d3657ef450aa06c8a3fb91282))
+* Rute og starttidspunkt opdateret ([#46](https://github.com/MetsaApp/amager-runners-race/issues/46)) ([8e791aa](https://github.com/MetsaApp/amager-runners-race/commit/8e791aabc2fb4104e17ed4ac1170ad72a52fc129))
+
 ## [1.0.1](https://github.com/MetsaApp/amager-runners-race/compare/v1.0.0...v1.0.1) (2026-05-29)
 
 
