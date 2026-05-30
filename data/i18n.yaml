@@ -33,7 +33,7 @@ en:
     sectionTitle: "Run the coast"
     label: "A club race, open to everyone."
     lead: "A fast loop along {location}. Run it once for the 5K, twice for the 10K."
-    startsSentence: "The {dist0} sets off at {time0}, the {dist1} at {time1}."
+    startsSentence: "Both {dist0} and {dist1} start at {time0}."
     body: |
       <p>{organiser} is hosting the first edition of our evening race. Same course, same start line, same finish. {starts}</p>
       <p>Chip timing is included. Any profit goes back to the club, Amager Runners.</p>
@@ -107,7 +107,7 @@ da:
     sectionTitle: "Løb langs kysten"
     label: "Et klubløb. Åbent for alle."
     lead: "En hurtig rute gennem {location}. Én omgang på 5K, to omgange på 10K."
-    startsSentence: "{dist0} starter {time0}, {dist1} starter {time1}."
+    startsSentence: "{dist0} og {dist1} starter samtidig klokken {time0}."
     body: |
       <p>{organiser} holder første udgave af vores aftensløb. Samme rute, samme startlinje, samme mål. {starts}</p>
       <p>Chiptidtagning er inkluderet. Et eventuelt overskud går tilbage til klubben, Amager Runners.</p>

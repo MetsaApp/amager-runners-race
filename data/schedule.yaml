@@ -12,7 +12,7 @@ rows:
       da: "Alle løbere"
     hot: false
 
-  - time: "18:00"
+  - time: "18:30"
     kind:
       en: "Start"
       da: "Start"
@@ -35,3 +35,15 @@ rows:
       en: "10K"
       da: "10K"
     hot: true
+
+  - time: "19:00"
+    kind:
+      en: "Post race"
+      da: "Efter løb"
+    name:
+      en: "Post-race hangout"
+      da: "Efterløbshygge i målområdet"
+    tag:
+      en: "All runners"
+      da: "Alle løbere"
+    hot: false
