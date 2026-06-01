@@ -14,7 +14,7 @@ tiers:
     items:
       - name: "Kjærulf Rammer"
         url: ""
-        image: ""   # logo file pending — text fallback until it arrives
+        image: "/img/kjærulff.png"   # logo file pending — text fallback until it arrives
 
   - id: standard
     cols: 3
