@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.0](https://github.com/MetsaApp/amager-runners-race/compare/v1.0.2...v1.1.0) (2026-06-01)
+
+
+### Features
+
+* **sponsors:** support three tiers with distinct visual prominence ([#41](https://github.com/MetsaApp/amager-runners-race/issues/41)) ([e5ce942](https://github.com/MetsaApp/amager-runners-race/commit/e5ce94226a7a49eedecf6492cbde2a0af48b7e0b))
+
 ## [1.0.2](https://github.com/MetsaApp/amager-runners-race/compare/v1.0.1...v1.0.2) (2026-05-30)
 
 
