@@ -501,6 +501,15 @@ section{ padding: 110px 28px; border-bottom: 1px solid var(--line-soft); }
   grid-auto-rows: 160px;
   border: 1px solid var(--ink);
 }
+.sponsors + .sponsors{ margin-top: 14px; }
+.sponsors--main{ grid-auto-rows: 240px; }
+.sponsors--partner{ grid-auto-rows: 120px; }
+.sponsors--main .sponsor > span{
+  font-size: clamp(28px, 3.2vw, 44px);
+}
+.sponsors--partner .sponsor > span{
+  font-size: clamp(14px, 1.4vw, 18px);
+}
 .sponsor{
   position: relative;
   display: flex;

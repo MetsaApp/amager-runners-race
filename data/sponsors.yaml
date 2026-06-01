@@ -1,20 +1,43 @@
-# Sponsors / partners. Adjust grid via `cols` and `colsMobile`.
-# Add a sponsor by appending to `items`. Set `image` to /img/yourlogo.png
-# and `url` to their site; placeholder cards show `name`.
-cols: 4
-colsMobile: 2
+# Sponsors / partners, grouped into three tiers of visual prominence.
+# Each tier gets its own grid row with its own column counts.
+#   - main:     Hovedsponsor (10.000 DKK)            — largest cells
+#   - standard: Sponsor      (5.000 DKK or in-kind)  — medium cells
+#   - partner:  Små sponsorer / partnere             — small, dense grid
+# Add a sponsor by appending to the relevant tier's `items`. Set
+# `image` to /img/yourlogo.png and `url` to their site; entries with no
+# image fall back to rendering the brand name as text.
 
-items:
-  - name: "Dansk Atletik"
-    url: "https://dansk-atletik.dk"
-    image: "/img/daf.jpg"
-  - name: "Sparekassen Danmark"
-    url: "https://www.spard.dk/"
-    image: "/img/sparekassen-danmark.jpg"
-  - name: "MetaLine ApS"
-    url: ""
-    image: ""
-  - name: ""        # blank name → renders "Your logo?" placeholder
-    url: ""
-    image: ""
-    placeholder: true
+tiers:
+  - id: main
+    cols: 1
+    colsMobile: 1
+    items:
+      - name: "Kjærulf Rammer"
+        url: ""
+        image: "/img/kjærulff.png"   # logo file pending — text fallback until it arrives
+
+  - id: standard
+    cols: 3
+    colsMobile: 2
+    items:
+      - name: "Sparekassen Danmark"
+        url: "https://www.spard.dk/"
+        image: "/img/sparekassen-danmark.jpg"
+      - name: "Rema 1000"
+        url: ""
+        image: ""
+      - name: "MetaLine ApS"
+        url: ""
+        image: ""
+      - name: "Dansk Atletik"
+        url: "https://dansk-atletik.dk"
+        image: "/img/daf.jpg"
+
+  - id: partner
+    cols: 5
+    colsMobile: 3
+    items:
+      - name: ""
+        url: ""
+        image: ""
+        placeholder: true
