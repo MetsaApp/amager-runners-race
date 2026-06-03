@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.1](https://github.com/MetsaApp/amager-runners-race/compare/v1.1.0...v1.1.1) (2026-06-03)
+
+
+### Bug Fixes
+
+* gennemtving release af sprogændring ([e493d69](https://github.com/MetsaApp/amager-runners-race/commit/e493d6992b9fc7a1b3b84c77ec746e9fa77ecb2b))
+
 ## [1.1.0](https://github.com/MetsaApp/amager-runners-race/compare/v1.0.2...v1.1.0) (2026-06-01)
 
 
