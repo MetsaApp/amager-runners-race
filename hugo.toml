@@ -1,7 +1,7 @@
 baseURL = "https://race.amagerrunners.dk/"
 title = "Strandparkløbet Amager"
 locale = "en"
-defaultContentLanguage = "da"
+defaultContentLanguage = "en"
 defaultContentLanguageInSubdir = false
 enableRobotsTXT = true
 enableEmoji = false
