@@ -31,13 +31,14 @@ en:
   intro:
     sectionLabel: "About the race"
     sectionTitle: "Run the coast"
-    label: "A club race, open to everyone."
-    lead: "A fast loop along {location}. Run it once for the 5K, twice for the 10K."
-    startsSentence: "Both {dist0} and {dist1} start at {time0}."
+    label: "Open to everyone."
+    lead: "A FAST AND SCENIC ROUTE ALONG THE COAST. RUN 5 KM OR 10 KM IN AMAGER STRANDPARK."
+    startsSentence: "{dist0} and {dist1} start together at {time0}."
     body: |
-      <p>{organiser} is hosting the first edition of our evening race. Same course, same start line, same finish. {starts}</p>
-      <p>Chip timing is included. Any profit goes back to the club, Amager Runners.</p>
-
+      Are you putting the finishing touches on your preparations for the World Athletics Half Marathon Championships in Copenhagen? Or are you simply looking to challenge yourself on a fast and scenic course?<br><br>
+      Choose between 5 km and 10 km on a certified course through the beautiful surroundings of Amager Strandpark. The flat coastal paths provide the perfect opportunity to chase a personal best, whether you're an experienced runner or just getting started.<br><br>
+      Runners of all levels are welcome. Come on your own or bring your favourite running buddy and experience the running community of Amager.<br><br>
+      Chip timing is included, and water will be available at the start and finish area. The race is organised by Amager Runners with support from the Danish Athletics Federation. Any surplus from the event will be reinvested in the club's work to promote running, community, and active lifestyles on Amager.
   schedule:
     sectionLabel: "Schedule"
     sectionTitle: "The evening"
@@ -105,13 +106,14 @@ da:
   intro:
     sectionLabel: "Om løbet"
     sectionTitle: "Løb langs kysten"
-    label: "Et klubløb. Åbent for alle."
-    lead: "En hurtig rute gennem {location}. Én omgang på 5K, to omgange på 10K."
+    label: "Åbent for alle."
+    lead: "EN HURTIG OG FLOT RUTE LANGS KYSTEN. Løb 5 KM ELLER 10 KM I AMAGER STRANDPARK."
     startsSentence: "{dist0} og {dist1} starter samtidig klokken {time0}."
     body: |
-      <p>{organiser} holder første udgave af vores aftensløb. Samme rute, samme startlinje, samme mål. {starts}</p>
-      <p>Chiptidtagning er inkluderet. Et eventuelt overskud går tilbage til klubben, Amager Runners.</p>
-
+      Er du i gang med de sidste forberedelser frem mod VM i halvmaraton i København? Eller har du bare lyst til at udfordre dig selv på en hurtig og flot rute?<br><br>
+      Vælg mellem 5 km og 10 km på en DAF-opmålt rute gennem Amager Strandparks smukke omgivelser. De flade stier langs kysten giver optimale muligheder for at jagte en personlig rekord – uanset om du er erfaren løber eller motionist.<br><br>
+      Alle niveauer er velkomne. Kom alene eller tag din bedste løbebuddy med og oplev fællesskabet omkring løb på Amager.<br><br>
+      Chiptidtagning er inkluderet, og der vil være vand ved start og mål. Løbet arrangeres af Amager Runners med støtte fra Dansk Atletik Forbund. Et eventuelt overskud går til klubbens arbejde med at skabe løbeglæde og fællesskab på Amager.
   schedule:
     sectionLabel: "Program"
     sectionTitle: "Aftenen"
