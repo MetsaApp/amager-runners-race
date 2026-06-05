@@ -36,7 +36,7 @@ tiers:
     items:
       - name: "Yellow Bird"
         url: "https://yellowbirdcoffee.dk/"
-        image: "/img/yellowbird.png"
+        image: "/img/yellowbirdLogo.png"
       - name: "Dansk Atletik"
         url: "https://dansk-atletik.dk"
         image: "/img/daf.jpg"
