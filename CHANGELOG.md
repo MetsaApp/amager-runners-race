@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.2.0](https://github.com/MetsaApp/amager-runners-race/compare/v1.1.1...v1.2.0) (2026-06-05)
+
+
+### Features
+
+* add yellowbird logo ([#60](https://github.com/MetsaApp/amager-runners-race/issues/60)) ([cef2487](https://github.com/MetsaApp/amager-runners-race/commit/cef248734f0c80f2a3945eff26a4b0dff1007606))
+* Yellow Bird logo tilføjet ([#58](https://github.com/MetsaApp/amager-runners-race/issues/58)) ([3a68ba2](https://github.com/MetsaApp/amager-runners-race/commit/3a68ba210c09741afe98315a1636ea556f013b75))
+
 ## [1.1.1](https://github.com/MetsaApp/amager-runners-race/compare/v1.1.0...v1.1.1) (2026-06-03)
 
 
