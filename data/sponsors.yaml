@@ -29,15 +29,14 @@ tiers:
       - name: "MetaLine ApS"
         url: ""
         image: ""
-      - name: "Dansk Atletik"
-        url: "https://dansk-atletik.dk"
-        image: "/img/daf.jpg"
 
   - id: partner
     cols: 5
     colsMobile: 3
     items:
-      - name: ""
-        url: ""
-        image: ""
-        placeholder: true
+      - name: "Yellow Bird"
+        url: "https://yellowbirdcoffee.dk/"
+        image: "/img/yellowbird.png"
+      - name: "Dansk Atletik"
+        url: "https://dansk-atletik.dk"
+        image: "/img/daf.jpg"

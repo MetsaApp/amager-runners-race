@@ -515,7 +515,7 @@ section{ padding: 110px 28px; border-bottom: 1px solid var(--line-soft); }
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 160px;
+  min-height: 100px;
   border-right: 1px solid var(--line-soft);
   border-bottom: 1px solid var(--line-soft);
   color: var(--ink);
@@ -535,6 +535,7 @@ section{ padding: 110px 28px; border-bottom: 1px solid var(--line-soft); }
   object-fit: contain;
   filter: grayscale(0);
 }
+
 /* Text-only cell with a real brand name (no logo yet) */
 .sponsor > span{
   font-family: var(--f-display);
