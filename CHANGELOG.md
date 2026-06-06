@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.0](https://github.com/MetsaApp/amager-runners-race/compare/v1.2.1...v1.3.0) (2026-06-06)
+
+
+### Features
+
+* Billede tilpasset ([#66](https://github.com/MetsaApp/amager-runners-race/issues/66)) ([54458b3](https://github.com/MetsaApp/amager-runners-race/commit/54458b39ac3d4a52de7e0bfa3322c785d08dcd0c))
+
 ## [1.2.1](https://github.com/MetsaApp/amager-runners-race/compare/v1.2.0...v1.2.1) (2026-06-05)
 
 
