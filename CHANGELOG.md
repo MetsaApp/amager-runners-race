@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.0](https://github.com/MetsaApp/amager-runners-race/compare/v1.3.0...v1.4.0) (2026-06-07)
+
+
+### Features
+
+* Ny rute ([#69](https://github.com/MetsaApp/amager-runners-race/issues/69)) ([d327c59](https://github.com/MetsaApp/amager-runners-race/commit/d327c5950518c0d0cd59ef238f1ee38683129d7b))
+
 ## [1.3.0](https://github.com/MetsaApp/amager-runners-race/compare/v1.2.1...v1.3.0) (2026-06-06)
 
 
