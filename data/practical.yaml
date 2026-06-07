@@ -9,16 +9,15 @@ cards:
       en: "Parking"
       da: "Parkering"
     body:
-      en: "Parking at {location}, north and south. Spaces are limited, so take the Metro to Femøren (4 min walk) if you can."
-      da: "Parkering ved {location}, nord og syd. Pladserne er begrænsede, så tag Metroen til Femøren (4 min. gang), hvis du kan."
-
+      en: "Parking at Amager Strandpark, north and south. Spaces are limited, so please take the Metro to Amager Strand or Femøren."
+      da: "Parkering ved Amager Strandpark, nord og syd. Pladserne er begrænsede, så tag gerne Metroen til Amager Strand eller Femøren"
   - icon: "B"
     title:
       en: "Bag drop"
       da: "Taskeaflevering"
     body:
-      en: "Staffed bag drop at Tiøren. Show your bib to pick up."
-      da: "Bemandet taskeaflevering ved Tiøren. Vis dit startnummer ved afhentning."
+      en: "Staffed bag drop at Strandstation 3. Show your bib to pick up."
+      da: "Bemandet taskeaflevering ved Strandstation 3. Vis dit startnummer ved afhentning."
 
   - icon: "H"
     title:
