@@ -339,7 +339,7 @@ section{ padding: 110px 28px; border-bottom: 1px solid var(--line-soft); }
   border-right: 1px solid var(--line-soft);
   border-bottom: 1px solid var(--line-soft);
   min-height: 220px;
-  display: flex; flex-direction: column; justify-content: space-between;
+  display: flex; flex-direction: column; justify-content: flex-start;
 }
 .prac-icon{
   width: 36px; height: 36px; border: 1.5px solid var(--ink);

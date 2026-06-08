@@ -40,3 +40,6 @@ tiers:
       - name: "Dansk Atletik"
         url: "https://dansk-atletik.dk"
         image: "/img/daf.jpg"
+      - name: "Amager Strandpark parkrun"
+        url: "https://www.parkrun.dk/amagerstrandpark/"
+        image: "/img/parkrun.png"
