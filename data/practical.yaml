@@ -42,3 +42,19 @@ cards:
     body:
       en: "Chip timing is included. More details closer to race day."
       da: "Chiptidtagning er inkluderet. Flere detaljer tættere på løbsdagen."
+  
+  - icon: "Z"
+    title:
+      en: "Prizes"
+      da: "Præmier"
+    body:
+      en: "Prizes for the top 3 women and men in both 5K and 10K. Additionally, there will be raffle prizes for all participants."
+      da: "Præmier til top 3 kvinder og mænd på både 5 km og 10 km. Derudover udloddes lodtrækningspræmier blandt alle deltagere."
+  
+  - icon: "R"
+    title:
+      en: "The route"
+      da: "Ruten"
+    body:
+      en: "A fast and spectator-friendly route along the water at Amager Strandpark, starting and finishing at Strandstation 3."
+      da: "En hurtig og tilskuervenlig rute langs vandet i Amager Strandpark med start og mål ved Strandstation 3."
