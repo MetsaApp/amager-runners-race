@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.6.0](https://github.com/MetsaApp/amager-runners-race/compare/v1.5.1...v1.6.0) (2026-06-08)
+
+
+### Features
+
+* Præmier og rute tilføjet under praktisk ([#80](https://github.com/MetsaApp/amager-runners-race/issues/80)) ([b971c5a](https://github.com/MetsaApp/amager-runners-race/commit/b971c5a723502aad9dcf0624192d77bf1aed5ec7))
+
 ## [1.5.1](https://github.com/MetsaApp/amager-runners-race/compare/v1.5.0...v1.5.1) (2026-06-08)
 
 
