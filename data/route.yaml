@@ -7,8 +7,8 @@ stats:
     laps: 1
     elevation: "~6 M"
     surface:
-      en: "Mostly asphalt"
-      da: "Mest asfalt"
+      en: "96% Asphalt"
+      da: "96% Asfalt"
     aidStations: "Finish"
     legendStart:
       en: "Start / Finish"
@@ -19,8 +19,8 @@ stats:
     laps: 2
     elevation: "~12 M"
     surface:
-      en: "Mostly asphalt"
-      da: "Mest asfalt"
+      en: "Asphalt"
+      da: "96% Asfalt"
     aidStations: "5k + Finish"
     legendStart:
       en: "Start / Finish / Aid"
