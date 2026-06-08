@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.5.0](https://github.com/MetsaApp/amager-runners-race/compare/v1.4.0...v1.5.0) (2026-06-08)
+
+
+### Features
+
+* Add parkrun and mod practical ([#75](https://github.com/MetsaApp/amager-runners-race/issues/75)) ([74d3ad5](https://github.com/MetsaApp/amager-runners-race/commit/74d3ad583bc665db3046e188ff8de42a78d2edd8))
+
+
+### Bug Fixes
+
+* Trigger release ([#72](https://github.com/MetsaApp/amager-runners-race/issues/72)) ([f1efc49](https://github.com/MetsaApp/amager-runners-race/commit/f1efc49f9a49be047884be1358032850e55e330a))
+
 ## [1.4.0](https://github.com/MetsaApp/amager-runners-race/compare/v1.3.0...v1.4.0) (2026-06-07)
 
 
