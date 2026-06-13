@@ -10,15 +10,16 @@
     <div class="contact-col">
       <h4>{{ $t.contact.organiser }}</h4>
       <p>{{ $p.organiser }}</p>
-      <p>{{ $p.organiserStreet }}, {{ $p.organiserPostalCode }} {{ $p.organiserLocality }}</p>
-      <p>CVR {{ $p.organiserCVR }}</p>
+      <p><a href="{{ $p.social.facebookgroup }}">Facebook Group</a></p>
+      <!-- <p>{{ $p.organiserStreet }}, {{ $p.organiserPostalCode }} {{ $p.organiserLocality }}</p> -->
       <p style="margin-top:10px"><a href="mailto:{{ $p.organiserEmail }}">{{ $p.organiserEmail }}</a></p>
+      <p>CVR {{ $p.organiserCVR }}</p>
     </div>
     <div class="contact-col">
       <h4>{{ $t.contact.follow }}</h4>
       <p><a href="{{ $p.social.website }}">amagerrunners.dk</a></p>
       <p><a href="{{ $p.social.strava }}">strava.com/clubs/amagerrunners</a></p>
-      <p><a href="{{ $p.social.facebook }}">Facebook group</a></p>
+      <p><a href="{{ $p.social.facebook }}">Facebook Event</a> - like & share 💙</p>
     </div>
   </div>
 </section>
