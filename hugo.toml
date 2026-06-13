@@ -63,7 +63,7 @@ disableKinds = ["taxonomy", "term", "section"]
   location = "Amager Strandpark"
   organiser = "Amager Runners"
   organiserUrl = "https://amagerrunners.dk"
-  organiserEmail = "info@amagerrunners.dk"
+  organiserEmail = "info(@)amagerrunners.dk"
   #organiserStreet = "Erantisvej 28"
   #organiserPostalCode = "2300"
   #organiserLocality = "København S"
@@ -87,4 +87,5 @@ disableKinds = ["taxonomy", "term", "section"]
   [params.social]
     website = "https://amagerrunners.dk/"
     strava = "https://strava.com/clubs/amagerrunners"
-    facebook = "https://www.facebook.com/groups/992359708926135"
+    facebook = "https://fb.me/e/3TCCMcbZT"
+    facebookgroup = "https://www.facebook.com/groups/992359708926135"

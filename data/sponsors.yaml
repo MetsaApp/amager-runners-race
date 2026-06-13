@@ -26,9 +26,9 @@ tiers:
       - name: "Rema 1000"
         url: ""
         image: ""
-      - name: "MetaLine ApS"
-        url: ""
-        image: ""
+      - name: "Dansk Atletik"
+        url: "https://dansk-atletik.dk"
+        image: "/img/daf.jpg"
 
   - id: partner
     cols: 5
@@ -37,9 +37,6 @@ tiers:
       - name: "Yellow Bird"
         url: "https://yellowbirdcoffee.dk/"
         image: "/img/YellowBirdLogo.png"
-      - name: "Dansk Atletik"
-        url: "https://dansk-atletik.dk"
-        image: "/img/daf.jpg"
       - name: "Amager Strandpark parkrun"
         url: "https://www.parkrun.dk/amagerstrandpark/"
         image: "/img/parkrun.png"
