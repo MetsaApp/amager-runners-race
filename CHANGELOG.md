@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.10.0](https://github.com/MetsaApp/amager-runners-race/compare/v1.9.0...v1.10.0) (2026-06-15)
+
+
+### Features
+
+* ny rute stort loop ([#93](https://github.com/MetsaApp/amager-runners-race/issues/93)) ([9acaca9](https://github.com/MetsaApp/amager-runners-race/commit/9acaca9af36277538d8fff9de598000f4c145b24))
+
 ## [1.9.0](https://github.com/MetsaApp/amager-runners-race/compare/v1.8.0...v1.9.0) (2026-06-13)
 
 
