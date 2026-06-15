@@ -24,8 +24,8 @@ cards:
       en: "Water"
       da: "Vand"
     body:
-      en: "One water station at the start and finish. 10K runners pass it at halfway."
-      da: "Én drikkestation ved start og mål. 10K-løbere passerer den halvvejs."
+      en: "Water stations at the start and finish, and at the 5K mark for 10K runners."
+      da: "Væskedepot ved start og mål, og ved 5 km for 10K-løbere"
 
   - icon: "M"
     title:
@@ -56,5 +56,5 @@ cards:
       en: "The route"
       da: "Ruten"
     body:
-      en: "A fast and spectator-friendly route along the water at Amager Strandpark, starting and finishing at Femøren by the sea."
-      da: "En hurtig og tilskuervenlig rute langs vandet i Amager Strandpark med start og mål ved Femøren ud mod havet"
+      en: "A flat and fast route along the water at Amager Strandpark. Start on the path at Amager Strandvej and finish at Femøren."
+      da: "En flad og hurtig rute langs vandet i Amager Strandpark. Start på stien ved Amager Strandvej og mål ved Femøren"

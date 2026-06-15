@@ -26,9 +26,6 @@ tiers:
       - name: "Rema 1000"
         url: ""
         image: ""
-      - name: "MetaLine ApS"
-        url: ""
-        image: ""
 
   - id: partner
     cols: 5
