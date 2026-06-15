@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.9.0](https://github.com/MetsaApp/amager-runners-race/compare/v1.8.0...v1.9.0) (2026-06-13)
+
+
+### Features
+
+* Link til facebook event ([#90](https://github.com/MetsaApp/amager-runners-race/issues/90)) ([8e1c425](https://github.com/MetsaApp/amager-runners-race/commit/8e1c42561ccde72b74ca38bd1b4cdddc4cd672c3))
+
 ## [1.8.0](https://github.com/MetsaApp/amager-runners-race/compare/v1.7.0...v1.8.0) (2026-06-10)
 
 
