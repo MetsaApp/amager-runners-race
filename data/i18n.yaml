@@ -25,14 +25,14 @@ en:
     items:
       - "{date}"
       - "Two distances"
-      - "Fast and scenic"
+      - "Flat, fast and scenic"
       - "One loop on the coast"
 
   intro:
     sectionLabel: "About the race"
     sectionTitle: "Run the coast"
     label: "Open to everyone."
-    lead: "A FAST AND SCENIC ROUTE ALONG THE COAST. RUN 5 KM OR 10 KM IN AMAGER STRANDPARK."
+    lead: "A FLAT, FAST AND SCENIC ROUTE ALONG THE COAST. RUN 5 KM OR 10 KM IN AMAGER STRANDPARK."
     startsSentence: "{dist0} and {dist1} start together at {time0}."
     body: |
       Are you putting the finishing touches on your preparations for the World Athletics Half Marathon Championships in Copenhagen? Or are you simply looking to challenge yourself on a fast and scenic course?<br><br>
@@ -100,14 +100,14 @@ da:
     items:
       - "{date}"
       - "To distancer"
-      - "Flot og hurtig"
+      - "Flad, hurtig og flot"
       - "Én rute langs kysten"
 
   intro:
     sectionLabel: "Om løbet"
     sectionTitle: "Løb langs kysten"
     label: "Åbent for alle."
-    lead: "EN HURTIG OG FLOT RUTE LANGS KYSTEN. Løb 5 KM ELLER 10 KM I AMAGER STRANDPARK."
+    lead: "EN FLAD, HURTIG OG FLOT RUTE LANGS KYSTEN. Løb 5 KM ELLER 10 KM I AMAGER STRANDPARK."
     startsSentence: "{dist0} og {dist1} starter samtidig klokken {time0}."
     body: |
       Er du i gang med de sidste forberedelser frem mod VM i halvmaraton i København? Eller har du bare lyst til at udfordre dig selv på en hurtig og flot rute?<br><br>
