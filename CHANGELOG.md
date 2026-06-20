@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.11.0](https://github.com/MetsaApp/amager-runners-race/compare/v1.10.0...v1.11.0) (2026-06-20)
+
+
+### Features
+
+* ny rute start femoren ([#96](https://github.com/MetsaApp/amager-runners-race/issues/96)) ([4de67e4](https://github.com/MetsaApp/amager-runners-race/commit/4de67e4b986dc9cb85d6f5b180fb90bf7904f3c1))
+
 ## [1.10.0](https://github.com/MetsaApp/amager-runners-race/compare/v1.9.0...v1.10.0) (2026-06-15)
 
 
