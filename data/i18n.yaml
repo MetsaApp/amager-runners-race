@@ -56,7 +56,7 @@ en:
   route:
     sectionLabel: "Route"
     sectionTitle: "The loop"
-    intro: "One course for both races. The 5K runs the loop below once. The 10K runs it <strong>twice</strong>, with a single aid station at the start / finish line that you pass through at halfway."
+    intro: "Flat and fast 5k asphalt loop with only a little gravel at start/finish. 5K runs 1 lap, 10K runs 2 laps with an aid station at start/finish."
     tab5k: "5 KM"
     tab10k: "10 KM"
     statDist: "Lap distance"
@@ -131,7 +131,7 @@ da:
   route:
     sectionLabel: "Rute"
     sectionTitle: "Ruten"
-    intro: "Én rute til begge løb. 5K løber ruten herunder én gang. 10K løber den <strong>to gange</strong>, med ét depot ved start/mål som du passerer halvvejs."
+    intro: "Én flad og hurtig 5 km-rundstrækning på asfalt - kun lidt grus ved start/mål. 5K løber én gang og 10K løber to gange med ét depot ved start/mål."
     tab5k: "5 KM"
     tab10k: "10 KM"
     statDist: "Omgangsdistance"
