@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.13.0](https://github.com/MetsaApp/amager-runners-race/compare/v1.12.0...v1.13.0) (2026-07-06)
+
+
+### Features
+
+* logo update ([#107](https://github.com/MetsaApp/amager-runners-race/issues/107)) ([f48c9b8](https://github.com/MetsaApp/amager-runners-race/commit/f48c9b8402cd3e4e3e96fdeb231199363e7a1b4a))
+
 ## [1.12.0](https://github.com/MetsaApp/amager-runners-race/compare/v1.11.0...v1.12.0) (2026-07-06)
 
 
