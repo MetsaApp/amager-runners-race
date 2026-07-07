@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.16.0](https://github.com/MetsaApp/amager-runners-race/compare/v1.15.0...v1.16.0) (2026-07-07)
+
+
+### Features
+
+* Witamin Well og Surf School tilføjet ([#116](https://github.com/MetsaApp/amager-runners-race/issues/116)) ([396e1a4](https://github.com/MetsaApp/amager-runners-race/commit/396e1a41c1c72d9c56cf42c923cafde2a6efd73b))
+
 ## [1.15.0](https://github.com/MetsaApp/amager-runners-race/compare/v1.14.0...v1.15.0) (2026-07-06)
 
 
