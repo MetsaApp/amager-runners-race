@@ -20,7 +20,7 @@ tiers:
         image: "/img/handelsforeningen.png"    # logo file pending — text fallback until it arrives
 
   - id: standard
-    cols: 3
+    cols: 4
     colsMobile: 2
     items:
       - name: "Sparekassen Danmark"
@@ -32,9 +32,12 @@ tiers:
       - name: "Clarion Hotel® Copenhagen Airport"
         url: "https://www.strawberry.dk/hoteller/danmark/kastrup-lufthavn/clarion-hotel-copenhagen-airport"
         image: "/img/clarion-hotel.png" 
+      - name: "Copenhagen Surf School"
+        url: "https://copenhagensurfschool.dk/"
+        image: "/img/Surf_School.png" 
 
   - id: partner
-    cols: 5
+    cols: 6
     colsMobile: 3
     items:
       - name: "Yellow Bird"
@@ -52,3 +55,6 @@ tiers:
       - name: "Pelican Wines"
         url: "https://www.pelicanwines.dk/"
         image: "/img/PelicanWinesTran2.png"
+      - name: "Vitamin Well"
+        url: "https://www.vitaminwell.com/"
+        image: "/img/vitamin-well.png"
