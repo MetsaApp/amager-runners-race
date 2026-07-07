@@ -28,7 +28,7 @@ tiers:
         image: "/img/sparekassen-danmark.jpg"
       - name: "Rema 1000"
         url: "https://www.rema1000.dk/"
-        image: "img/REMA_1000.png"
+        image: "/img/REMA_1000.png"
       - name: "Clarion Hotel® Copenhagen Airport"
         url: "https://www.strawberry.dk/hoteller/danmark/kastrup-lufthavn/clarion-hotel-copenhagen-airport"
         image: "/img/clarion-hotel.png" 
