@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.19.0](https://github.com/MetsaApp/amager-runners-race/compare/v1.18.0...v1.19.0) (2026-08-23)
+
+
+### Features
+
+* Løberen tilføjet ([#125](https://github.com/MetsaApp/amager-runners-race/issues/125)) ([8333c26](https://github.com/MetsaApp/amager-runners-race/commit/8333c2644c371493f41e68f8601d52e4a6235358))
+
 ## [1.18.0](https://github.com/MetsaApp/amager-runners-race/compare/v1.17.0...v1.18.0) (2026-07-07)
 
 
