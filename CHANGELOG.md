@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.20.0](https://github.com/MetsaApp/amager-runners-race/compare/v1.19.0...v1.20.0) (2026-09-03)
+
+
+### Features
+
+* race-day signup notice, online registration closed ([9236666](https://github.com/MetsaApp/amager-runners-race/commit/92366663a01ca4d55da58526458f39f0ca14f3dc))
+
 ## [1.19.0](https://github.com/MetsaApp/amager-runners-race/compare/v1.18.0...v1.19.0) (2026-08-23)
 
 
