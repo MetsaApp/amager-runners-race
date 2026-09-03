@@ -10,7 +10,7 @@ en:
     contact: "Contact"
 
   hero:
-    pill: "Registration open. {capacity} spots."
+    pill: "Online registration closed. Sign up at the race."
     edition: "First edition · 2026"
     kicker: "{organiser} presents · {date}"
     eyebrow: "Strandparkløbet Amager"
@@ -52,6 +52,7 @@ en:
     sectionTitle: "Sign up"
     register: "Register →"
     feeText: "+ fee"
+    notice: "Online registration is closed — but you can still join! Sign up in person at the start/finish area in Amager Strandpark on race day."
 
   route:
     sectionLabel: "Route"
@@ -85,7 +86,7 @@ da:
     contact: "Kontakt"
 
   hero:
-    pill: "Tilmelding åben. {capacity} pladser."
+    pill: "Onlinetilmelding lukket. Tilmeld dig på dagen."
     edition: "Første udgave · 2026"
     kicker: "{organiser} præsenterer · {date}"
     eyebrow: "Strandparkløbet Amager"
@@ -127,6 +128,7 @@ da:
     sectionTitle: "Tilmeld dig"
     register: "Tilmeld →"
     feeText: "+ gebyr"
+    notice: "Onlinetilmeldingen er lukket – men du kan stadig nå det! Tilmeld dig på selve dagen ved start/mål-området i Amager Strandpark."
 
   route:
     sectionLabel: "Rute"

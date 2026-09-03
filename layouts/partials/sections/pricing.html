@@ -40,13 +40,7 @@ default 3 -}} {{- $maxW := $data.maxWidth | default "640px" -}}
         {{ end }}
       </ul>
       {{ end }}
-      <a
-        class="btn btn-primary"
-        href="{{ $data.registerUrl }}"
-        target="_blank"
-        rel="noopener"
-        >{{ $t.pricing.register }}</a
-      >
+      <div class="price-notice">{{ $t.pricing.notice }}</div>
     </div>
     {{ end }}
   </div>

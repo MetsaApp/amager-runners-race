@@ -407,6 +407,12 @@ section{ padding: 110px 28px; border-bottom: 1px solid var(--line-soft); }
   color: var(--muted);
 }
 .price-card.feature .price-window{ color: rgba(255,255,255,.65); }
+.price-notice{
+  border: 1px solid var(--accent);
+  padding: 14px 16px;
+  font-family: var(--f-mono); font-size: 12px;
+  letter-spacing: .06em; line-height: 1.6;
+}
 
 /* ---------------- ROUTE ---------------- */
 .route-head{
