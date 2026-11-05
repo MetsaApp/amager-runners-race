@@ -16,8 +16,9 @@ node_modules/
 .playwright-mcp/
 /*.png
 
-# Claude Code local
-.claude/
+# Claude Code local, except the shared settings that enable the git hooks
+.claude/*
+!.claude/settings.json
 .mcp.json
 
 # Design inspiration / scratch
